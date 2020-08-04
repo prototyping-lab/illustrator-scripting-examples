@@ -1,0 +1,9 @@
+{ 
+    "compilerOptions": { 
+        "module": "none", 
+        "noLib": true 
+    },
+    "typeAcquisition": {
+        "include": [ "types-for-adobe/Illustrator/2015.3" ]
+    }
+}

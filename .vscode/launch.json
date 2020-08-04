@@ -1,0 +1,93 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  
+  "trace": true,
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Current Script",
+      "program": "${file}",
+      "type": "extendscript-debug",
+      "request": "launch",
+      "stopOnEntry": false,
+      "targetSpecifier": "illustrator-24.064"
+      
+    },
+    {
+      "name": "Ask for Script Name",
+      "program": "${workspaceFolder}/${command:AskForScriptName}",
+      "type": "extendscript-debug",
+      "request": "launch",
+      "stopOnEntry": false,
+      "targetSpecifier": "illustrator-24.064"
+    },
+    {
+      "name": "Make Linear Gradient",
+      "program": "${workspaceFolder}/sample-scripts/Javascript/Gradients/MakeLinearGradient.jsx",
+      "type": "extendscript-debug",
+      "request": "launch",
+      "stopOnEntry": false,
+      "targetSpecifier": "illustrator-24.064"
+    },
+    {
+      "name": "Make Radial Gradient",
+      "program": "${workspaceFolder}/sample-scripts/Javascript/Gradients/MakeRadialGradient.jsx",
+      "type": "extendscript-debug",
+      "request": "launch",
+      "stopOnEntry": false,
+      "targetSpecifier": "illustrator-24.064"
+    },
+    {
+      "name": "App Info",
+      "program": "${workspaceFolder}/sample-scripts/JavaScript/Miscellaneous/AppInfo.jsx",
+      "type": "extendscript-debug",
+      "request": "launch",
+      "stopOnEntry": false,
+      "targetSpecifier": "illustrator-24.064"
+    },
+    {
+        "name": "Align Text with Path",
+        "program": "${workspaceFolder}/sample-scripts/JavaScript/Working With Paths/AlignTextWithPath.jsx",
+        "type": "extendscript-debug",
+        "request": "launch",
+        "stopOnEntry": false,
+        "targetSpecifier": "illustrator-24.064"
+      },
+      {
+        "name": "Make Star Group",
+        "program": "${workspaceFolder}/sample-scripts/JavaScript/Working With Paths/Make Star Group.jsx",
+        "type": "extendscript-debug",
+        "request": "launch",
+        "stopOnEntry": false,
+        "targetSpecifier": "illustrator-24.064"
+      },
+      {
+        "name": "Move Item",
+        "program": "${workspaceFolder}/sample-scripts/JavaScript/Working With Paths/MoveItem.jsx",
+        "type": "extendscript-debug",
+        "request": "launch",
+        "stopOnEntry": false,
+        "targetSpecifier": "illustrator-24.064"
+      },
+      {
+        "name": "Text on Path",
+        "program": "${workspaceFolder}/sample-scripts/JavaScript/Working With Paths/Text on Path.jsx",
+        "type": "extendscript-debug",
+        "request": "launch",
+        "stopOnEntry": false,
+        "targetSpecifier": "illustrator-24.064"
+      },
+      {
+        "name": "Trees",
+        "program": "${workspaceFolder}/sample-scripts/JavaScript/Working With Paths/Trees.jsx",
+        "type": "extendscript-debug",
+        "request": "launch",
+        "stopOnEntry": false,
+        "targetSpecifier": "illustrator-24.064"
+      },
+
+
+  ]
+}
