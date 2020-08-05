@@ -1,9 +1,11 @@
 { 
     "compilerOptions": { 
         "module": "none", 
-        "noLib": true 
+        "noLib": true,
+        "checkJs": true,
+        "strictFunctionTypes": false
     },
     "typeAcquisition": {
-        "include": [ "types-for-adobe/Illustrator/2015.3" ]
+        "include": [ "node_modules/types-for-adobe/Illustrator/2015.3" ]
     }
 }
