@@ -9,10 +9,6 @@
 -  A couple of debug configurations are defined in `.vscode/launch.json`.  
  Feel free to add your own.
 
-## Using Intellisense
-
-- To harness the full power of Intellisense (autocompletion etc) make sure to install the packages necessary for type aquisition via `npm install`.
- 
 ## Using the Sample Scripts
 
 - To play with the sample scripts provided by Adobe, copy the Illustrator example scripts to this project folder.
