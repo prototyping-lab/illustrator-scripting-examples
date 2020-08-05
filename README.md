@@ -2,6 +2,12 @@
 
 - this is a template for developing Adobe Illustrator Scripts in Visual Studio Code
 
+## Script Folders
+
+- [sample-scripts](sample-scripts) — examples provided by Adobe
+- [scripts](scripts) — examples from various sources
+- [my-scripts](my-scripts) — add your scripts here
+
 ## Using the Debugger
 
 - Install the `Extended Script Debugger` Plugin for VS-Code
@@ -11,13 +17,13 @@
 
 ## Using the Sample Scripts
 
-- To play with the sample scripts provided by Adobe, copy the Illustrator example scripts to this project folder.
-- On OSX the sample-scripts can be found at `"/Applications/Adobe Illustrator 2020/Scripting.localized/Sample Scripts.localized/"`
+- To play with the sample scripts folder provided by Adobe, copy the Illustrator example scripts to this project folder.
+- On OSX this folder can be found at `"/Applications/Adobe Illustrator 2020/Scripting.localized/Sample Scripts.localized/"`
 
 ## Create your own Scripts
 
 - Use the my-scripts folder to add your own experiments
-- Use the `Current Script` run configuration to debug the selected cript.
+- Use the `Current Script` run configuration to debug the selected script.
 
 ## Deploy your Script
 
