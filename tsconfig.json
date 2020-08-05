@@ -1,0 +1,13 @@
+{ 
+    "compilerOptions": { 
+        "module": "none", 
+        "target": "ES3",
+        "noLib": true,
+        "allowJs": true,
+        "checkJs": true,
+        "typeRoots": [ "typings"],
+        "types":  [ "Illustrator/2015.3" ]
+    },
+    "include": [ "my-scripts", "sample-scripts", "scripts"],
+    "exclude": [ "node_modules", "my-scripts/ExtendScript/**/*" ]
+}
