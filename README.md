@@ -16,7 +16,6 @@
 ## Using the Sample Scripts
 
 - To play with the sample scripts provided by Adobe, copy the Illustrator example scripts to this project folder.
-
 - On OSX the sample-scripts can be found at `"/Applications/Adobe Illustrator 2020/Scripting.localized/Sample Scripts.localized/"`
 
 ## Create your own Scripts
