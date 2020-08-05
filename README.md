@@ -22,8 +22,9 @@
 
 ## Create your own Scripts
 
-- Use the my-scripts folder to add your own experiments
+- You can use the `my-scripts/Javascript` folder to add your own `.jsx` files.
 - Use the `Current Script` run configuration to debug the selected script.
+- You can also write and compile Typescript inside the `my-scripts/Typescript` folder.
 
 ## Deploy your Script
 
