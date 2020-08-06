@@ -26,9 +26,33 @@
 - Use the `Current Script` run configuration to debug the selected script.
 - You can also write and compile Typescript inside the `my-scripts/Typescript` folder.
 
-## Deploy your Script
+## Distribute your Script
 
-- Once the scripts work just distribute them ...
-- Drop them into your Script folder.  
-  On OSX the scripts folder can be found at `"/Applications/Adobe Illustrator 2020/Presets.localized/en_US/Scripts"`
+- To use the scripts from Illustrator just drop them into your Script folder. On OSX the scripts folder can be found at `"/Applications/Adobe Illustrator 2020/Presets.localized/en_US/Scripts"`
+- Once the scripts work just zip and distribute them ...
 
+## Resources
+
+Here are some resources to get you started with scripting for Illustrator:
+
+### Official
+- [Adobe Illustrator Scripting Guide](https://www.adobe.com/content/dam/acom/en/devnet/illustrator/pdf/AI_ScriptGd_2017.pdf) (PDF)
+- [Javascript Scripting Reference](https://www.adobe.com/content/dam/acom/en/devnet/illustrator/pdf/Illustrator_JavaScript_Scripting_Reference_2017.pdf) (PDF)
+
+### Inofficial
+- [Illustrator Scripting Guide](https://illustrator-scripting-guide.readthedocs.io)
+- [ScriptUI Dialog Builder](https://scriptui.joonas.me/)
+
+## Scripts on Github
+
+Here are some nice examples of Illustrator scripts hosted on github:
+
+- [Illustrator Scripts by Hiroyuki Sato](https://github.com/shspage/illustrator-scripts)
+- [Integrating Paper.js into Illustrator](https://github.com/shspage/plainCanvas)
+- [Draw Outlines and AnchorPoints](https://github.com/Inventsable/Outliner)
+- [Circle Packing Example](https://github.com/shspage/illustrator-circlepacking)
+
+### More Resources
+
+- [Illustrator Scripting with Python](https://github.com/lohriialo/illustrator-scripting-python)
+- [Creating Plugins with Adobe CEP](https://github.com/Adobe-CEP/Getting-Started-guides)
