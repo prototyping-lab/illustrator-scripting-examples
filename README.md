@@ -1,6 +1,8 @@
 # Adobe Illustrator Scripting Examples
 
-- this is a template for developing Adobe Illustrator Scripts in Visual Studio Code
+This is a template for developing Adobe Illustrator Scripts in Visual Studio Code ...
+
+![](https://user-images.githubusercontent.com/720669/89570895-196b2d80-d827-11ea-8f4d-2b1665c15164.png)
 
 ## Script Folders
 
