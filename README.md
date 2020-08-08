@@ -17,6 +17,10 @@ This is a template for developing Adobe Illustrator Scripts in Visual Studio Cod
 -  A couple of debug configurations are defined in `.vscode/launch.json`.  
  Feel free to add your own.
 
+## Using Intellisense
+
+- This repo uses the typings provided [here](https://github.com/ten-A/Types-for-Adobe)
+
 ## Using the Sample Scripts
 
 - To play with the sample scripts folder provided by Adobe, copy the Illustrator example scripts to this project folder.

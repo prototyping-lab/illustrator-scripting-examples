@@ -1,28 +1,5 @@
 /// <reference path="JavaScript.d.ts" />
 
-declare enum _Alignment {
-  TOP = 1,
-  BOTTOM,
-  LEFT,
-  RIGHT,
-  FILL,
-  CENTER,
-}
-
-declare enum _FontStyle {
-  REGULAR,
-  BOLD,
-  ITALIC,
-  BOLDITALIC,
-}
-
-declare const enum _BrushOrPenType {
-  SOLID_COLOR,
-  THEME_COLOR,
-}
-
-type _Bounds = Bounds | [number, number, number, number]
-
 /**
  * A global class containing central information about ScriptUI. Not instantiable.
  */
@@ -31,13 +8,13 @@ declare class ScriptUI {
    * Collects the enumerated values that can be used in the alignment and alignChildren properties of controls and containers.
    * Predefined alignment values are: TOP, BOTTOM, LEFT, RIGHT, FILL, CENTER
    */
-  static readonly Alignment: _Alignment
+  static readonly Alignment: Alignment
 
   /**
    * Collects the enumerated values that can be used as the style argument to the ScriptUI.newFont() method.
    * Predefined styles are REGULAR, BOLD, ITALIC, BOLDITALIC.
    */
-  static readonly FontStyle: _FontStyle
+  static readonly FontStyle: object
 
   /**
    * The font constants defined by the host application.
@@ -45,8 +22,8 @@ declare class ScriptUI {
   static readonly applicationFonts: object
 
   /**
-   * An object whose properties are the names of compatibility modes supported by the host application.
-   * The presence of ScriptUI.compatibility.su1PanelCoordinates means that the application allows backward compatibility with the coordinate system of Panel elements in ScriptUI version 1.
+   * An object whose properties are the names of compatability modes supported by the host application.
+   * The presence of ScriptUI.compatability.su1PanelCoordinates means that the application allows backward compatibility with the coordinate system of Panel elements in ScriptUI version 1.
    */
   static readonly compatibility: object
 
@@ -123,8 +100,10 @@ declare class Window extends _Control {
   /**
    * Tells the layout manager how unlike-sized children of this container should be aligned within a column or row.
    * Order of creation determines which children are at the top of a column or the left of a row; the earlier a child is created, the closer it is to the top or left of its column or row. If defined, alignment for a child element overrides the alignChildren setting for the parent container. See alignment property for values.
+   * X 'LEFT', 'CENTER', 'RIGHT', FILL'
+   * Y 'TOP', 'CENTER', 'BOTTOM'
    */
-  alignChildren: string
+  alignChildren: [AlignmentX, AlignmentY]
 
   /**
    * For windows of type dialog, the UI element to notify when the user presses a cancellation key combination.
@@ -141,7 +120,7 @@ declare class Window extends _Control {
    * The collection of UI elements that have been added to this container.
    * An array indexed by number or by a string containing an element's name. The length property of this array is the number of child elements for container elements, and is zero for controls.
    */
-  readonly children: _Control[]
+  readonly children: object[]
 
   /**
    * For windows of type dialog, the UI element to notify when the user presses a Enter key.
@@ -153,18 +132,18 @@ declare class Window extends _Control {
    * The bounds of the window frame in screen coordinates.
    * The frame consists of the title bar and borders that enclose the content region of a window, depending on the windowing system.
    */
-  readonly frameBounds: _Bounds
+  readonly frameBounds: Bounds | [number, number, number, number]
 
   /**
    * The top left corner of the window frame in screen coordinates.
    * The same as [frameBounds.x, frameBounds.y]. Set this value to move the window frame to the specified location on the screen. The frameBounds value changes accordingly.
    */
-  frameLocation: Point | number[]
+  frameLocation: uiPoint | [number, number]
 
   /**
    * The size and location of the window's frame in screen coordinates.
    */
-  readonly frameSize: Dimension | number[]
+  readonly frameSize: Dimension | [number, number]
 
   /**
    * Deprecated. Use ScriptUI.frameworkName instead.
@@ -228,7 +207,7 @@ declare class Window extends _Control {
   spacing: number
 
   /**
-   * The title, label, or displayed text, a localizable string.
+   * The title, label, or displayed text, a localizeable string.
    * Does not apply to containers of type group.
    */
   text: string
@@ -248,8 +227,8 @@ declare class Window extends _Control {
   constructor(
     type: string,
     title?: string,
-    bounds?: _Bounds,
-    properties?: _AddControlPropertiesWindow,
+    bounds?: Bounds | [number, number, number, number],
+    properties?: Partial<_ControlPropertiesMap["window"]>,
   )
 
   /**
@@ -259,7 +238,7 @@ declare class Window extends _Control {
    * @param text The text or label, a localizable string. Initial text to be displayed in the control as the title, label, or contents, depending on the control type. If supplied, this value is assigned to the new object’s text property.
    * @param properties An object that contains one or more creation properties of the new child (properties used only when the element is created). The creation properties depend on the element type. See properties property of each control type.
    */
-  add: _AddControl
+  add: _WindowPanelGroupAdd
 
   /**
    * Displays a platform-standard dialog containing a short message and an OK button.
@@ -270,7 +249,7 @@ declare class Window extends _Control {
   static alert(message: string, title?: string, errorIcon?: boolean): void
 
   /**
-   * Centers this window on screen or with respect to another window.
+   * Centers this window on screen or with repect to another window.
    * @param window The relative window. If not specified, centers on the screen.
    */
   center(window?: Window): void
@@ -312,7 +291,7 @@ declare class Window extends _Control {
   onActivate(): void
 
   /**
-   * An event-handler callback function, called when the window is about to be closed.
+   * An event-handler callback function, calledwhen the window is about to be closed.
    * Called when a request is made to close the window, either by an explicit call to the close() function or by a user action (clicking the OS-specific close icon in the title bar). The function is called before the window actually closes; it can return false to cancel the close operation.
    */
   onClose(): boolean
@@ -324,12 +303,12 @@ declare class Window extends _Control {
   onDeactivate(): void
 
   /**
-   * An event-handler callback function, called when the window has been moved
+   * An event-handler callback function, calledwhen the windowhas been moved
    */
   onMove(): void
 
   /**
-   * An event-handler callback function, called when the window is being moved
+   * An event-handler callback function, calledwhen the window is being moved
    * Called while a window in being moved, each time the position changes. A handler can monitor the move operation.
    */
   onMoving(): void
@@ -382,10 +361,8 @@ declare class LayoutManager {
    * Invokes the automatic layout behavior for the managed container.
    * Adjusts sizes and positions of the child elements of this window or container according to the placement and alignment property values in the parent and children.
    * Invoked automatically the first time the window is displayed. Thereafter, the script must invoke it explicitly to change the layout in case of changes in the size or position of the parent or children.
-   *
-   * @param recalculate Optional. When true, forces the layout manager to recalculate the container size for this and any child containers. Default is false.
    */
-  layout(recalculate?: boolean): void
+  layout(): void
 
   /**
    * Performs a layout after a Window is resized, based on the new size.
@@ -420,7 +397,7 @@ declare class ScriptUIPen {
    * The pen type, solid or theme.
    * One of these constants: ScriptUIGraphics.PenType.SOLID_COLOR or ScriptUIGraphics.PenType.THEME_COLOR
    */
-  readonly type: typeof ScriptUIGraphics.PenType
+  readonly type: string
 }
 
 /**
@@ -444,7 +421,7 @@ declare class ScriptUIBrush {
    * The brush type, solid or theme.
    * One of these constants: ScriptUIGraphics.BrushType.SOLID_COLOR or ScriptUIGraphics.BrushType.THEME_COLOR
    */
-  readonly type: typeof ScriptUIGraphics.BrushType
+  readonly type: number
 }
 
 /**
@@ -462,17 +439,17 @@ declare class ScriptUIGraphics {
    * Contains the enumerated constants for the type argument of newBrush().
    * Type constants are: SOLID_COLOR, THEME_COLOR.
    */
-  static readonly BrushType: _BrushOrPenType
+  static readonly BrushType: object
 
   /**
    * Contains the enumerated constants for the type argument of newPen().
    * Type constants are: SOLID_COLOR, THEME_COLOR.
    */
-  static readonly PenType: _BrushOrPenType
+  static readonly PenType: object
 
   /**
    * The background color for containers; for non-containers, the parent background color.
-   * The paint color and style is defined in this brush object.This property is only supported for controls like dropdownlist, edittext, and listbox.
+   * The paint color and style is defined in this brush object.This property is only supported for controls likedropdownlist, edittext, and listbox.
    */
   backgroundColor: ScriptUIBrush
 
@@ -484,11 +461,11 @@ declare class ScriptUIGraphics {
   /**
    * The current position in the current drawing path.
    */
-  readonly currentPoint: Point | number[]
+  readonly currentPoint: uiPoint | [number, number]
 
   /**
    * The background color for containers when disabled or inactive; for non-containers, the parent background color.
-   * The paint color and style is defined in this brush object.This property is only supported for controls like dropdownlist, edittext, and listbox.
+   * The paint color and style is defined in this brush object.This property is only supported for controls likedropdownlist, edittext, and listbox.
    */
   disabledBackgroundColor: ScriptUIBrush
 
@@ -511,7 +488,7 @@ declare class ScriptUIGraphics {
 
   /**
    * Closes the current path.
-   * Defines a line from the current position (currentPoint) to the start point of the current path (the value of currentPath).
+   * Defines a line from the current postion (currentPoint) to the start point of the current path (the value of currentPath).
    */
   closePath(): void
 
@@ -558,7 +535,7 @@ declare class ScriptUIGraphics {
    * @param width The width of the region in pixels.
    * @param height The height of the region in pixels.
    */
-  ellipsePath(left: number, top: number, width: number, height: number): Point | number[]
+  ellipsePath(left: number, top: number, width: number, height: number): uiPoint | [number, number]
 
   /**
    * Fills a path using a given painting brush.
@@ -569,11 +546,11 @@ declare class ScriptUIGraphics {
 
   /**
    * Adds a path segment to the currentPath.
-   * The line is defined from the currentPoint to the specified destination point. Returns the Point object for the destination point, which becomes the new value of currentPoint.
+   * The line is defined from the currentPoint to the specified destination point. Returns the Point objectfor the destination point, which becomes the new value of currentPoint.
    * @param x The X coordinate for the destination point, relative to the origin of this element.
    * @param y The Y coordinate for the destination point, relative to the origin of this element.
    */
-  lineTo(x: number, y: number): Point | number[]
+  lineTo(x: number, y: number): uiPoint | [number, number]
 
   /**
    * Calculates the size needed to display a string using the given font.
@@ -586,7 +563,7 @@ declare class ScriptUIGraphics {
     text: string,
     font?: ScriptUIFont,
     boundingWidth?: number,
-  ): Dimension | number[]
+  ): Dimension | [number, number]
 
   /**
    * Adds a given point to the currentPath, and makes it the current drawing position.
@@ -594,14 +571,14 @@ declare class ScriptUIGraphics {
    * @param x The X coordinate for the new point, relative to the origin of this element.
    * @param y The Y coordinate for the new point, relative to the origin of this element.
    */
-  moveTo(x: number, y: number): Point | number[]
+  moveTo(x: number, y: number): uiPoint | [number, number]
 
   /**
    * Creates a new painting brush object.
    * @param type The brush type, solid or theme. One of the constants ScriptUIGraphics.BrushType.SOLID_COLOR or ScriptUIGraphics.BrushType.THEME_COLOR.
    * @param color The brush color. If type is SOLID_COLOR, the color expressed as an array of three or four values, in the form [R, B, G, A] specifying the red, green, and blue values of the color and, optionally, the opacity (alpha channel). All values are numbers in the range [0.0..1.0]. An opacity of 0 is fully transparent, and an opacity of 1 is fully opaque. If the type is THEME_COLOR, the name string of the theme. Theme colors are defined by the host application.
    */
-  newBrush(type: typeof ScriptUIGraphics.BrushType, color: number[]): ScriptUIBrush
+  newBrush(type: number, color: number[]): ScriptUIBrush
 
   /**
    * Creates a new, empty path object.
@@ -615,17 +592,17 @@ declare class ScriptUIGraphics {
    * @param color The pen color. If type is SOLID_COLOR, the color expressed as an array of three or four values, in the form [R, B, G, A] specifying the red, green, and blue values of the color and, optionally, the opacity (alpha channel). All values are numbers in the range [0.0..1.0]. An opacity of 0 is fully transparent, and an opacity of 1 is fully opaque. If the type is THEME_COLOR, the name string of the theme. Theme colors are defined by the host application.
    * @param width The width of the pen line in pixels. The line is centered around the current point. For example, if the value is 2, drawing a line from (0, 10) to (5, 10) paints the two rows of pixels directly above and below y-position 10.
    */
-  newPen(type: typeof ScriptUIGraphics.PenType, color: number[], width: number): ScriptUIPen
+  newPen(type: number, color: number[], width: number): ScriptUIPen
 
   /**
    * Defines a rectangular path in the currentPath object.
-   * The rectangle can be filled using fillPath() or stroked using strokePath().Returns the Point object for the upper left corner of the rectangle, which becomes the new value of currentPoint.
+   * The rectangle can be filled using fillPath() or stroked using strokePath().Returns the Point objectfor the upper left corner of the rectangle, which becomes the new value of currentPoint.
    * @param left The left coordinate relative to the origin of this element.
    * @param top The top coordinate relative to the origin of this element.
    * @param width The width in pixels.
    * @param height The height in pixels.
    */
-  rectPath(left: number, top: number, width: number, height: number): Point | number[]
+  rectPath(left: number, top: number, width: number, height: number): uiPoint | [number, number]
 
   /**
    * Strokes the path segments of a path with a given drawing pen.
@@ -722,9 +699,9 @@ declare class ScriptUIFont {
   readonly size: number
 
   /**
-   * The font style. One of the constants in ScriptUI.FontStyle.
+   * The font style. One of the constants in ScriptUIGraphics.FontStyle.
    */
-  readonly style: typeof ScriptUI.FontStyle
+  readonly style: object
 
   /**
    * The name of a substitution font, a fallback font to substitute for this font if the requested font family or style is not available.
@@ -755,7 +732,7 @@ declare class ScriptUIImage {
   /**
    * The image size in pixels.
    */
-  readonly size: Dimension | number[]
+  readonly size: Dimension | [number, number]
 }
 
 /**
@@ -897,7 +874,7 @@ declare class Button extends _Control {
 }
 
 /**
- * A mouse-sensitive pushbutton that displays an image instead of text.
+ * Amouse-sensitive pushbutton that displays an image instead of text.
  * Calls the onClick() callback if the control is clicked or if its notify() method is called.
  */
 declare class IconButton extends _Control {
@@ -921,12 +898,6 @@ declare class IconButton extends _Control {
    * The image object that defines the image to be drawn.
    */
   image: ScriptUIImage
-
-  /**
-   * The image object that defines the image to be drawn.
-   * Same as IconButton.image.
-   */
-  icon: ScriptUIImage
 
   /**
    * The key sequence that invokes the onShortcutKey() callback for this element (in Windows only).
@@ -959,61 +930,6 @@ declare class IconButton extends _Control {
   /**
    * An event-handler callback function, called when the window is about to be drawn.
    * Allows the script to modify or control the appearance, using the control’s associated ScriptUIGraphics object. Handler takes one argument, a DrawState object.
-   */
-  onDraw(): void
-
-  /**
-   * An event-handler callback function, called when the element's shortcutKey sequence is typed in the active window.
-   * In Windows only.
-   */
-  onShortcutKey(): void
-}
-
-/**
- * Displays an icon or image.
- */
-declare class Image extends _Control {
-  /**
-   * An array of child elements.
-   */
-  readonly children: object[]
-
-  /**
-   * The graphics object that can be used to customize the element's appearance, in response to the onDraw() event.
-   */
-  readonly graphics: ScriptUIGraphics
-
-  /**
-   * The image object that defines the image to be drawn.
-   */
-  image: ScriptUIImage
-
-  /**
-   * The image object that defines the image to be drawn.
-   * Same as Image.image.
-   */
-  icon: ScriptUIImage
-
-  /**
-   * The key sequence that invokes the onShortcutKey() callback for this element (in Windows only).
-   */
-  shortcutKey: string
-
-  /**
-   * An event-handler callback function, called when the element acquires the keyboard focus.
-   * Called when the user gives the control the keyboard focus by clicking it or tabbing into it.
-   */
-  onActivate(): void
-
-  /**
-   * An event-handler callback function, called when the element loses the keyboard focus.
-   * Called when the user moves the keyboard focus from the previously active control to another control.
-   */
-  onDeactivate(): void
-
-  /**
-   * An event-handler callback function, called when the window is about to be drawn.
-   * Allows the script to modify or control the appearance, using the control’s associated ScriptUIGraphics object. Handler takes one argument, a DrawState object.
    */
   onDraw(): void
 
@@ -1136,7 +1052,7 @@ declare class ListBox extends _Control {
    * A JavaScript object with two read-only properties whose values are set by the creation parameters:
    * titles: An array of column title strings, whose length matches the number of columns specified at creation.
    * preferredWidths: An array of column widths, whose length matches the number of columns specified at creation.
-   * visible: An array of boolean visible attributes, whose length matches the number of columns specified at creation.This property can be used to show/hide a column. Available in ScriptUI Version 6.0 or later provided ScriptUI.frameworkName == 'Flex'.
+   * visible: An array of boolean visible attributes, whose length matches the number of columns specified at creation.This property can be used to show/hide a column. Avaiblable in ScriptUI Version 6.0 or later provided ScriptUI.frameworkName == 'Flex'.
    */
   readonly columns: object
 
@@ -1149,7 +1065,7 @@ declare class ListBox extends _Control {
    * The width and height in pixels of each item in the list.
    * Used by auto-layout to determine the preferredSize of the list, if not otherwise specified. If not set explicitly, the size of each item is set to match the largest height and width among all items in the list
    */
-  itemSize: Dimension | number[]
+  itemSize: Dimension | [number, number]
 
   /**
    * The array of choice items displayed in the list.
@@ -1262,7 +1178,7 @@ declare class DropDownList extends _Control {
    * The width and height in pixels of each item in the list.
    * Used by auto-layout to determine the preferredSize of the list, if not otherwise specified. If not set explicitly, the size of each item is set to match the largest height and width among all items in the list
    */
-  itemSize: Dimension | number[]
+  itemSize: Dimension | [number, number]
 
   /**
    * The array of choice items displayed in the drop-down or pop-up list.
@@ -1373,7 +1289,7 @@ declare class ListItem {
   /**
    * The parent element, a list control.
    */
-  readonly parent: _Control
+  readonly parent: object
 
   /**
    * The selection state of this item.
@@ -1816,7 +1732,7 @@ declare class TreeView extends _Control {
    * The width and height in pixels of each item in the list.
    * Used by auto-layout to determine the preferredSize of the list, if not otherwise specified. If not set explicitly, the size of each item is set to match the largest height and width among all items in the list
    */
-  itemSize: Dimension | number[]
+  itemSize: Dimension | [number, number]
 
   /**
    * The array of top-level items displayed in the list.
@@ -1968,12 +1884,12 @@ declare class Group extends _Control {
    * Tells the layout manager how unlike-sized children of this container should be aligned within a column or row.
    * Order of creation determines which children are at the top of a column or the left of a row; the earlier a child is created, the closer it is to the top or left of its column or row. If defined, alignment for a child element overrides the alignChildren setting for the parent container. See alignment property for values.
    */
-  alignChildren: string
+  alignChildren: [AlignmentX, AlignmentY]
 
   /**
    * An array of child elements.
    */
-  readonly children: _Control[]
+  readonly children: object[]
 
   /**
    * The graphics object that can be used to customize the element's appearance, in response to the onDraw() event.
@@ -2012,7 +1928,7 @@ declare class Group extends _Control {
    * @param text The text or label, a localizable string. Initial text to be displayed in the control as the title, label, or contents, depending on the control type. If supplied, this value is assigned to the new object’s text property.
    * @param properties An object that contains one or more creation properties of the new child (properties used only when the element is created). The creation properties depend on the element type. See properties property of each control type.
    */
-  add: _AddControl
+  add: _WindowPanelGroupAdd
 
   /**
    * An event-handler callback function, called when the group is about to be drawn.
@@ -2036,7 +1952,7 @@ declare class Panel extends _Control {
   /**
    * Specifies how to align the child elements.
    */
-  alignChildren: string
+  alignChildren: [AlignmentX, AlignmentY]
 
   /**
    * Reserve space for the specified number of characters; affects calculation of preferredSize .
@@ -2046,7 +1962,7 @@ declare class Panel extends _Control {
   /**
    * An array of child elements.
    */
-  readonly children: _Control[]
+  readonly children: object[]
 
   /**
    * The graphics object that can be used to customize the element's appearance, in response to the onDraw() event.
@@ -2096,7 +2012,7 @@ declare class Panel extends _Control {
    * @param text The text or label, a localizable string. Initial text to be displayed in the control as the title, label, or contents, depending on the control type. If supplied, this value is assigned to the new object’s text property.
    * @param properties An object that contains one or more creation properties of the new child (properties used only when the element is created). The creation properties depend on the element type. See properties property of each control type.
    */
-  add: _AddControl
+  add: _WindowPanelGroupAdd
 
   /**
    * An event-handler callback function, called when the panel is about to be drawn.
@@ -2113,48 +2029,11 @@ declare class Panel extends _Control {
 }
 
 /**
- * A container for other types of controls.
- * Differs from a panel element in that is must be a direct child of a tabbedpanel element, the title is shown in the selection tab, and it does not have a script-definable border.
- */
-declare class Tab extends Panel {
-  /**
-   * The parent element.
-   */
-  readonly parent: TabbedPanel
-}
-
-/**
- * A container for selectable tab containers.
- * Differs from a panel element in that it can contain only tab elements as direct children.
- */
-declare class TabbedPanel extends Panel {
-  /**
-   * An array of child elements.
-   */
-  readonly children: Tab[]
-
-  /**
-   * The currently selected tab.
-   * Setting this value causes the specified tab to be enabled in the panel.
-   * You can set the value using the index of an item, rather than an object reference.
-   * If set to an index value that is out of range, the operation is ignored.
-   * When set with an index value, the property still returns an object reference.
-   * When the value of the selection property changes, either by a user selecting a different tab, or by a script setting the property, the TabbedPanel receives an onChange notification.
-   */
-  selection: Tab | number
-
-  /**
-   * An event-handler callback function, called when the selected tab has changed.
-   */
-  onChange(): void
-}
-
-/**
  * Defines the location of a window or UI element. Contains a 2-element array.
  * Specifies the origin point of an element as horizontal and vertical pixel offsets from the origin of the element's coordinate space.
- * A Point object is created when you set an element’s location property. You can set the property using a JavaScript object with properties named x and y, or an array with 2 values in the order [x, y].
+ * A uiPoint object is created when you set an element’s location property. You can set the property using a JavaScript object with properties named x and y, or an array with 2 values in the order [x, y].
  */
-declare class Point {
+declare class uiPoint {
   /**
    * The left coordinate.
    */
@@ -2302,7 +2181,7 @@ declare class UIEvent {
   /**
    * The current phase of event propagation; one of none, target, capture, bubble.
    */
-  readonly eventPhase: number
+  readonly eventPhase: string
 
   /**
    * The event target object for this event.
@@ -2420,7 +2299,7 @@ declare class Event {
   /**
    * The current phase of event propagation; one of none, target, capture, bubble.
    */
-  readonly eventPhase: number
+  readonly eventPhase: string
 
   /**
    * The event target object for this event.
@@ -2510,23 +2389,23 @@ declare class KeyboardState {
 }
 
 /**
- * A Control class.
+ * Added by types-for-adobe
  */
 declare class _Control {
   /**
    * The alignment style for child elements of a container. If defined, this value overrides the alignChildren setting for the parent container.
    * This can be a single string, which indicates the alignment for the orientation specified in the parent container, or an array of two strings, indicating both the horizontal and vertical alignment (in that order). Allowed values depend on the orientation value of the parent container. They are not case sensitive.
-   * For orientation = row: top, bottom, fill
-   * For orientation = column: left, right, fill
-   * For orientation = stack: top, bottom, left, right, fill
+   * For orientation=row:top, bottom, fill
+   * For orientation=column: left, right, fill
+   * For orientation=stack:top, bottom, left, right, fill
    */
-  alignment: string
+  alignment: [AlignmentX, AlignmentY]
 
   /**
    * The boundaries of the element, in parent-relative coordinates.
    * Setting an element's size or location changes its bounds property, and vice-versa.
    */
-  bounds: _Bounds
+  bounds: Bounds | [number, number, number, number]
 
   /**
    * True if this element is enabled.
@@ -2549,35 +2428,35 @@ declare class _Control {
    * The upper left corner of this element relative to its parent.
    * The location is defined as [bounds.x, bounds.y]. Setting an element's location changes its bounds property, and vice-versa.
    */
-  location: Point | number[]
+  location: uiPoint | [number, number]
 
   /**
    * The maximum height and width to which the element can be resized.
    */
-  maximumSize: Dimension | number[]
+  maximumSize: Dimension | [number, number]
 
   /**
    * The minimum height and width to which the element can be resized.
    */
-  minimumSize: Dimension | number[]
+  minimumSize: Dimension | [number, number]
 
   /**
    * The parent element.
    */
-  readonly parent: _Control
+  readonly parent: object
 
   /**
    * The preferred size, used by layout managers to determine the best size for each element.
    * If not explicitly set by a script, value is established by the UI framework in which ScriptUI is employed, and is based on such attributes of the element as its text, font, font size, icon size, and other UI framework-specific attributes. A script can explicitly set this value before the layout manager is invoked in order to establish an element size other than the default.
    * To set a specific value for only one dimension, specify the other dimension as -1.
    */
-  preferredSize: Dimension | number[]
+  preferredSize: Dimension | [number, number]
 
   /**
    * The current dimensions of this element.
    * Initially undefined, and unless explicitly set by a script, it is defined by a LayoutManager . A script can explicitly set size before the layout manager is invoked to establish an element size other than the preferredSize or the default size, but this is not recommended. Defined as [bounds.width, bounds.height]. Setting an element's size changes its bounds property, and vice-versa.
    */
-  size: Dimension | number[]
+  size: Dimension | [number, number]
 
   /**
    * The element type.
@@ -2598,10 +2477,10 @@ declare class _Control {
   /**
    * The bounds of this element relative to the top-level parent window.
    */
-  readonly windowBounds: _Bounds
+  readonly windowBounds: Bounds | [number, number, number, number]
 
   /**
-   * Registers an event handler for a particular type of event occurring in this element.
+   * Registers an event handler for a particular type of event occuring in this element.
    * @param eventName The name of the event. Event names are listed in the JavaScript Tools Guide.
    * @param handler The function that handles the event. This can be the name of a function defined in the extension, or a locally defined handler function to be executed when the event occurs. A handler function takes one argument, the UIEvent object.
    * @param capturePhase When true, the handler is called only in the capturing phase of the event propagation. Default is false, meaning that the handler is called in the bubbling phase if this object is an ancestor of the target, or in the at-target phase if this object is itself the target.
@@ -2620,7 +2499,7 @@ declare class _Control {
   hide(): void
 
   /**
-   * Unregisters an event handler for a particular type of event occurring in this element.
+   * Unregisters an event handler for a particular type of event occuring in this element.
    * All arguments must be identical to those that were used to register the event handler.
    * @param eventName The name of the event.
    * @param handler The function that handles the event.
@@ -2637,283 +2516,305 @@ declare class _Control {
 }
 
 /**
- * Creation properties.
- * @param name A unique name for the control.
+ * Creation properties map
+ * An object that contains one or more creation properties of the element (properties used only when the element is created).
  */
-interface _AddControlProperties {
-  name?: string
-}
-
-/**
- * Creation properties of a DropDownList.
- * @param name A unique name for the control.
- * @param items An array of strings for the text of each list item. An item object is created for each item. An item with the text string "-" creates a separator item. Supply this property, or the items argument to the add() method, not both. This form is most useful for elements defined using Resource Specifications.
- */
-interface _AddControlPropertiesDropDownList {
-  name?: string
-  items?: string[]
-}
-
-/**
- * Creation properties of an EditText.
- * @param name A unique name for the control.
- * @param multiline When false (the default), the control displays a single line of text. When true, the control displays multiple lines, in which case the text wraps within the width of the control.
- * @param borderless When true, the control is drawn with no border. Default is false.
- * @param scrollable For multiline elements only. When true (the default), the text field has a vertical scrollbar that is enabled when the element contains more text than fits in the visible area. When false, no vertical scrollbar appears; if the element contains more text than fits in the visible area, the arrow keys can be used to scroll the text up and down.
- * @param readonly When false (the default), the control accepts text input. When true, the control does not accept input but only displays the contents of the text property.
- * @param noecho When false (the default), the control displays input text. When true, the control does not display input text (used for password input fields).
- * @param enterKeySignalsOnChange When false (the default), the control signals an onChange event when the editable text is changed and the control loses the keyboard focus (that is, the user tabs to another control, clicks outside the control, or types Enter). When true, the control only signals an onChange() event when the editable text is changed and the user types Enter; other changes to the keyboard focus do not signal the event.
- * @param wantReturn Only applies to multiple line edit controls in ScriptUI Version 6.0 or later. When true the RETURN/ENTER keystroke is considered as text-input advancing the cursor to the next line. The default value is false.
- */
-interface _AddControlPropertiesEditText {
-  name?: string
-  multiline?: boolean
-  borderless?: boolean
-  scrollable?: boolean
-  readonly?: boolean
-  noecho?: boolean
-  enterKeySignalsOnChange?: boolean
-  wantReturn?: boolean
-}
-
-/**
- * Creation properties of an IconButton.
- * @param name A unique name for the control.
- * @param style A string for the visual style, either "button", which has a visible border with a raised or 3D appearance, or "toolbutton", which has a flat appearance, appropriate for inclusion in a toolbar.
- * @param toggle For a button-style control, a value of true causes it to get a button-pressed appearance the first time it is clicked, and alternate with the unpressed appearance each time it is clicked. The toggle state is reflected in the control’s value property.
- */
-interface _AddControlPropertiesIconButton {
-  name?: string
-  style?: "button" | "toolbutton"
-  toggle?: boolean
-}
-
-/**
- * Creation properties of a ListBox.
- * @param name A unique name for the control.
- * @param multiselect When false (the default), only one item can be selected. When true, multiple items can be selected.
- * @param selected When true, multiple items can be selected.
- * @param items An array of strings for the text of each list item. An item object is created for each item. An item with the text string "-" creates a separator item. Supply this property, or the items argument to the add() method, not both. This form is most useful for elements defined using Resource Specifications.
- * @param numberOfColumns A number of columns in which to display the items; default is 1. When there are multiple columns, each ListItem object represents a selectable row. Its text and image values specify the label in the first column, and the subitems property specifies the labels in the additional columns.
- * @param showHeaders True to display column titles.
- * @param columnWidths An array of numbers for the preferred width in pixels of each column.
- * @param columnTitles A corresponding array of strings for the title of each column, to be shown if showHeaders is true.
- */
-interface _AddControlPropertiesListBox {
-  name?: string
-  multiselect?: boolean
-  selected?: boolean
-  items?: string[]
-  numberOfColumns?: number
-  showHeaders?: boolean
-  columnWidths?: number[]
-  columnTitles?: string[]
-}
-
-/**
- * Creation properties of a Panel.
- * @param name A unique name for the control.
- * @param borderStyle A string that specifies the appearance of the border drawn around the panel. One of black, etched, gray, raised, sunken. Default is etched.
- * @param su1PanelCoordinates Photoshop only. When true, this panel automatically adjusts the positions of its children for compatibility with Photoshop CS. Default is false, meaning that the panel does not adjust the positions of its children, even if the parent window has automatic adjustment enabled.
- */
-interface _AddControlPropertiesPanel {
-  name?: string
-  borderStyle?: string
-  su1PanelCoordinates?: boolean
-}
-
-/**
- * Creation properties of a StaticText.
- * @param name A unique name for the control.
- * @param multiline When false (the default), the control displays a single line of text. When true, the control displays multiple lines, in which case the text wraps within the width of the control.
- * @param scrolling When false (the default), the displayed text cannot be scrolled. When true, the displayed text can be vertically scrolled using the Up Arrow and Down Arrow; this case implies multiline=true.
- * @param truncate If middle or end, defines where to remove characters from the text and replace them with an ellipsis if the specified title does not fit within the space reserved for it. If none, and the text does not fit, characters are removed from the end, without any replacement ellipsis character.
- */
-interface _AddControlPropertiesStaticText {
-  name?: string
-  multiline?: boolean
-  scrolling?: boolean
-  truncate?: string
-}
-
-/**
- * Creation properties of a TreeView.
- * @param name A unique name for the control.
- * @param items An array of strings for the text of each top-level list item. An item object is created for each item. An item with the text string "-" creates a separator item. Supply this property, or the items argument to the add() method, not both. This form is most useful for elements defined using Resource Specifications.
- */
-interface _AddControlPropertiesTreeView {
-  name?: string
-  items?: string[]
-}
-
-/**
- * Creation properties of a Window.
- * @param resizeable When true, the window can be resized by the user. Default is false.
- * @param su1PanelCoordinates Photoshop only. When true, the child panels of this window automatically adjust the positions of their children for compatibility with Photoshop CS (in which the vertical coordinate was measured from outside the frame). Default is false. Individual panels can override the parent window’s setting.
- * @param closeButton Bridge only. When true, the title bar includes a button to close the window, if the platform and window type allow it. When false, it does not. Default is true. Not used for dialogs.
- * @param maximizeButton Bridge only. When true, the title bar includes a button to expand the window to its maximum size (typically, the entire screen), if the platform and window type allow it. When false, it does not. Default is false for type palette, true for type window. Not used for dialogs.
- * @param minimizeButton Bridge only. When true, the title bar includes a button to minimize or iconify the window, if the platform and window type allow it. When false, it does not. Default is false for type palette, true for type window. Main windows cannot have a minimize button in Mac OS. Not used for dialogs.
- * @param independent When true, a window of type window is independent of other application windows, and can be hidden behind them in Windows. In Mac OS, has no effect. Default is false.
- * @param borderless When true, the window has no title bar or borders. Properties that control those features are ignored.
- */
-interface _AddControlPropertiesWindow {
-  resizeable?: boolean
-  su1PanelCoordinates?: boolean
-  closeButton?: boolean
-  maximizeButton?: boolean
-  minimizeButton?: boolean
-  independent?: boolean
-  borderless?: boolean
-}
-
-interface _AddControl {
+interface _ControlPropertiesMap {
   /**
-   * Creation of a Button.
-   * The third argument can be the initial text value.
-   * Special name "ok" makes the button primary for parent dialog, and the special name "cancel" makes the button default cancel button for parent dialog.
+   * Creation properties of a Button
+   * But the third argument to the add() method that creates it can be the initial text value.
+   * @param name A unique name for the control. Special name "ok" makes the button primary for parent dialog, and the special name "cancel" makes the button default cancel button for parent dialog.
    */
-  (type: "button", bounds?: _Bounds, text?: string, properties?: _AddControlProperties): Button
+  button: {
+    name: string
+  }
 
   /**
-   * Creation of a CheckBox.
-   * The third argument is the text to be displayed.
+   * Creation properties of a CheckBox
+   * The third argument to the add() method that creates it is the text to be displayed.
+   * @param name A unique name for the control.
    */
-  (type: "checkbox", bounds?: _Bounds, text?: string, properties?: _AddControlProperties): Checkbox
+  checkbox: {
+    name: string
+  }
 
   /**
+   * Creation properties of a DropDownList
+   * @param name A unique name for the control.
+   * @param items An array of strings for the text of each list item. An item object is created for each item. An item with the text string "-" creates a separator item. Supply this property, or the items argument to the add() method, not both. This form is most useful for elements defined using Resource Specifications.
    */
+  dropdownlist: {
+    name: string
+    items: string[]
+  }
+
+  /**
+   * Creation properties of an EditText
+   * @param name A unique name for the control.
+   * @param multiline When false (the default), the control displays a single line of text. When true, the control displays multiple lines, in which case the text wraps within the width of the control.
+   * @param borderless When true, the control is drawn with no border. Default is false.
+   * @param scrollable For multiline elements only. When true (the default), the text field has a vertical scrollbar that is enabled when the element contains more text than fits in the visible area. When false, no vertical scrollbar appears; if the element contains more text than fits in the visible area, the arrow keys can be used to scroll the text up and down.
+   * @param readonly When false (the default), the control accepts text input. When true, the control does not accept input but only displays the contents of the text property.
+   * @param noecho When false (the default), the control displays input text. When true, the control does not display input text (used for password input fields).
+   * @param enterKeySignalsOnChange When false (the default), the control signals an onChange event when the editable text is changed and the control loses the keyboard focus (that is, the user tabs to another control, clicks outside the control, or types Enter). When true, the control only signals an onChange() event when the editable text is changed and the user types Enter; other changes to the keyboard focus do not signal the event.
+   * @param wantReturn Only applies to multiple line edit controls in ScriptUI Version 6.0 or later. When true the RETURN/ENTER keystroke is considered as text-input advancing the cursor to the next line. The default value is false.
+   */
+  edittext: {
+    name: string
+    multiline: boolean
+    borderless: boolean
+    scrollable: boolean
+    readonly: boolean
+    noecho: boolean
+    enterKeySignalsOnChange: boolean
+    wantReturn: boolean
+  }
+
+  /**
+   * Creation properties of a FlashPlayer
+   * @param name A unique name for the control.
+   */
+  flashplayer: {
+    name: string
+  }
+
+  /**
+   * Creation properties of a Group
+   * @param name A unique name for the control.
+   */
+  group: {
+    name: string
+  }
+
+  /**
+   * Creation properties of an IconButton
+   * @param name A unique name for the control.
+   * @param style A string for the visual style, either "button", which has a visible border with a raised or 3D appearance, or "toolbutton", which has a flat appearance, appropriate for inclusion in a toolbar.
+   * @param toggle For a button-style control, a value of true causes it to get a button-pressed appearance the first time it is clicked, and alternate with the unpressed appearance each time it is clicked. The toggle state is reflected in the control’s value property.
+   */
+  iconbutton: {
+    name: string
+    style: "button" | "toolbutton"
+    toggle: boolean
+  }
+
+  /**
+   * Creation properties of a ListBox
+   * @param name A unique name for the control.
+   * @param multiselect When false (the default), only one item can be selected. When true, multiple items can be selected.
+   * @param selected When true, multiple items can be selected.
+   * @param items An array of strings for the text of each list item. An item object is created for each item. An item with the text string "-" creates a separator item. Supply this property, or the items argument to the add() method, not both. This form is most useful for elements defined using Resource Specifications.
+   * @param numberOfColumns A number of columns in which to display the items; default is 1. When there are multiple columns, each ListItem object represents a selectable row. Its text and image values specify the label in the first column, and the subitems property specifies the labels in the additional columns.
+   * @param showHeaders True to display column titles.
+   * @param columnWidths An array of numbers for the preferred width in pixels of each column.
+   * @param columnTitles A corresponding array of strings for the title of each column, to be shown if showHeaders is true.
+   */
+  listbox: {
+    name: string
+    multiselect: boolean
+    selected: boolean
+    items: string[]
+    numberOfColumns: number
+    showHeaders: boolean
+    columnWidths: number[]
+    columnTitles: string[]
+  }
+
+  /**
+   * Creation properties of a Panel
+   * @param name A unique name for the control.
+   * @param borderStyle A string that specifies the appearance of the border drawn around the panel. One of black, etched, gray, raised, sunken. Default is etched.
+   * @param su1PanelCoordinates Photoshop only. When true, this panel automatically adjusts the positions of its children for compatability with Photoshop CS. Default is false, meaning that the panel does not adjust the positions of its children, even if the parent window has automatic adjustment enabled.
+   */
+  panel: {
+    name: string
+    borderStyle: string
+    su1PanelCoordinates: boolean
+  }
+
+  /**
+   * Creation properties of a ProgressBar
+   * The third argument of the add() method that creates it is the initial value (default 0), and the fourth argument is the maximum value of the range (default 100).
+   * @param name A unique name for the control.
+   */
+  progressbar: {
+    name: string
+  }
+
+  /**
+   * Creation properties of a RadioButton
+   * The third argument of the add() method that creates can be the label text.
+   * @param name A unique name for the control.
+   */
+  radiobutton: {
+    name: string
+  }
+
+  /**
+   * Creation properties of a Scrollbar
+   * The third argument of the add() method that creates it is the initial value, and the fourth and fifth arguments are the minimum and maximum values of the range.
+   * @param name A unique name for the control.
+   */
+  scrollbar: {
+    name: string
+  }
+
+  /**
+   * Creation properties of a Slider
+   * The third argument of the add() method that creates it is the initial value, and the fourth and fifth arguments are the minimum and maximum values of the range.
+   * @param name A unique name for the control.
+   */
+  slider: {
+    name: string
+  }
+
+  /**
+   * Creation properties of a StaticText
+   * @param name A unique name for the control.
+   * @param multiline When false (the default), the control displays a single line of text. When true, the control displays multiple lines, in which case the text wraps within the width of the control.
+   * @param scrolling When false (the default), the displayed text cannot be scrolled. When true, the displayed text can be vertically scrolled using the Up Arrow and Down Arrow; this case implies multiline=true.
+   * @param truncate If middle or end, defines where to remove characters from the text and replace them with an ellipsis if the specified title does not fit within the space reserved for it. If none, and the text does not fit, characters are removed from the end, without any replacement ellipsis character.
+   */
+  statictext: {
+    name: string
+    multiline: boolean
+    scrolling: boolean
+    truncate: string
+  }
+
+  /**
+   * Creation properties of a TreeView
+   * @param name A unique name for the control.
+   * @param items An array of strings for the text of each top-level list item. An item object is created for each item. An item with the text string "-" creates a separator item. Supply this property, or the items argument to the add() method, not both. This form is most useful for elements defined using Resource Specifications.
+   */
+  treeview: {
+    name: string
+    items: string[]
+  }
+
+  /**
+   * Creation properties of a Window
+   * @param resizeable When true, the window can be resized by the user. Default is false.
+   * @param su1PanelCoordinates Photoshop only. When true, the child panels of this window automatically adjust the positions of their children for compatability with Photoshop CS (in which the vertical coordinate was measured from outside the frame). Default is false. Individual panels can override the parent window’s setting.
+   * @param closeButton Bridge only. When true, the title bar includes a button to close the window, if the platform and window type allow it. When false, it does not. Default is true. Not used for dialogs.
+   * @param maximizeButton Bridge only. When true, the title bar includes a button to expand the window to its maximum size (typically, the entire screen), if the platform and window type allow it. When false, it does not. Default is false for type palette, true for type window. Not used for dialogs.
+   * @param minimizeButton Bridge only. When true, the title bar includes a button to minimize or iconify the window, if the platform and window type allow it. When false, it does not. Default is false for type palette, true for type window. Main windows cannot have a minimize button in Mac OS. Not used for dialogs.
+   * @param independent When true, a window of type window is independent of other application windows, and can be hidden behind them in Windows. In Mac OS, has no effect. Default is false.
+   * @param borderless When true, the window has no title bar or borders. Properties that control those features are ignored.
+   */
+  window: {
+    resizeable: boolean
+    su1PanelCoordinates: boolean
+    closeButton: boolean
+    maximizeButton: boolean
+    minimizeButton: boolean
+    independent: boolean
+    borderless: boolean
+  }
+
+  /**
+   * A ListItem object has no creation properties.
+   */
+  listitem: {}
+}
+
+interface _WindowPanelGroupAdd {
+  (
+    type: "button",
+    bounds?: Bounds | [number, number, number, number],
+    text?: string,
+    properties?: Partial<_ControlPropertiesMap["button"]>,
+  ): Button
+  (
+    type: "checkbox",
+    bounds?: Bounds | [number, number, number, number],
+    text?: string,
+    properties?: Partial<_ControlPropertiesMap["checkbox"]>,
+  ): Checkbox
   (
     type: "dropdownlist",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     items?: string[],
-    properties?: _AddControlPropertiesDropDownList,
+    properties?: Partial<_ControlPropertiesMap["dropdownlist"]>,
   ): DropDownList
-
-  /**
-   */
   (
     type: "edittext",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     text?: string,
-    properties?: _AddControlPropertiesEditText,
+    properties?: Partial<_ControlPropertiesMap["edittext"]>,
   ): EditText
-
-  /**
-   */
   (
     type: "flashplayer",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     movieToLoad?: string | File,
-    properties?: _AddControlProperties,
+    properties?: Partial<_ControlPropertiesMap["flashplayer"]>,
   ): FlashPlayer
-
-  /**
-   */
-  (type: "group", bounds?: _Bounds, properties?: _AddControlProperties): Group
-
-  /**
-   */
+  (
+    type: "group",
+    bounds?: Bounds | [number, number, number, number],
+    properties?: Partial<_ControlPropertiesMap["group"]>,
+  ): Group
   (
     type: "iconbutton",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     icon?: string | File,
-    properties?: _AddControlPropertiesIconButton,
+    properties?: Partial<_ControlPropertiesMap["iconbutton"]>,
   ): IconButton
-
-  /**
-   */
-  (type: "image", bounds?: _Bounds, icon?: string | File, properties?: _AddControlProperties): Image
-
-  /**
-   */
   (
     type: "listbox",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     items?: string[],
-    properties?: _AddControlPropertiesListBox,
+    properties?: Partial<_ControlPropertiesMap["listbox"]>,
   ): ListBox
-
-  /**
-   */
-  (type: "panel", bounds?: _Bounds, text?: string, properties?: _AddControlPropertiesPanel): Panel
-
-  /**
-   * Creation of a ProgressBar.
-   * The third argument is the initial value (default 0), and the fourth argument is the maximum value of the range (default 100).
-   */
+  (
+    type: "panel",
+    bounds?: Bounds | [number, number, number, number],
+    text?: string,
+    properties?: Partial<_ControlPropertiesMap["panel"]>,
+  ): Panel
   (
     type: "progressbar",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     value?: number,
     max?: number,
-    properties?: _AddControlProperties,
+    properties?: Partial<_ControlPropertiesMap["progressbar"]>,
   ): Progressbar
-
-  /**
-   * Creation of a RadioButton.
-   * The third argument can be the label text.
-   */
   (
     type: "radiobutton",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     text?: string,
-    properties?: _AddControlProperties,
+    properties?: Partial<_ControlPropertiesMap["radiobutton"]>,
   ): RadioButton
-
-  /**
-   * Creation of a Scrollbar.
-   * The third argument is the initial value, and the fourth and fifth arguments are the minimum and maximum values of the range.
-   */
   (
     type: "scrollbar",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     value?: number,
     min?: number,
     max?: number,
-    properties?: _AddControlProperties,
+    properties?: Partial<_ControlPropertiesMap["scrollbar"]>,
   ): Scrollbar
-
-  /**
-   * Creation of a Slider.
-   * The third argument is the initial value, and the fourth and fifth arguments are the minimum and maximum values of the range.
-   */
   (
     type: "slider",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     value?: number,
     min?: number,
     max?: number,
-    properties?: _AddControlProperties,
+    properties?: Partial<_ControlPropertiesMap["slider"]>,
   ): Slider
-
-  /**
-   */
   (
     type: "statictext",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     text?: string,
-    properties?: _AddControlPropertiesStaticText,
+    properties?: Partial<_ControlPropertiesMap["statictext"]>,
   ): StaticText
-
-  /**
-   */
-  (type: "tab", bounds: _Bounds, text?: string[], properties?: _AddControlProperties): Tab
-
-  /**
-   */
-  (
-    type: "tabbedpanel",
-    bounds?: _Bounds,
-    text?: string,
-    properties?: _AddControlProperties,
-  ): TabbedPanel
-
-  /**
-   */
   (
     type: "treeview",
-    bounds?: _Bounds,
+    bounds?: Bounds | [number, number, number, number],
     items?: string[],
-    properties?: _AddControlPropertiesTreeView,
+    properties?: Partial<_ControlPropertiesMap["treeview"]>,
   ): TreeView
 }
+
+type AlignmentX = 'LEFT' | 'RIGHT' | 'FILL' | 'CENTER';
+type AlignmentY = 'TOP' | 'BOTTOM' | 'FILL' | 'CENTER';
+type Alignment = AlignmentX | AlignmentY;

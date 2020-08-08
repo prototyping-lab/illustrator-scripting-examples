@@ -2,6 +2,11 @@
 /// <reference path="../../shared/ScriptUI.d.ts" />
 
 /**
+ * Illustrator CC 2019
+ * ver.0.0.2
+ */
+
+/**
  * The screen mode.
  */
 declare enum ScreenMode {
@@ -649,6 +654,76 @@ declare enum DocumentType {
    * Acrobat PDF file format.
    */
   PDF = 3,
+}
+
+/**
+ * Export for screens scale type.
+ */
+declare enum ExportForScreensScaleType {
+  /**
+   * Scale artwork by factors like 1x, 2x, 3x and so on, where 1x means 72 ppi.
+   */
+  SCALEBYFACTOR = 0,
+
+  /**
+   * Scale artwork by specifying artwork height in pixels like 100px, 124px etc. Width of the artwork is adjusted automatically to maintain the aspect ratio.
+   */
+  SCALEBYHEIGHT = 2,
+
+  /**
+   * Scale artwork by specifying resolution in ppi like 72 ppi, 100 ppi, 144 ppi etc.
+   */
+  SCALEBYRESOLUTION = 3,
+
+  /**
+   * Scale artwork by specifying artwork width in pixels like 100px, 124px etc. Height of the artwork is adjusted automatically to maintain the aspect ratio.
+   */
+  SCALEBYWIDTH = 1,
+}
+
+/**
+ * Export for screens type.
+ */
+declare enum ExportForScreensType {
+  /**
+   * Export file in JPEG (100% quality) format.
+   */
+  SE_JPEG100 = 1,
+
+  /**
+   * Export file in JPEG (20% quality) format.
+   */
+  SE_JPEG20 = 4,
+
+  /**
+   * Export file in JPEG (50% quality) format.
+   */
+  SE_JPEG50 = 3,
+
+  /**
+   * Export file in JPEG (80% quality) format.
+   */
+  SE_JPEG80 = 2,
+
+  /**
+   * Export file in Acrobat PDF format.
+   */
+  SE_PDF = 8,
+
+  /**
+   * Export file in PNG 24-bit format.
+   */
+  SE_PNG24 = 7,
+
+  /**
+   * Export file in PNG 8-bit format.
+   */
+  SE_PNG8 = 6,
+
+  /**
+   * Export file in SVG format.
+   */
+  SE_SVG = 5,
 }
 
 /**
@@ -3197,6 +3272,166 @@ declare enum WariChuJustificationType {
 }
 
 /**
+ * The kashida type constants.
+ */
+declare enum KashidasType {
+  /**
+   *
+   */
+  DEFAULT_KASHIDAS = 0,
+
+  /**
+   *
+   */
+  KASHIDAS_OFF = 1,
+
+  /**
+   *
+   */
+  KASHIDAS_ON = 0,
+}
+
+/**
+ * Direction override type constants.
+ */
+declare enum DirOverrideType {
+  /**
+   *
+   */
+  DEFAULT_DIRECTION = 0,
+
+  /**
+   *
+   */
+  LEFT_TO_RIGHT_DIRECTION = 1,
+
+  /**
+   *
+   */
+  RIGHT_TO_LEFT_DIRECTION = 2,
+}
+
+/**
+ * Digit set type constants.
+ */
+declare enum DigitSetType {
+  /**
+   *
+   */
+  ARABIC_DIGITS = 1,
+
+  /**
+   *
+   */
+  DEFAULT_DIGITS = 0,
+
+  /**
+   *
+   */
+  FARSI_DIGITS = 3,
+
+  /**
+   *
+   */
+  HINDI_DIGITS = 2,
+}
+
+/**
+ * Diacritic vertical position type constants.
+ */
+declare enum DiacVPosType {
+  /**
+   *
+   */
+  DEFAULT_POSITION = 0,
+
+  /**
+   *
+   */
+  LOOSE_POSITION = 1,
+
+  /**
+   *
+   */
+  MEDIUM_POSITION = 2,
+
+  /**
+   *
+   */
+  OPENTYPE_POSITION = 4,
+
+  /**
+   *
+   */
+  TIGHT_POSITION = 3,
+}
+
+/**
+ * The kashida width type constants.
+ */
+declare enum KashidaWidthType {
+  /**
+   *
+   */
+  kashidaLong = 3,
+
+  /**
+   *
+   */
+  kashidaMedium = 2,
+
+  /**
+   *
+   */
+  kashidaNone = 0,
+
+  /**
+   *
+   */
+  kashidaSmall = 1,
+
+  /**
+   *
+   */
+  kashidaStylistic = 4,
+}
+
+/**
+ * The composer type constants.
+ */
+declare enum ComposerEngineType {
+  /**
+   *
+   */
+  adornment = 2,
+
+  /**
+   *
+   */
+  latinCJKComposer = 0,
+
+  /**
+   *
+   */
+  optycaComposer = 1,
+}
+
+/**
+ * The composer type constants.
+ */
+declare enum ParagraphDirectionType {
+  /**
+   *
+   */
+  LEFT_TO_RIGHT_DIRECTION = 0,
+
+  /**
+   *
+   */
+  RIGHT_TO_LEFT_DIRECTION = 1,
+}
+
+/**
  * The Burasagari type.
  */
 declare enum BurasagariTypeEnum {
@@ -3667,29 +3902,110 @@ declare enum DocumentLayoutStyle {
 }
 
 /**
- * A collection of artboards.
+ * JPEG Compression Method type.
  */
-declare class Artboards extends Array<Artboard> {
+declare enum JPEGCompressionMethodType {
+  /**
+   * Select Baseline Optimized for optimized color and a slightly smaller file size. Not supported by all web browsers.
+   */
+  BASELINEOPTIMIZED = 1,
+
+  /**
+   * Select Baseline (Standard) to use a format recognized by most web browsers.
+   */
+  BASELINESTANDARD = 0,
+
+  /**
+   * Select Progressive to display a series of increasingly detailed scans (you specify how many in ProgressiveScan) as the image downloads. Not supported by all web browsers.
+   */
+  PROGRESSIVE = 2,
+}
+
+/**
+ * A collection of assets.
+ */
+declare class Assets {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
+
+  /**
+   * Creates an asset from the given art(s)
+   * @param sourceArt The page item(s) to apply to.
+   */
+  add(sourceArt: any): Asset
+
+  /**
+   * Creates an asset from the selected arts.
+   */
+  addFromSelection(): Asset
+
+  /**
+   * Gets the asset with the specified AssetID.
+   * @param assetID The UID of the asset.
+   */
+  getByID(assetID: number): Asset
+
+  /**
+   * Get the first element in the collection with the provided name.
+   */
+  getByName(name: string): Asset
+
+  /**
+   * Gets the first asset with specified name.
+   * @param assetName Name of the asset.
+   */
+  getByName(assetName: string): Asset
+
+  /**
+   * Deletes the asset with specified id.
+   * @param assetID UID of the asset to be deleted.
+   */
+  remove(assetID: number): void
+
+  /**
+   * Deletes all elements.
+   */
+  removeAll(): void
+}
+
+/**
+ * A collection of artboards.
+ */
+declare class Artboards {
+  /**
+   * Number of elements in the collection.
+   */
+  length: number;
+
+  [n: number]: Artboard
+
+  /**
+   * The object's container.
+   */
+  parent: object
+
+  /**
+   * The class name of the object.
+   */
+  typename: string
 
   /**
    * Add artboard object.
    * @param artboardRect Size and position of artboard.
    */
-  add(artboardRect: Rect): Artboard
+  add(artboardRect: [number, number, number, number]): Artboard
 
   /**
    * Retrieves the index position of the active artboard in the document's list.
@@ -3698,7 +4014,6 @@ declare class Artboards extends Array<Artboard> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Artboard
 
@@ -3713,7 +4028,7 @@ declare class Artboards extends Array<Artboard> {
    * @param artboardRect Size and position of artboard.
    * @param index Index position where artboard should be inserted.
    */
-  insert(artboardRect: Rect, index: number): void
+  insert(artboardRect: [number, number, number, number], index: number): void
 
   /**
    * Delete artboard object.
@@ -3736,21 +4051,23 @@ declare class Artboards extends Array<Artboard> {
 /**
  * A collection of documents.
  */
-declare class Documents extends Array<Document> {
+declare class Documents {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Document
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * A document.
@@ -3778,7 +4095,7 @@ declare class Documents extends Array<Document> {
    * @param presetSettings Custom settings to apply to the preset.
    * @param showOptionsDialog If false, do not show Options dialog.
    */
-  static addDocument(
+  addDocument(
     startupPreset: string,
     presetSettings?: DocumentPreset,
     showOptionsDialog?: boolean,
@@ -3789,7 +4106,7 @@ declare class Documents extends Array<Document> {
    * @param startupPreset The name of startup document preset.
    * @param showOptionsDialog Argument controls if options Dialog is shown or not.
    */
-  static addDocumentWithDialogOption(startupPreset: string, showOptionsDialog?: boolean): Document
+  addDocumentWithDialogOption(startupPreset: string, showOptionsDialog?: boolean): Document
 
   /**
    * Arranges the documents in the specified style.
@@ -3799,7 +4116,6 @@ declare class Documents extends Array<Document> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Document
 }
@@ -3807,21 +4123,23 @@ declare class Documents extends Array<Document> {
 /**
  * A collection of layers.
  */
-declare class Layers extends Array<Layer> {
+declare class Layers {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Layer
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a layer.
@@ -3830,7 +4148,6 @@ declare class Layers extends Array<Layer> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Layer
 
@@ -3843,21 +4160,23 @@ declare class Layers extends Array<Layer> {
 /**
  * A collection of group items.
  */
-declare class GroupItems extends Array<GroupItem> {
+declare class GroupItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: GroupItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a group item.
@@ -3868,11 +4187,10 @@ declare class GroupItems extends Array<GroupItem> {
    * Create a group item from a vector graphics file.
    * @param imageFile The vector graphics file to be embedded.
    */
-  static createFromFile(imageFile: File): GroupItem
+  createFromFile(imageFile: File): GroupItem
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): GroupItem
 
@@ -3885,25 +4203,26 @@ declare class GroupItems extends Array<GroupItem> {
 /**
  * A collection of page items.
  */
-declare class PageItems extends Array<PageItem> {
+declare class PageItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: PageItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): PageItem
 }
@@ -3911,21 +4230,23 @@ declare class PageItems extends Array<PageItem> {
 /**
  * A collection of path items.
  */
-declare class PathItems extends Array<PathItem> {
+declare class PathItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: PathItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a path.
@@ -3941,7 +4262,7 @@ declare class PathItems extends Array<PathItem> {
    * @param reversed Is the ellipse path reversed?
    * @param inscribed Is the ellipse path inscribed?
    */
-  static ellipse(
+  ellipse(
     top?: number,
     left?: number,
     width?: number,
@@ -3952,19 +4273,16 @@ declare class PathItems extends Array<PathItem> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): PathItem
 
   /**
    * Used to create a regular polygon path item. Not for path item access.
-   * @param centerX
-   * @param centerY
    * @param radius The radius of the polygon points.
    * @param sides The number of sides on the polygon.
    * @param reversed Is the polygon path reversed?
    */
-  static polygon(
+  polygon(
     centerX?: number,
     centerY?: number,
     radius?: number,
@@ -3980,13 +4298,7 @@ declare class PathItems extends Array<PathItem> {
    * @param height The height of the rectangle.
    * @param reversed Is the rectangle path reversed?
    */
-  static rectangle(
-    top: number,
-    left: number,
-    width: number,
-    height: number,
-    reversed?: boolean,
-  ): PathItem
+  rectangle(top: number, left: number, width: number, height: number, reversed?: boolean): PathItem
 
   /**
    * Deletes all elements.
@@ -3995,15 +4307,11 @@ declare class PathItems extends Array<PathItem> {
 
   /**
    * Used to create a rounded-corner rectangular path item. Not for path item access.
-   * @param top
-   * @param left
-   * @param width
-   * @param height
    * @param horizontalRadius Horizontal corner radius.
    * @param verticalRadius Vertical corner radius.
    * @param reversed Is the rectangle path reversed?
    */
-  static roundedRectangle(
+  roundedRectangle(
     top: number,
     left: number,
     width: number,
@@ -4015,14 +4323,12 @@ declare class PathItems extends Array<PathItem> {
 
   /**
    * Used to create a star-shaped path item. Not for path item access.
-   * @param centerX
-   * @param centerY
    * @param radius The outside radius of the star points.
    * @param innerRadius The inside radius of the star points.
    * @param points The number of points on the star.
    * @param reversed Is the star path reversed?
    */
-  static star(
+  star(
     centerX?: number,
     centerY?: number,
     radius?: number,
@@ -4035,21 +4341,23 @@ declare class PathItems extends Array<PathItem> {
 /**
  * A collection of path points.
  */
-declare class PathPoints extends Array<PathPoint> {
+declare class PathPoints {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: PathPoint
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a path point.
@@ -4058,7 +4366,6 @@ declare class PathPoints extends Array<PathPoint> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): PathPoint
 
@@ -4071,21 +4378,23 @@ declare class PathPoints extends Array<PathPoint> {
 /**
  * A collection of compound path items.
  */
-declare class CompoundPathItems extends Array<CompoundPathItem> {
+declare class CompoundPathItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: CompoundPathItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a compound path item.
@@ -4094,7 +4403,6 @@ declare class CompoundPathItems extends Array<CompoundPathItem> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): CompoundPathItem
 
@@ -4107,25 +4415,26 @@ declare class CompoundPathItems extends Array<CompoundPathItem> {
 /**
  * A collection of stories.
  */
-declare class Stories extends Array<Story> {
+declare class Stories {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Story
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Story
 }
@@ -4133,26 +4442,28 @@ declare class Stories extends Array<Story> {
 /**
  * A collection of text frame items.
  */
-declare class TextFrameItems extends Array<TextFrame> {
+declare class TextFrameItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: TextFrameItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a point text frame item.
    */
-  add(): TextFrame
+  add(): TextFrameItem
 
   /**
    * Create an area text frame item.
@@ -4161,18 +4472,17 @@ declare class TextFrameItems extends Array<TextFrame> {
    * @param baseFrame The base text frame if it has one.
    * @param postFix Whether to postfix/prefix the new text frame to the specified base text frame.
    */
-  static areaText(
+  areaText(
     textPath: PathItem,
     orientation?: TextOrientation,
-    baseFrame?: TextFrame,
+    baseFrame?: TextFrameItem,
     postFix?: boolean,
-  ): TextFrame
+  ): TextFrameItem
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
-  getByName(name: string): TextFrame
+  getByName(name: string): TextFrameItem
 
   /**
    * Create an on-path text frame item.
@@ -4183,21 +4493,21 @@ declare class TextFrameItems extends Array<TextFrame> {
    * @param baseFrame The base text frame if it has one.
    * @param postFix Whether to postfix/prefix the new text frame to the specified base text frame.
    */
-  static pathText(
+  pathText(
     textPath: PathItem,
     startTValue?: number,
     endTValue?: number,
     orientation?: TextOrientation,
-    baseFrame?: TextFrame,
+    baseFrame?: TextFrameItem,
     postFix?: boolean,
-  ): TextFrame
+  ): TextFrameItem
 
   /**
    * Create a point text frame item.
    * @param anchor The position (coordinates) of the anchor point.
    * @param orientation The orientation of the text.
    */
-  static pointText(anchor: Point | number[], orientation?: TextOrientation): TextFrame
+  pointText(anchor: Point, orientation?: TextOrientation): TextFrameItem
 
   /**
    * Deletes all elements.
@@ -4208,21 +4518,23 @@ declare class TextFrameItems extends Array<TextFrame> {
 /**
  * A collection of legacy text items.
  */
-declare class LegacyTextItems extends Array<LegacyTextItem> {
+declare class LegacyTextItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: LegacyTextItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create text frames from all legacy text items. The original legacy text items will be deleted.
@@ -4231,7 +4543,6 @@ declare class LegacyTextItems extends Array<LegacyTextItem> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): LegacyTextItem
 }
@@ -4239,25 +4550,26 @@ declare class LegacyTextItems extends Array<LegacyTextItem> {
 /**
  * A collection of text range items.
  */
-declare class TextRanges extends Array<TextRange> {
+declare class TextRanges {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: TextRange
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): TextRange
 }
@@ -4265,25 +4577,26 @@ declare class TextRanges extends Array<TextRange> {
 /**
  * A collection of insertion points.
  */
-declare class InsertionPoints extends Array<InsertionPoint> {
+declare class InsertionPoints {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: InsertionPoint
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): InsertionPoint
 }
@@ -4291,21 +4604,23 @@ declare class InsertionPoints extends Array<InsertionPoint> {
 /**
  * A collection of characters.
  */
-declare class Characters extends Array<TextRange> {
+declare class Characters {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: TextRange
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a character.
@@ -4317,11 +4632,10 @@ declare class Characters extends Array<TextRange> {
    *
    * @param contents The text string.
    */
-  static addBefore(contents: string): TextRange
+  addBefore(contents: string): TextRange
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): TextRange
 
@@ -4334,21 +4648,23 @@ declare class Characters extends Array<TextRange> {
 /**
  * A collection of words.
  */
-declare class Words extends Array<TextRange> {
+declare class Words {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: TextRange
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a word.
@@ -4360,11 +4676,10 @@ declare class Words extends Array<TextRange> {
    *
    * @param contents The text string.
    */
-  static addBefore(contents: string): TextRange
+  addBefore(contents: string): TextRange
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): TextRange
 
@@ -4377,25 +4692,26 @@ declare class Words extends Array<TextRange> {
 /**
  * A collection of lines.
  */
-declare class Lines extends Array<TextRange> {
+declare class Lines {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: PathItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): TextRange
 }
@@ -4403,21 +4719,23 @@ declare class Lines extends Array<TextRange> {
 /**
  * A collection of Paragraphs.
  */
-declare class Paragraphs extends Array<TextRange> {
+declare class Paragraphs {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: TextRange
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a text art item.
@@ -4429,11 +4747,10 @@ declare class Paragraphs extends Array<TextRange> {
    *
    * @param contents The text string.
    */
-  static addBefore(contents: string): TextRange
+  addBefore(contents: string): TextRange
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): TextRange
 
@@ -4446,21 +4763,23 @@ declare class Paragraphs extends Array<TextRange> {
 /**
  * A collection of character styles.
  */
-declare class CharacterStyles extends Array<CharacterStyle> {
+declare class CharacterStyles {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: CharacterStyle
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a named character style.
@@ -4470,7 +4789,6 @@ declare class CharacterStyles extends Array<CharacterStyle> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): CharacterStyle
 
@@ -4483,21 +4801,23 @@ declare class CharacterStyles extends Array<CharacterStyle> {
 /**
  * A collection of paragraph styles.
  */
-declare class ParagraphStyles extends Array<ParagraphStyle> {
+declare class ParagraphStyles {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: ParagraphStyle
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a named paragraph style.
@@ -4507,7 +4827,6 @@ declare class ParagraphStyles extends Array<ParagraphStyle> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): ParagraphStyle
 
@@ -4520,21 +4839,23 @@ declare class ParagraphStyles extends Array<ParagraphStyle> {
 /**
  * A collection of custom spot colors.
  */
-declare class Spots extends Array<Spot> {
+declare class Spots {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Spot
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a spot color.
@@ -4543,7 +4864,6 @@ declare class Spots extends Array<Spot> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Spot
 
@@ -4556,21 +4876,23 @@ declare class Spots extends Array<Spot> {
 /**
  * A collection of swatches.
  */
-declare class Swatches extends Array<Swatch> {
+declare class Swatches {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Swatch
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a swatch.
@@ -4579,7 +4901,6 @@ declare class Swatches extends Array<Swatch> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Swatch
 
@@ -4598,21 +4919,23 @@ declare class Swatches extends Array<Swatch> {
 /**
  * A collection of Swatch groups.
  */
-declare class SwatchGroups extends Array<SwatchGroup> {
+declare class SwatchGroups {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: SwatchGroup
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a Swatch group.
@@ -4621,7 +4944,6 @@ declare class SwatchGroups extends Array<SwatchGroup> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): SwatchGroup
 
@@ -4639,21 +4961,23 @@ declare class SwatchGroups extends Array<SwatchGroup> {
 /**
  * A collection of gradients.
  */
-declare class Gradients extends Array<Gradient> {
+declare class Gradients {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Gradient
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a gradient.
@@ -4662,7 +4986,6 @@ declare class Gradients extends Array<Gradient> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Gradient
 
@@ -4675,21 +4998,23 @@ declare class Gradients extends Array<Gradient> {
 /**
  * A collection of gradient stops.
  */
-declare class GradientStops extends Array<GradientStop> {
+declare class GradientStops {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: GradientStop
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a gradient stop.
@@ -4698,7 +5023,6 @@ declare class GradientStops extends Array<GradientStop> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): GradientStop
 
@@ -4711,21 +5035,23 @@ declare class GradientStops extends Array<GradientStop> {
 /**
  * A collection of patterns.
  */
-declare class Patterns extends Array<Pattern> {
+declare class Patterns {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Pattern
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a pattern.
@@ -4734,7 +5060,6 @@ declare class Patterns extends Array<Pattern> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Pattern
 
@@ -4747,21 +5072,23 @@ declare class Patterns extends Array<Pattern> {
 /**
  * A collection of symbols.
  */
-declare class Symbols extends Array<Symbol> {
+declare class Symbols {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Symbol
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a symbol.
@@ -4772,7 +5099,6 @@ declare class Symbols extends Array<Symbol> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Symbol
 
@@ -4785,21 +5111,23 @@ declare class Symbols extends Array<Symbol> {
 /**
  * A collection of symbol items.
  */
-declare class SymbolItems extends Array<SymbolItem> {
+declare class SymbolItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: SymbolItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * An instance of a symbol item.
@@ -4809,7 +5137,6 @@ declare class SymbolItems extends Array<SymbolItem> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): SymbolItem
 
@@ -4822,21 +5149,23 @@ declare class SymbolItems extends Array<SymbolItem> {
 /**
  * A collection of brushes.
  */
-declare class Brushes extends Array<Brush> {
+declare class Brushes {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Brush
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a brush.
@@ -4849,42 +5178,47 @@ declare class Brushes extends Array<Brush> {
    * Create a brush, select the brush tool and load the created brush in the brush tool.
    * @param brushDefinition The brush definition from which the brush would be created.
    */
-  static addAndLoad(brushDefinition: File): Brush
+  addAndLoad(brushDefinition: File): Brush
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Brush
 }
 
 /**
- * A collection of art styles.
+ * A collection of GraphicStyle objects in a document.
  */
-declare class ArtStyles extends Array<ArtStyle> {
+declare class GraphicStyles {
   /**
-   * Number of elements in the collection.
+   * The number of graphic styles in the document.
    */
-  readonly length: number
+  readonly length: number;
+  [n: number]: GraphicStyle
 
   /**
-   * The object's container.
+   * The document that contains this graphic styles collection.
    */
-  readonly parent: object
+  readonly parent: Document
 
   /**
-   * The class name of the object.
+   * The class name of the referenced object.
    */
   readonly typename: string
 
   /**
-   * Get the first element in the collection with the provided name.
-   * @param name
+   * Gets the first element in the collection with the specified name.
    */
-  getByName(name: string): ArtStyle
+  getByName(name: string): GraphicStyle
 
   /**
-   * Deletes all elements.
+   * Gets an element from the collection.
+   */
+  index(itemKey: string): GraphicStyle
+  index(itemKey: number): GraphicStyle
+
+  /**
+   * Removes all elements in the referenced collection.
    */
   removeAll(): void
 }
@@ -4892,25 +5226,26 @@ declare class ArtStyles extends Array<ArtStyle> {
 /**
  * A collection of fonts.
  */
-declare class TextFonts extends Array<TextFont> {
+declare class TextFonts {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: TextFont
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): TextFont
 
@@ -4935,21 +5270,23 @@ declare class TextFonts extends Array<TextFont> {
 /**
  * The collection of tags associated with a page item.
  */
-declare class Tags extends Array<Tag> {
+declare class Tags {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Tag
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a tag.
@@ -4958,7 +5295,6 @@ declare class Tags extends Array<Tag> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Tag
 
@@ -4969,27 +5305,28 @@ declare class Tags extends Array<Tag> {
 }
 
 /**
- * A collection of RasterItems.
+ *
  */
-declare class RasterItems extends Array<RasterItem> {
+declare class RasterItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: RasterItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): RasterItem
 
@@ -5000,23 +5337,25 @@ declare class RasterItems extends Array<RasterItem> {
 }
 
 /**
- * A collection of PlacedItems.
+ *
  */
-declare class PlacedItems extends Array<PlacedItem> {
+declare class PlacedItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: PlacedItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a placed item.
@@ -5025,7 +5364,6 @@ declare class PlacedItems extends Array<PlacedItem> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): PlacedItem
 
@@ -5038,21 +5376,23 @@ declare class PlacedItems extends Array<PlacedItem> {
 /**
  * EmbeddedItems Collection.
  */
-declare class EmbeddedItems extends Array<EmbedItem> {
+declare class EmbeddedItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: PageItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create an embedded item.
@@ -5061,7 +5401,6 @@ declare class EmbeddedItems extends Array<EmbedItem> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): EmbedItem
 
@@ -5072,27 +5411,28 @@ declare class EmbeddedItems extends Array<EmbedItem> {
 }
 
 /**
- * A collection of MeshItems.
+ *
  */
-declare class MeshItems extends Array<MeshItem> {
+declare class MeshItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: MeshItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): MeshItem
 
@@ -5103,27 +5443,28 @@ declare class MeshItems extends Array<MeshItem> {
 }
 
 /**
- * A collection of GraphItems.
+ *
  */
-declare class GraphItems extends Array<GraphItem> {
+declare class GraphItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: GraphItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): GraphItem
 
@@ -5134,27 +5475,28 @@ declare class GraphItems extends Array<GraphItem> {
 }
 
 /**
- * A collection of PluginItems.
+ *
  */
-declare class PluginItems extends Array<PluginItem> {
+declare class PluginItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: PluginItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): PluginItem
 
@@ -5165,27 +5507,28 @@ declare class PluginItems extends Array<PluginItem> {
 }
 
 /**
- * A collection of NonNativeItems.
+ *
  */
-declare class NonNativeItems extends Array<NonNativeItem> {
+declare class NonNativeItems {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: NonNativeItem
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): NonNativeItem
 }
@@ -5193,25 +5536,26 @@ declare class NonNativeItems extends Array<NonNativeItem> {
 /**
  * A collection of views.
  */
-declare class Views extends Array<View> {
+declare class Views {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: View
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): View
 }
@@ -5219,21 +5563,23 @@ declare class Views extends Array<View> {
 /**
  * A collection of variables.
  */
-declare class Variables extends Array<Variable> {
+declare class Variables {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: Variable
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a variable.
@@ -5242,7 +5588,6 @@ declare class Variables extends Array<Variable> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): Variable
 
@@ -5255,21 +5600,23 @@ declare class Variables extends Array<Variable> {
 /**
  * A collection of datasets.
  */
-declare class DataSets extends Array<DataSet> {
+declare class DataSets {
   /**
    * Number of elements in the collection.
    */
-  readonly length: number
+  length: number;
+
+  [n: number]: DataSet
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Create a data set.
@@ -5278,7 +5625,6 @@ declare class DataSets extends Array<DataSet> {
 
   /**
    * Get the first element in the collection with the provided name.
-   * @param name
    */
   getByName(name: string): DataSet
 
@@ -5295,42 +5641,42 @@ declare class OpenOptions {
   /**
    * Add this file to the list of recently opened files.
    */
-  static addToRecentFiles: boolean
+  addToRecentFiles: boolean
 
   /**
    * Convert crop area to Artboard when opening legacy document (pre-Illustrator CS4) in CS4 or later. If false then crop areas are discarded.
    */
-  static convertCropAreaToArtboard: boolean
+  convertCropAreaToArtboard: boolean
 
   /**
    * Convert print tiles to Artboard when opening legacy document (pre-Illustrator CS4) in CS4 or later.
    */
-  static convertTilesToArtboard: boolean
+  convertTilesToArtboard: boolean
 
   /**
    * Create Artboard with dimentions of artwork bounding box when opening legacy document (pre-Illustrator CS4) in CS4 or later.
    */
-  static createArtboardWithArtworkBoundingBox: boolean
+  createArtboardWithArtworkBoundingBox: boolean
 
   /**
    * Open the file as library.
    */
-  static openAs: LibraryType
+  openAs: LibraryType
 
   /**
    * Preserve Legacy Artboard (pre-Illustrator CS4) when opening in CS4 or later.
    */
-  static preserveLegacyArtboard: boolean
+  preserveLegacyArtboard: boolean
 
   /**
    * Choose to preserve the spot colors in the gradient mesh objects for legacy documents (pre-Illustrator CS3)
    */
-  static updateLegacyGradientMesh: boolean
+  updateLegacyGradientMesh: boolean
 
   /**
    * Choose to update all text objects for documents saved with legacy texts (pre-Illustrator 11)
    */
-  static updateLegacyText: boolean
+  updateLegacyText: boolean
 }
 
 /**
@@ -5340,57 +5686,57 @@ declare class FXGSaveOptions {
   /**
    * If SaveMultipleArtboards is true,this will be considered for multi-asset extraction which specifies artboard range.Empty string will extracts all the artboards.Default is empty string.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * The policy used by FXG to expand blends.
    */
-  static blendsPolicy: BlendsExpandPolicy
+  blendsPolicy: BlendsExpandPolicy
 
   /**
    * Choose to downsample the linked images(72ppi)
    */
-  static downsampleLinkedImages: boolean
+  downsampleLinkedImages: boolean
 
   /**
    * The policy used by FXG to preserve filters.
    */
-  static filtersPolicy: FiltersPreservePolicy
+  filtersPolicy: FiltersPreservePolicy
 
   /**
    * The policy used by FXG to preserve gradients.
    */
-  static gradientsPolicy: GradientsPreservePolicy
+  gradientsPolicy: GradientsPreservePolicy
 
   /**
    * Choose to include metadata (XMP)
    */
-  static includeMetadata: boolean
+  includeMetadata: boolean
 
   /**
    * Choose to include unused symbols.
    */
-  static includeUnusedSymbols: boolean
+  includeUnusedSymbols: boolean
 
   /**
    * Choose to preserve the editing capabilities of FXG.
    */
-  static preserveEditingCapabilities: boolean
+  preserveEditingCapabilities: boolean
 
   /**
    * All the artboards or range of the artboards will be saved.
    */
-  static saveMultipleArtboards: boolean
+  saveMultipleArtboards: boolean
 
   /**
    * The policy used by FXG to preserve text.
    */
-  static textPolicy: TextPreservePolicy
+  textPolicy: TextPreservePolicy
 
   /**
    * The version of the FXG file format to create.
    */
-  static version: FXGVersion
+  version: FXGVersion
 }
 
 /**
@@ -5400,62 +5746,62 @@ declare class EPSSaveOptions {
   /**
    * If SaveMultipleArtboards is true,this will be considered for multi-asset extraction which specifies artboard range.Empty string will extracts all the artboards.Default is empty string.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * Use CMYK PostScript.
    */
-  static cmykPostScript: boolean
+  cmykPostScript: boolean
 
   /**
    * What Illustrator file format version to create.
    */
-  static compatibility: Compatibility
+  compatibility: Compatibility
 
   /**
    * Create a raster item of the gradient or gradient mesh so that PostScript Level 2 printers can print the object.
    */
-  static compatibleGradientPrinting: boolean
+  compatibleGradientPrinting: boolean
 
   /**
    * Embed all fonts used by the document in the saved file (version 7 or later)
    */
-  static embedAllFonts: boolean
+  embedAllFonts: boolean
 
   /**
    * Are linked image files to be included in the saved document.
    */
-  static embedLinkedFiles: boolean
+  embedLinkedFiles: boolean
 
   /**
    * How should transparency be flattened for older file format versions (pre-version 9)
    */
-  static flattenOutput: OutputFlattening
+  flattenOutput: OutputFlattening
 
   /**
    * Include thumbnail image of the EPS artwork.
    */
-  static includeDocumentThumbnails: boolean
+  includeDocumentThumbnails: boolean
 
   /**
    *
    */
-  static overprint: PDFOverprint
+  overprint: PDFOverprint
 
   /**
    * PostScript level to use (level 1 valid for file format version 8 or older)
    */
-  static postScript: EPSPostScriptLevelEnum
+  postScript: EPSPostScriptLevelEnum
 
   /**
    * EPS preview format.
    */
-  static preview: EPSPreview
+  preview: EPSPreview
 
   /**
    * All the artboards or range of the artboards will be saved.
    */
-  static saveMultipleArtboards: boolean
+  saveMultipleArtboards: boolean
 }
 
 /**
@@ -5465,282 +5811,282 @@ declare class PDFSaveOptions {
   /**
    * Create acrobat layers from top-level layers - acrobat 6 only option.
    */
-  static acrobatLayers: boolean
+  acrobatLayers: boolean
 
   /**
    * Considered for multi-asset extraction which specifies artboard range.Empty string will extracts all the artboards.Default is empty string.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * Link 4 bleed values.
    */
-  static bleedLink: boolean
+  bleedLink: boolean
 
   /**
    * The bleed offset rect.
    */
-  static bleedOffsetRect: Rect
+  bleedOffsetRect: [number, number, number, number]
 
   /**
    * Draw color bars.
    */
-  static colorBars: boolean
+  colorBars: boolean
 
   /**
    * How should color bitmap images be compressed.
    */
-  static colorCompression: CompressionQuality
+  colorCompression: CompressionQuality
 
   /**
    * PDF color conversion policy. Three choices are available: (1)No Color Conversion (2) Repurpose (3) Convert to Destination.
    */
-  static colorConversionID: ColorConversion
+  colorConversionID: ColorConversion
 
   /**
    * When NoColorConversion is specified for Color Conversion, NoColorDestination is set.
    */
-  static colorDestinationID: ColorDestination
+  colorDestinationID: ColorDestination
 
   /**
    * If zero, no downsampling, otherwise, the resolution to downsample color bitmap images to.
    */
-  static colorDownsampling: number
+  colorDownsampling: number
 
   /**
    * Downsample if the image's resolution is above this value.
    */
-  static colorDownsamplingImageThreshold: number
+  colorDownsamplingImageThreshold: number
 
   /**
    * How should color bitmap images be resampled.
    */
-  static colorDownsamplingMethod: DownsampleMethod
+  colorDownsamplingMethod: DownsampleMethod
 
   /**
    * If CMS is off, Don't Include Profiles is set.
    */
-  static colorProfileID: ColorProfile
+  colorProfileID: ColorProfile
 
   /**
    * Tile size when compressing with JPEG2000.
    */
-  static colorTileSize: number
+  colorTileSize: number
 
   /**
    * The version of the Acrobat file format to create.
    */
-  static compatibility: PDFCompatibility
+  compatibility: PDFCompatibility
 
   /**
    * Should line art and text be compressed?
    */
-  static compressArt: boolean
+  compressArt: boolean
 
   /**
    * A password string to open the document.
    */
-  static documentPassword: string
+  documentPassword: string
 
   /**
    * Enable accessing 128-bit.
    */
-  static enableAccess: boolean
+  enableAccess: boolean
 
   /**
    * Enable copying of text 128-bit.
    */
-  static enableCopy: boolean
+  enableCopy: boolean
 
   /**
    * Enable copying and accessing 40-bit.
    */
-  static enableCopyAccess: boolean
+  enableCopyAccess: boolean
 
   /**
    * Enable plaintext metadata 128-bit - available only for acrobat 6.
    */
-  static enablePlainText: boolean
+  enablePlainText: boolean
 
   /**
    * The printing flattener options.
    */
-  static flattenerOptions: PrintFlattenerOptions
+  flattenerOptions: PrintFlattenerOptions
 
   /**
    * The transparency flattener preset name.
    */
-  static flattenerPreset: string
+  flattenerPreset: string
 
   /**
    * Include a subset of fonts when less than this percentage of characters are used.
    */
-  static fontSubsetThreshold: number
+  fontSubsetThreshold: number
 
   /**
    * Generate thumbnails for the saved document.
    */
-  static generateThumbnails: boolean
+  generateThumbnails: boolean
 
   /**
    * How should grayscale bitmap images be compressed.
    */
-  static grayscaleCompression: CompressionQuality
+  grayscaleCompression: CompressionQuality
 
   /**
    * If zero, no downsampling, otherwise, the resolution to downsample grayscale images to.
    */
-  static grayscaleDownsampling: number
+  grayscaleDownsampling: number
 
   /**
    * Downsample if the image's resolution is above this value.
    */
-  static grayscaleDownsamplingImageThreshold: number
+  grayscaleDownsamplingImageThreshold: number
 
   /**
    * How should grayscale bitmap images be resampled.
    */
-  static grayscaleDownsamplingMethod: DownsampleMethod
+  grayscaleDownsamplingMethod: DownsampleMethod
 
   /**
    * Tile size when compressing with JPEG2000.
    */
-  static grayscaleTileSize: number
+  grayscaleTileSize: number
 
   /**
    * How should monochrome bitmap images be compressed.
    */
-  static monochromeCompression: MonochromeCompression
+  monochromeCompression: MonochromeCompression
 
   /**
    * If zero, no downsampling, otherwise, the resolution to downsample images to.
    */
-  static monochromeDownsampling: number
+  monochromeDownsampling: number
 
   /**
    * Downsample if the image's resolution is above this value.
    */
-  static monochromeDownsamplingImageThreshold: number
+  monochromeDownsamplingImageThreshold: number
 
   /**
    * How should monochrome bitmap images be resampled.
    */
-  static monochromeDownsamplingMethod: DownsampleMethod
+  monochromeDownsamplingMethod: DownsampleMethod
 
   /**
    * Custom offset (in points) for using the custom paper.
    */
-  static offset: number
+  offset: number
 
   /**
    * Should the PDF document be optimized for fast web viewing.
    */
-  static optimization: boolean
+  optimization: boolean
 
   /**
    * This is an optional comment which, if present, is added to the PDF file and describes the intended printing condition.
    */
-  static outputCondition: string
+  outputCondition: string
 
   /**
    * If selected for Output Intent Profile Name, you can set the name of a registered printing condition.
    */
-  static outputConditionID: string
+  outputConditionID: string
 
   /**
    * When CMS is on, the output intent profile is the same profile selected for Destination in the Color group box.
    */
-  static outputIntentProfile: string
+  outputIntentProfile: string
 
   /**
    * PDF security printing permission.
    */
-  static pDFAllowPrinting: PDFPrintAllowedEnum
+  pDFAllowPrinting: PDFPrintAllowedEnum
 
   /**
    * PDF security changes allowed.
    */
-  static pDFChangesAllowed: PDFChangesAllowedEnum
+  pDFChangesAllowed: PDFChangesAllowedEnum
 
   /**
    * The max string length is 255 bytes. Name of PDF preset to use.
    */
-  static pDFPreset: string
+  pDFPreset: string
 
   /**
    * This control includes the None option for when the user is not complying with any PDF standard.
    */
-  static pDFXStandard: PDFXStandard
+  pDFXStandard: PDFXStandard
 
   /**
    * This displays the description from the selected preset.
    */
-  static pDFXStandardDescription: string
+  pDFXStandardDescription: string
 
   /**
    * Draw page information.
    */
-  static pageInformation: boolean
+  pageInformation: boolean
 
   /**
    * The page marks style.
    */
-  static pageMarksType: PageMarksTypes
+  pageMarksType: PageMarksTypes
 
   /**
    * A password string to restrict editing security settings.
    */
-  static permissionPassword: string
+  permissionPassword: string
 
   /**
    * Preserve Illustrator editing capabilities when saving the document.
    */
-  static preserveEditability: boolean
+  preserveEditability: boolean
 
   /**
    * Flattening printer resolution.
    */
-  static printerResolution: number
+  printerResolution: number
 
   /**
    * Draw registration marks.
    */
-  static registrationMarks: boolean
+  registrationMarks: boolean
 
   /**
    * URL to the site where the specified output condition is registered. No validation is performed on the URL.
    */
-  static registryName: string
+  registryName: string
 
   /**
    * Require a password to open the document.
    */
-  static requireDocumentPassword: boolean
+  requireDocumentPassword: boolean
 
   /**
    * Use a password to restrict editing security settings.
    */
-  static requirePermissionPassword: boolean
+  requirePermissionPassword: boolean
 
   /**
    * This indicates if manual trapping has been prepared in the document.
    */
-  static trapped: boolean
+  trapped: boolean
 
   /**
    * Trim mark weight.
    */
-  static trimMarkWeight: PDFTrimMarkWeight
+  trimMarkWeight: PDFTrimMarkWeight
 
   /**
    * Draw trim marks.
    */
-  static trimMarks: boolean
+  trimMarks: boolean
 
   /**
    * View PDF after saving.
    */
-  static viewAfterSaving: boolean
+  viewAfterSaving: boolean
 }
 
 /**
@@ -5750,47 +6096,47 @@ declare class IllustratorSaveOptions {
   /**
    * If SaveMultipleArtboards is true ,this will be considered for multi-asset extraction which specifies artboard range.Empty string will extracts all the artboards.Default is empty string.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * What Illustrator file format version to create.
    */
-  static compatibility: Compatibility
+  compatibility: Compatibility
 
   /**
    * Should the saved file be compressed (version 10 or later)
    */
-  static compressed: boolean
+  compressed: boolean
 
   /**
    * Embed the document's ICC profile in the saved file (version 9 or later)
    */
-  static embedICCProfile: boolean
+  embedICCProfile: boolean
 
   /**
    * Are linked image files to be included in the saved document (versions 7 or later)
    */
-  static embedLinkedFiles: boolean
+  embedLinkedFiles: boolean
 
   /**
    * How should transparency be flattened for older file format versions (pre-version 9)
    */
-  static flattenOutput: OutputFlattening
+  flattenOutput: OutputFlattening
 
   /**
    * Include a subset of fonts when less than this percentage of characters are used (version 9 or later)
    */
-  static fontSubsetThreshold: number
+  fontSubsetThreshold: number
 
   /**
    * Save as a PDF compatible file (version 10 or later)
    */
-  static pdfCompatible: boolean
+  pdfCompatible: boolean
 
   /**
    * All the artboards or range of the artboards will be saved.
    */
-  static saveMultipleArtboards: boolean
+  saveMultipleArtboards: boolean
 }
 
 /**
@@ -5800,32 +6146,217 @@ declare class Matrix {
   /**
    *
    */
-  static mValueA: number
+  mValueA: number
 
   /**
    *
    */
-  static mValueB: number
+  mValueB: number
 
   /**
    *
    */
-  static mValueC: number
+  mValueC: number
 
   /**
    *
    */
-  static mValueD: number
+  mValueD: number
 
   /**
    *
    */
-  static mValueTX: number
+  mValueTX: number
 
   /**
    *
    */
-  static mValueTY: number
+  mValueTY: number
+}
+
+/**
+ * An item that needs to be exported; for example, a document, artboard, or asset.
+ */
+declare class ExportForScreensItemToExport {
+  /**
+   * Range of artboards to export [possible values: '', 'all'(default), range]
+   */
+  artboards: string
+
+  /**
+   * Array of asset id to export (default:empty)
+   */
+  assets: number[]
+
+  /**
+   * Whether to export the document or not.
+   */
+  document: boolean
+}
+
+/**
+ * Options which may be provided when exporting a document as a JPEG100 file.
+ */
+declare class ExportForScreensOptionsJPEG {
+  /**
+   * Should the resulting image be antialiased.
+   */
+  antiAliasing: AntiAliasingMethod
+
+  /**
+   * Should the image be compressed.
+   */
+  compressionMethod: JPEGCompressionMethodType
+
+  /**
+   * Embed an ICC profile when exporting.
+   */
+  embedICCProfile: boolean
+
+  /**
+   * Specify the number of detailed scans when downloading a JPEG file using the Progressive option as the CompressionMethod.
+   */
+  progressiveScan: number
+
+  /**
+   * How should the resulting image be scaled.
+   */
+  scaleType: ExportForScreensScaleType
+
+  /**
+   * The value by which the resulting image should be scaled.
+   */
+  scaleTypeValue: number
+}
+
+/**
+ * Options which may be provided when exporting a document as an 8 bit PNG file.
+ */
+declare class ExportForScreensOptionsPNG8 {
+  /**
+   * Should the resulting image be antialiased.
+   */
+  antiAliasing: AntiAliasingMethod
+
+  /**
+   * Number of colors in exported color table.
+   */
+  colorCount: number
+
+  /**
+   * Should the resulting image be interlaced.
+   */
+  interlaced: boolean
+
+  /**
+   * Should the artboard be matted with a color.
+   */
+  matte: boolean
+
+  /**
+   * The color to use when matting the artboard (default: white)
+   */
+  matteColor: RGBColor
+
+  /**
+   * How should the resulting image be scaled.
+   */
+  scaleType: ExportForScreensScaleType
+
+  /**
+   * The value by which the resulting image should be scaled.
+   */
+  scaleTypeValue: number
+
+  /**
+   * Should the resulting image use transparency.
+   */
+  transparency: boolean
+}
+
+/**
+ * Options which may be provided when exporting a document as an 24 bit PNG file.
+ */
+declare class ExportForScreensOptionsPNG24 {
+  /**
+   * Should the resulting image be antialiased.
+   */
+  antiAliasing: AntiAliasingMethod
+
+  /**
+   * Should the resulting image rasterize against a black background (with value true) or white background(with value false) if it doesn't use transparency.
+   */
+  backgroundBlack: boolean
+
+  /**
+   * Should the resulting image be interlaced.
+   */
+  interlaced: boolean
+
+  /**
+   * How should the resulting image be scaled.
+   */
+  scaleType: ExportForScreensScaleType
+
+  /**
+   * The value by which the resulting image should be scaled.
+   */
+  scaleTypeValue: number
+
+  /**
+   * Should the resulting image use transparency.
+   */
+  transparency: boolean
+}
+
+/**
+ * Options which may be provided when exporting a document as a web optimized SVG file.
+ */
+declare class ExportForScreensOptionsWebOptimizedSVG {
+  /**
+   * Decimal precision for element coordinate values.
+   */
+  coordinatePrecision: number
+
+  /**
+   * How should the CSS properties of the document be included in the document.
+   */
+  cssProperties: SVGCSSPropertyLocation
+
+  /**
+   * The type of font that should be included in the exported file.
+   */
+  fontType: SVGFontType
+
+  /**
+   * Should the raster images in the exported file be included.
+   */
+  rasterImageLocation: RasterImageLocation
+
+  /**
+   * How object names (IDs) are generated in exported SVG.
+   */
+  svgId: SVGIdType
+
+  /**
+   * Reduces the size of the svg.
+   */
+  svgMinify: boolean
+
+  /**
+   * Makes the SVG Responsive.
+   */
+  svgResponsive: boolean
+}
+
+/**
+ * Options which may be provided when exporting a document as a PDF file.
+ */
+declare class ExportForScreensPDFOptions {
+  /**
+   * The max string length is 255 bytes. Name of PDF preset to use.
+   */
+  pdfPreset: string
 }
 
 /**
@@ -5835,52 +6366,52 @@ declare class ExportOptionsJPEG {
   /**
    * Should the resulting image be antialiased.
    */
-  static antiAliasing: boolean
+  antiAliasing: boolean
 
   /**
    * Should the resulting image be clipped to the artboard.
    */
-  static artBoardClipping: boolean
+  artBoardClipping: boolean
 
   /**
    * Blur the resulting image this much.
    */
-  static blurAmount: number
+  blurAmount: number
 
   /**
    * Horizontal scaling factor.
    */
-  static horizontalScale: number
+  horizontalScale: number
 
   /**
    * Should the artboard be matted with a color.
    */
-  static matte: boolean
+  matte: boolean
 
   /**
    * The color to use when matting the artboard (default: white)
    */
-  static matteColor: RGBColor
+  matteColor: RGBColor
 
   /**
    * Should the image be optimized for web viewing.
    */
-  static optimization: boolean
+  optimization: boolean
 
   /**
    * Quality of resulting image.
    */
-  static qualitySetting: number
+  qualitySetting: number
 
   /**
    * Should the resulting image be saved as HTML.
    */
-  static saveAsHTML: boolean
+  saveAsHTML: boolean
 
   /**
    * Vertical scaling factor.
    */
-  static verticalScale: number
+  verticalScale: number
 }
 
 /**
@@ -5890,72 +6421,72 @@ declare class ExportOptionsPNG8 {
   /**
    * Should the resulting image be antialiased.
    */
-  static antiAliasing: boolean
+  antiAliasing: boolean
 
   /**
    * Should the resulting image be clipped to the artboard.
    */
-  static artBoardClipping: boolean
+  artBoardClipping: boolean
 
   /**
    * Number of colors in exported color table.
    */
-  static colorCount: number
+  colorCount: number
 
   /**
    * Method used to dither colors.
    */
-  static colorDither: ColorDitherMethod
+  colorDither: ColorDitherMethod
 
   /**
    * Method used to reduce the number of colors.
    */
-  static colorReduction: ColorReductionMethod
+  colorReduction: ColorReductionMethod
 
   /**
    * How much should the colors be dithered.
    */
-  static ditherPercent: number
+  ditherPercent: number
 
   /**
    * Horizontal scaling factor.
    */
-  static horizontalScale: number
+  horizontalScale: number
 
   /**
    * Should the resulting image be interlaced.
    */
-  static interlaced: boolean
+  interlaced: boolean
 
   /**
    * Should the artboard be matted with a color.
    */
-  static matte: boolean
+  matte: boolean
 
   /**
    * The color to use when matting the artboard (default: white)
    */
-  static matteColor: RGBColor
+  matteColor: RGBColor
 
   /**
    * Should the resulting image be saved as HTML.
    */
-  static saveAsHTML: boolean
+  saveAsHTML: boolean
 
   /**
    * Should the resulting image use transparency.
    */
-  static transparency: boolean
+  transparency: boolean
 
   /**
    * Vertical scaling factor.
    */
-  static verticalScale: number
+  verticalScale: number
 
   /**
    * How much should the color table be changed to match the web palette.
    */
-  static webSnap: number
+  webSnap: number
 }
 
 /**
@@ -5965,47 +6496,47 @@ declare class ExportOptionsPNG24 {
   /**
    * Should the resulting image be antialiased.
    */
-  static antiAliasing: boolean
+  antiAliasing: boolean
 
   /**
    * Should the resulting image be clipped to the artboard.
    */
-  static artBoardClipping: boolean
+  artBoardClipping: boolean
 
   /**
    * Dimensions in which to contain the resulting raster.
    */
-  static dimensions: Dimensions
+  dimensions: Dimensions
 
   /**
    * Horizontal scaling factor.
    */
-  static horizontalScale: number
+  horizontalScale: number
 
   /**
    * Should the artboard be matted with a color.
    */
-  static matte: boolean
+  matte: boolean
 
   /**
    * The color to use when matting the artboard (default: white)
    */
-  static matteColor: RGBColor
+  matteColor: RGBColor
 
   /**
    * Should the resulting image be saved as HTML.
    */
-  static saveAsHTML: boolean
+  saveAsHTML: boolean
 
   /**
    * Should the resulting image use transparency.
    */
-  static transparency: boolean
+  transparency: boolean
 
   /**
    * Vertical scaling factor.
    */
-  static verticalScale: number
+  verticalScale: number
 }
 
 /**
@@ -6015,77 +6546,77 @@ declare class ExportOptionsGIF {
   /**
    * Should the resulting image be antialiased.
    */
-  static antiAliasing: boolean
+  antiAliasing: boolean
 
   /**
    * Should the resulting image be clipped to the artboard.
    */
-  static artBoardClipping: boolean
+  artBoardClipping: boolean
 
   /**
    * Number of colors in exported color table.
    */
-  static colorCount: number
+  colorCount: number
 
   /**
    * Method used to dither colors.
    */
-  static colorDither: ColorDitherMethod
+  colorDither: ColorDitherMethod
 
   /**
    * Method used to reduce the number of colors.
    */
-  static colorReduction: ColorReductionMethod
+  colorReduction: ColorReductionMethod
 
   /**
    * How much should the colors be dithered.
    */
-  static ditherPercent: number
+  ditherPercent: number
 
   /**
    * Horizontal scaling factor.
    */
-  static horizontalScale: number
+  horizontalScale: number
 
   /**
    * Level of information loss during compression.
    */
-  static infoLossPercent: number
+  infoLossPercent: number
 
   /**
    * Should the resulting image be interlaced.
    */
-  static interlaced: boolean
+  interlaced: boolean
 
   /**
    * Should the artboard be matted with a color.
    */
-  static matte: boolean
+  matte: boolean
 
   /**
    * The color to use when matting the artboard (default: white)
    */
-  static matteColor: RGBColor
+  matteColor: RGBColor
 
   /**
    * Should the resulting image be saved as HTML.
    */
-  static saveAsHTML: boolean
+  saveAsHTML: boolean
 
   /**
    * Should the resulting image use transparency.
    */
-  static transparency: boolean
+  transparency: boolean
 
   /**
    * Vertical scaling factor.
    */
-  static verticalScale: number
+  verticalScale: number
 
   /**
    * How much should the color table be changed to match the web pallet.
    */
-  static webSnap: number
+  webSnap: number
 }
 
 /**
@@ -6095,52 +6626,52 @@ declare class ExportOptionsPhotoshop {
   /**
    * Should the resulting image be antialiased.
    */
-  static antiAliasing: boolean
+  antiAliasing: boolean
 
   /**
    * If SaveMultipleArtboards is true,this will be considered for multi-asset extraction which specifies artboard range.Empty string will extracts all the artboards.Default is empty string.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * Export text objects as editable text layers.
    */
-  static editableText: boolean
+  editableText: boolean
 
   /**
    * Embed an ICC profile when exporting.
    */
-  static embedICCProfile: boolean
+  embedICCProfile: boolean
 
   /**
    * The color space of the exported file.
    */
-  static imageColorSpace: ImageColorSpace
+  imageColorSpace: ImageColorSpace
 
   /**
    * Preserve as much of the original document's structure as possible when exporting.
    */
-  static maximumEditability: boolean
+  maximumEditability: boolean
 
   /**
    * The resolution of the exported file.
    */
-  static resolution: number
+  resolution: number
 
   /**
    * All the artboards or range of the artboards will be exported.
    */
-  static saveMultipleArtboards: boolean
+  saveMultipleArtboards: boolean
 
   /**
    * Should a warning dialog be displayed because of conflicts in the export settings.
    */
-  static warnings: boolean
+  warnings: boolean
 
   /**
    * Preserve document layers when exporting.
    */
-  static writeLayers: boolean
+  writeLayers: boolean
 }
 
 /**
@@ -6150,92 +6681,92 @@ declare class ExportOptionsSVG {
   /**
    * The version of DTD that the exported file should be conforming to.
    */
-  static DTD: SVGDTDVersion
+  DTD: SVGDTDVersion
 
   /**
    * If SaveMultipleArtboards is true,this will be considered for multi-asset extraction which specifies artboard range.Empty string will extracts all the artboards.Default is empty string.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * Should the exported file be compressed.
    */
-  static compressed: boolean
+  compressed: boolean
 
   /**
    * Decimal precision for element coordinate values.
    */
-  static coordinatePrecision: number
+  coordinatePrecision: number
 
   /**
    * How should the CSS properties of the document be included in the document.
    */
-  static cssProperties: SVGCSSPropertyLocation
+  cssProperties: SVGCSSPropertyLocation
 
   /**
    * How should the text in the document be encoded.
    */
-  static documentEncoding: SVGDocumentEncoding
+  documentEncoding: SVGDocumentEncoding
 
   /**
    * Should the raster images in the exported file be included.
    */
-  static embedRasterImages: boolean
+  embedRasterImages: boolean
 
   /**
    * What font glyphs should be included in the exported file.
    */
-  static fontSubsetting: SVGFontSubsetting
+  fontSubsetting: SVGFontSubsetting
 
   /**
    * The type of font that should be included in the exported file.
    */
-  static fontType: SVGFontType
+  fontType: SVGFontType
 
   /**
    *
    */
-  static includeFileInfo: boolean
+  includeFileInfo: boolean
 
   /**
    *
    */
-  static includeUnusedStyles: boolean
+  includeUnusedStyles: boolean
 
   /**
    *
    */
-  static includeVariablesAndDatasets: boolean
+  includeVariablesAndDatasets: boolean
 
   /**
    *
    */
-  static optimizeForSVGViewer: boolean
+  optimizeForSVGViewer: boolean
 
   /**
    * Preserve Illustrator editing capabilities when exporting the document.
    */
-  static preserveEditability: boolean
+  preserveEditability: boolean
 
   /**
    * Is SVG auto kerning allowed?
    */
-  static sVGAutoKerning: boolean
+  sVGAutoKerning: boolean
 
   /**
    * Is SVG text-on-path construct allowed?
    */
-  static sVGTextOnPath: boolean
+  sVGTextOnPath: boolean
 
   /**
    * All the artboards or range of the artboards will be saved.
    */
-  static saveMultipleArtboards: boolean
+  saveMultipleArtboards: boolean
 
   /**
    * Preserve slice data in exported document.
    */
-  static slices: boolean
+  slices: boolean
 }
 
 /**
@@ -6245,47 +6776,47 @@ declare class ExportOptionsWebOptimizedSVG {
   /**
    * If SaveMultipleArtboards is true,this will be considered for multi-asset extraction which specifies artboard range.Empty string will extracts all the artboards.Default is empty string.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * Decimal precision for element coordinate values.
    */
-  static coordinatePrecision: number
+  coordinatePrecision: number
 
   /**
    * How should the CSS properties of the document be included in the document.
    */
-  static cssProperties: SVGCSSPropertyLocation
+  cssProperties: SVGCSSPropertyLocation
 
   /**
    * The type of font that should be included in the exported file.
    */
-  static fontType: SVGFontType
+  fontType: SVGFontType
 
   /**
    * Should the raster images in the exported file be included.
    */
-  static rasterImageLocation: RasterImageLocation
+  rasterImageLocation: RasterImageLocation
 
   /**
    * All the artboards or range of the artboards will be saved.
    */
-  static saveMultipleArtboards: boolean
+  saveMultipleArtboards: boolean
 
   /**
    * How object names (IDs) are generated in exported SVG.
    */
-  static svgId: SVGIdType
+  svgId: SVGIdType
 
   /**
    * Reduces the size of the svg.
    */
-  static svgMinify: boolean
+  svgMinify: boolean
 
   /**
    * Makes the SVG Responsive.
    */
-  static svgResponsive: boolean
+  svgResponsive: boolean
 }
 
 /**
@@ -6295,127 +6826,127 @@ declare class ExportOptionsFlash {
   /**
    * How should the arts be clipped during the output.
    */
-  static artClipping: ArtClippingOption
+  artClipping: ArtClippingOption
 
   /**
    * If SaveMultipleArtboards is true,this will be considered for multi-asset extraction which specifies artboard range.Empty string will extracts all the artboards.Default is empty string.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * The background color.
    */
-  static backgroundColor: RGBColor
+  backgroundColor: RGBColor
 
   /**
-   * A list of layers to be included as the static background in all exported Flash frames.
+   * A list of layers to be included as the background in all exported Flash frames.
    */
-  static backgroundLayers: Layer[]
+  backgroundLayers: Layer[]
 
   /**
    * Controls how the blend art objects are animated when export to Flash frames.
    */
-  static blendAnimation: BlendAnimationType
+  blendAnimation: BlendAnimationType
 
   /**
    * Should the exported file be compressed.
    */
-  static compressed: boolean
+  compressed: boolean
 
   /**
    * Should all text be converted to outlines.
    */
-  static convertTextToOutlines: boolean
+  convertTextToOutlines: boolean
 
   /**
    * How much curve information should be preserved.
    */
-  static curveQuality: number
+  curveQuality: number
 
   /**
    * Should all symbol definitions in the palette be exported to the SWF File.
    */
-  static exportAllSymbols: boolean
+  exportAllSymbols: boolean
 
   /**
    * How should the Flash file be created.
    */
-  static exportStyle: FlashExportStyle
+  exportStyle: FlashExportStyle
 
   /**
    * Which version of SWF to export.
    */
-  static exportVersion: FlashExportVersion
+  exportVersion: FlashExportVersion
 
   /**
    * When exporting layers to Flash frames.
    */
-  static frameRate: number
+  frameRate: number
 
   /**
    * Should the kerning information for text objects be ignored.
    */
-  static ignoreTextKerning: boolean
+  ignoreTextKerning: boolean
 
   /**
    * How should the images in the exported Flash file be compressed.
    */
-  static imageFormat: FlashImageFormat
+  imageFormat: FlashImageFormat
 
   /**
    * If true, include minimal XMP metadata in the exported file.
    */
-  static includeMetadata: boolean
+  includeMetadata: boolean
 
   /**
    * What method to use.
    */
-  static jpegMethod: FlashJPEGMethod
+  jpegMethod: FlashJPEGMethod
 
   /**
    * Level of compression.
    */
-  static jpegQuality: number
+  jpegQuality: number
 
   /**
    * The order in which the layers will be exported to Flash frames.
    */
-  static layerOrder: LayerOrderType
+  layerOrder: LayerOrderType
 
   /**
    * Should the Flash file be set to loop when run.
    */
-  static looping: boolean
+  looping: boolean
 
   /**
    * What access should the SWF file have - local or network access.
    */
-  static playbackAccess: FlashPlaybackSecurity
+  playbackAccess: FlashPlaybackSecurity
 
   /**
    * Choose whether to preserve artwork appearance or editability (default) during export.
    */
-  static preserveAppearance: boolean
+  preserveAppearance: boolean
 
   /**
    * Prevent the exported file from being imported by other applications.
    */
-  static readOnly: boolean
+  readOnly: boolean
 
   /**
    * If a file with the same name already exists, should it be replaced?
    */
-  static replacing: SaveOptions
+  replacing: SaveOptions
 
   /**
    * Pixels per inch.
    */
-  static resolution: number
+  resolution: number
 
   /**
    * All the artboards or range of the artboards will be exported.
    */
-  static saveMultipleArtboards: boolean
+  saveMultipleArtboards: boolean
 }
 
 /**
@@ -6425,57 +6956,57 @@ declare class ExportOptionsAutoCAD {
   /**
    * Alter paths for appearance.
    */
-  static alterPathsForAppearance: boolean
+  alterPathsForAppearance: boolean
 
   /**
    * Number of colors to export into the AutoCAD file.
    */
-  static colors: AutoCADColors
+  colors: AutoCADColors
 
   /**
    * Whether to convert text to outlines.
    */
-  static convertTextToOutlines: boolean
+  convertTextToOutlines: boolean
 
   /**
    * Which format to export the file as.
    */
-  static exportFileFormat: AutoCADExportFileFormat
+  exportFileFormat: AutoCADExportFileFormat
 
   /**
    * Whether to preserve appearance or editability during export.
    */
-  static exportOption: AutoCADExportOption
+  exportOption: AutoCADExportOption
 
   /**
    * Export selected art only.
    */
-  static exportSelectedArtOnly: boolean
+  exportSelectedArtOnly: boolean
 
   /**
    * Raster format in which to export raster art.
    */
-  static rasterFormat: AutoCADRasterFormat
+  rasterFormat: AutoCADRasterFormat
 
   /**
    * Whether to scale lineweights by the same amount as rest of the drawing.
    */
-  static scaleLineweights: boolean
+  scaleLineweights: boolean
 
   /**
    * Units from which to map.
    */
-  static unit: AutoCADUnit
+  unit: AutoCADUnit
 
   /**
    * Ratio by which to scale the output.
    */
-  static unitScaleRatio: number
+  unitScaleRatio: number
 
   /**
    * Release of AutoCAD to export to.
    */
-  static version: AutoCADCompatibility
+  version: AutoCADCompatibility
 }
 
 /**
@@ -6485,48 +7016,53 @@ declare class ExportOptionsTIFF {
   /**
    * Should the resulting image be antialiased.
    */
-  static antiAliasing: AntiAliasingMethod
+  antiAliasing: AntiAliasingMethod
 
   /**
    * If SaveMultipleArtboards is true,this will be considered for multi-asset extraction which specifies artboard range.Empty string will extracts all the artboards.Default is empty string.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * Mac or PC byte order when exporting.
    */
-  static byteOrder: TIFFByteOrder
+  byteOrder: TIFFByteOrder
 
   /**
    * Embed an ICC profile when exporting.
    */
-  static embedICCProfile: boolean
+  embedICCProfile: boolean
 
   /**
    * The color space of the exported file.
    */
-  static imageColorSpace: ImageColorSpace
+  imageColorSpace: ImageColorSpace
 
   /**
    * Compress TIFF file with LZW Compression when exporting.
    */
-  static lZWCompression: boolean
+  lZWCompression: boolean
 
   /**
    * The resolution of the exported file.
    */
-  static resolution: number
+  resolution: number
 
   /**
    * All the artboards or range of the artboards will be exported.
    */
-  static saveMultipleArtboards: boolean
+  saveMultipleArtboards: boolean
 }
 
 /**
  * The parent class for all color values used in Illustrator. See the specific color classes for more information.
  */
-declare class Color {}
+declare class Color {
+  /**
+   * The name of the color.
+   */
+  typename: string
+}
 
 /**
  * An Lab color specification.
@@ -6555,12 +7091,12 @@ declare class Dimensions {
   /**
    * The Height parameter.
    */
-  static height: number
+  height: number
 
   /**
    * The Width parameter.
    */
-  static width: number
+  width: number
 }
 
 /**
@@ -6670,7 +7206,7 @@ declare class PatternColor extends Color {
   /**
    * The fraction to scale the prototype before filling.
    */
-  scaleFactor: Point | number[]
+  scaleFactor: Point
 
   /**
    * The angle to slant the shear by.
@@ -6730,7 +7266,7 @@ declare class GradientColor extends Color {
   /**
    * The gradient vector origin.
    */
-  origin: Point | number[]
+  origin: Point
 }
 
 /**
@@ -6740,22 +7276,22 @@ declare class TabStopInfo {
   /**
    * The alignment of the tab stop.
    */
-  static alignment: TabStopAlignment
+  alignment: TabStopAlignment
 
   /**
    * The character used for decimal tab stops.
    */
-  static decimalCharacter: string
+  decimalCharacter: string
 
   /**
    * The leader dot.
    */
-  static leader: string
+  leader: string
 
   /**
    * The position of the tab stop expressed in points.
    */
-  static position: number
+  position: number
 }
 
 /**
@@ -6765,12 +7301,12 @@ declare class Printer {
   /**
    * The printer name.
    */
-  static name: string
+  name: string
 
   /**
    * The printer information.
    */
-  static printerInfo: PrinterInfo
+  printerInfo: PrinterInfo
 }
 
 /**
@@ -6780,92 +7316,92 @@ declare class PrinterInfo {
   /**
    * Does the printer support binary printing?
    */
-  static binaryPrintingSupport: boolean
+  binaryPrintingSupport: boolean
 
   /**
    * The printer color capability.
    */
-  static colorSupport: PrinterColorMode
+  colorSupport: PrinterColorMode
 
   /**
    * Does the printer support custom paper size?
    */
-  static customPaperSupport: boolean
+  customPaperSupport: boolean
 
   /**
    * Does the printer support custom paper transverse?
    */
-  static customPaperTransverseSupport: boolean
+  customPaperTransverseSupport: boolean
 
   /**
    * The printer default resolution.
    */
-  static deviceResolution: number
+  deviceResolution: number
 
   /**
    * Does the printer support InRIP color separation?
    */
-  static inRIPSeparationSupport: boolean
+  inRIPSeparationSupport: boolean
 
   /**
    * The printer maximum device resolution.
    */
-  static maxDeviceResolution: number
+  maxDeviceResolution: number
 
   /**
    * Custom paper's maximum height.
    */
-  static maxPaperHeight: number
+  maxPaperHeight: number
 
   /**
    * Custom paper's maximum height offset.
    */
-  static maxPaperHeightOffset: number
+  maxPaperHeightOffset: number
 
   /**
    * Custom paper's maximum width.
    */
-  static maxPaperWidth: number
+  maxPaperWidth: number
 
   /**
    * Custom paper's maximum width offset.
    */
-  static maxPaperWidthOffset: number
+  maxPaperWidthOffset: number
 
   /**
    * Custom paper's minimum height.
    */
-  static minPaperHeight: number
+  minPaperHeight: number
 
   /**
    * Custom paper's minimum height offset.
    */
-  static minPaperHeightOffset: number
+  minPaperHeightOffset: number
 
   /**
    * Custom paper's minimum width.
    */
-  static minPaperWidth: number
+  minPaperWidth: number
 
   /**
    * Custom paper's minimum width offset.
    */
-  static minPaperWidthOffset: number
+  minPaperWidthOffset: number
 
   /**
    * The list of supported paper sizes.
    */
-  static paperSizes: Paper[]
+  paperSizes: Paper[]
 
   /**
    * The PostScript level.
    */
-  static postScriptLevel: PrinterPostScriptLevelEnum
+  postScriptLevel: PrinterPostScriptLevelEnum
 
   /**
    * The printer type.
    */
-  static printerType: PrinterTypeEnum
+  printerType: PrinterTypeEnum
 }
 
 /**
@@ -6875,12 +7411,12 @@ declare class PPDFile {
   /**
    * The PPD file information.
    */
-  static PPDInfo: PPDFileInfo
+  PPDInfo: PPDFileInfo
 
   /**
    * The PPD model name.
    */
-  static name: string
+  name: string
 }
 
 /**
@@ -6890,22 +7426,22 @@ declare class PPDFileInfo {
   /**
    * Path specification for the PPD file.
    */
-  static PPDFilePath: File
+  PPDFilePath: File
 
   /**
    * The PostScript language level.
    */
-  static languageLevel: string
+  languageLevel: string
 
   /**
    * List of color separation screens.
    */
-  static screenList: Screen[]
+  screenList: Screen[]
 
   /**
    * List of color separation screen spot functions.
    */
-  static screenSpotFunctionList: ScreenSpotFunction[]
+  screenSpotFunctionList: ScreenSpotFunction[]
 }
 
 /**
@@ -6915,12 +7451,12 @@ declare class Paper {
   /**
    * The paper name.
    */
-  static name: string
+  name: string
 
   /**
    * The paper information.
    */
-  static paperInfo: PaperInfo
+  paperInfo: PaperInfo
 }
 
 /**
@@ -6930,22 +7466,22 @@ declare class PaperInfo {
   /**
    * Is it a custom paper?
    */
-  static customPaper: boolean
+  customPaper: boolean
 
   /**
    * The paper's height (in points)
    */
-  static height: number
+  height: number
 
   /**
    * The imageable area.
    */
-  static imageableArea: Rect
+  imageableArea: [number, number, number, number]
 
   /**
    * The paper's width (in points)
    */
-  static width: number
+  width: number
 }
 
 /**
@@ -6955,12 +7491,12 @@ declare class Screen {
   /**
    * The color separation screen name.
    */
-  static name: string
+  name: string
 
   /**
    * The color separation screen information.
    */
-  static screenInfo: ScreenInfo
+  screenInfo: ScreenInfo
 }
 
 /**
@@ -6970,17 +7506,17 @@ declare class ScreenInfo {
   /**
    * The screen's angle (in degrees)
    */
-  static angle: number
+  angle: number
 
   /**
    * Is it the default screen?
    */
-  static defaultScreen: boolean
+  defaultScreen: boolean
 
   /**
    * The screen's frequency.
    */
-  static frequency: number
+  frequency: number
 }
 
 /**
@@ -6990,12 +7526,12 @@ declare class ScreenSpotFunction {
   /**
    * The color separation screen spot function name.
    */
-  static name: string
+  name: string
 
   /**
    * The spot function in terms of the PostScript commands.
    */
-  static spotFunction: string
+  spotFunction: string
 }
 
 /**
@@ -7005,12 +7541,12 @@ declare class Ink {
   /**
    * The ink information.
    */
-  static inkInfo: InkInfo
+  inkInfo: InkInfo
 
   /**
    * The ink's name.
    */
-  static name: string
+  name: string
 }
 
 /**
@@ -7020,47 +7556,47 @@ declare class InkInfo {
   /**
    * The ink's screen angle (in degrees)
    */
-  static angle: number
+  angle: number
 
   /**
    * The color of the custom ink.
    */
-  static customColor: Color
+  customColor: Color
 
   /**
    * The neutral density.
    */
-  static density: number
+  density: number
 
   /**
    * The dot shape name.
    */
-  static dotShape: string
+  dotShape: string
 
   /**
    * The ink's frequency.
    */
-  static frequency: number
+  frequency: number
 
   /**
    * The ink type.
    */
-  static kind: InkType
+  kind: InkType
 
   /**
    * The ink printing status.
    */
-  static printingStatus: InkPrintStatus
+  printingStatus: InkPrintStatus
 
   /**
    * The trapping type.
    */
-  static trapping: TrappingType
+  trapping: TrappingType
 
   /**
    * The order of trapping for the ink.
    */
-  static trappingOrder: number
+  trappingOrder: number
 }
 
 /**
@@ -7070,62 +7606,72 @@ declare class DocumentPreset {
   /**
    * Layout for artboards.
    */
-  static artboardLayout: DocumentArtboardLayout
+  artboardLayout: DocumentArtboardLayout
 
   /**
    * Number of rows (for rows layout) OR column(for column layouts)of artboards.Range is 1 to (docNumArtboards - 1) or 1 for single row or column layouts.
    */
-  static artboardRowsOrCols: number
+  artboardRowsOrCols: number
 
   /**
    * Spacing between artboards.
    */
-  static artboardSpacing: number
+  artboardSpacing: number
 
   /**
    * The color mode for the new document.
    */
-  static colorMode: DocumentColorSpace
+  colorMode: DocumentColorSpace
+
+  /**
+   * Document link for bleed values.
+   */
+  documentBleedLink: boolean
+
+  /**
+   * Document bleed offset rect.
+   */
+  documentBleedOffset: [number, number, number, number]
 
   /**
    * The height for the new document.
    */
-  static height: number
+  height: number
 
   /**
    * Number of artboards for new document.Range (1:100).
    */
-  static numArtboards: number
+  numArtboards: number
 
   /**
    * The preview mode for the new document.
    */
-  static previewMode: DocumentPreviewMode
+  previewMode: DocumentPreviewMode
 
   /**
    * The raster resolution for the new document.
    */
-  static rasterResolution: DocumentRasterResolution
+  rasterResolution: DocumentRasterResolution
 
   /**
    * The title for the new document.
    */
-  static title: string
+  title: string
 
   /**
    * The transparency grid for the new document.
    */
-  static transparencyGrid: DocumentTransparencyGrid
+  transparencyGrid: DocumentTransparencyGrid
 
   /**
    * The units for the new document.
    */
-  static units: RulerUnits
+  units: RulerUnits
 
   /**
    * The width for the new document.
    */
-  static width: number
+  width: number
 }
 
 /**
@@ -7135,67 +7681,67 @@ declare class PrintOptions {
   /**
    * The name of the PPD to use.
    */
-  static PPDName: string
+  PPDName: string
 
   /**
    * The printing color management options.
    */
-  static colorManagementOptions: PrintColorManagementOptions
+  colorManagementOptions: PrintColorManagementOptions
 
   /**
    * The printing color separation options.
    */
-  static colorSeparationOptions: PrintColorSeparationOptions
+  colorSeparationOptions: PrintColorSeparationOptions
 
   /**
    * The printing coordinate options.
    */
-  static coordinateOptions: PrintCoordinateOptions
+  coordinateOptions: PrintCoordinateOptions
 
   /**
    * The printing flattener options.
    */
-  static flattenerOptions: PrintFlattenerOptions
+  flattenerOptions: PrintFlattenerOptions
 
   /**
    * The transparency flattener preset name.
    */
-  static flattenerPreset: string
+  flattenerPreset: string
 
   /**
    * The printing font options.
    */
-  static fontOptions: PrintFontOptions
+  fontOptions: PrintFontOptions
 
   /**
    * The printing job options.
    */
-  static jobOptions: PrintJobOptions
+  jobOptions: PrintJobOptions
 
   /**
    * The printing page marks options.
    */
-  static pageMarksOptions: PrintPageMarksOptions
+  pageMarksOptions: PrintPageMarksOptions
 
   /**
    * The paper options.
    */
-  static paperOptions: PrintPaperOptions
+  paperOptions: PrintPaperOptions
 
   /**
    * The printing PostScript options.
    */
-  static postScriptOptions: PrintPostScriptOptions
+  postScriptOptions: PrintPostScriptOptions
 
   /**
    * The name of a print preset to use.
    */
-  static printPreset: string
+  printPreset: string
 
   /**
    * The name of the printer to print to.
    */
-  static printerName: string
+  printerName: string
 }
 
 /**
@@ -7205,27 +7751,27 @@ declare class PrintPaperOptions {
   /**
    * The custom height (in points) for using the custom paper.
    */
-  static height: number
+  height: number
 
   /**
    * The paper's name.
    */
-  static name: string
+  name: string
 
   /**
    * Custom offset (in points) for using the custom paper.
    */
-  static offset: number
+  offset: number
 
   /**
    * Whether to transverse the artwork (rotate 90 degrees) on the custom paper.
    */
-  static transverse: boolean
+  transverse: boolean
 
   /**
    * The custom width (in points) for using the custom paper.
    */
-  static width: number
+  width: number
 }
 
 /**
@@ -7235,57 +7781,57 @@ declare class PrintJobOptions {
   /**
    * Artboard Range to be printed if PrintAllArtboards is false.
    */
-  static artboardRange: string
+  artboardRange: string
 
   /**
    * The bitmap resolution.
    */
-  static bitmapResolution: number
+  bitmapResolution: number
 
   /**
    * Whether to collate print pages.
    */
-  static collate: boolean
+  collate: boolean
 
   /**
    * The number of copies to print.
    */
-  static copies: number
+  copies: number
 
   /**
    * The layers/objects to be printed.
    */
-  static designation: PrintArtworkDesignation
+  designation: PrintArtworkDesignation
 
   /**
    * The file to be printed to.
    */
-  static file: File
+  file: File
 
   /**
    * The print job name.
    */
-  static name: string
+  name: string
 
   /**
    * Whether to print all artboards.
    */
-  static printAllArtboards: boolean
+  printAllArtboards: boolean
 
   /**
    * The printing bounds.
    */
-  static printArea: PrintingBounds
+  printArea: PrintingBounds
 
   /**
    * Whether to print as bitmap.
    */
-  static printAsBitmap: boolean
+  printAsBitmap: boolean
 
   /**
    * Print pages in reverse order.
    */
-  static reversePages: boolean
+  reversePages: boolean
 }
 
 /**
@@ -7295,22 +7841,22 @@ declare class PrintColorSeparationOptions {
   /**
    * The color separation type.
    */
-  static colorSeparationMode: PrintColorSeparationMode
+  colorSeparationMode: PrintColorSeparationMode
 
   /**
    * Whether to convert all spot colors to process colors.
    */
-  static convertSpotColors: boolean
+  convertSpotColors: boolean
 
   /**
    * The list of inks for color separation.
    */
-  static inkList: Ink[]
+  inkList: Ink[]
 
   /**
    * Whether to overprint in black.
    */
-  static overPrintBlack: boolean
+  overPrintBlack: boolean
 }
 
 /**
@@ -7320,37 +7866,37 @@ declare class PrintCoordinateOptions {
   /**
    * Whether to flip artwork horizontally.
    */
-  static emulsion: boolean
+  emulsion: boolean
 
   /**
    * Whether to proportionally scale the artwork to fit on the page.
    */
-  static fitToPage: boolean
+  fitToPage: boolean
 
   /**
    * The horizontal scaling factor expressed as a percentage (100 = 100%)
    */
-  static horizontalScale: number
+  horizontalScale: number
 
   /**
    * The artwork orientation.
    */
-  static orientation: PrintOrientation
+  orientation: PrintOrientation
 
   /**
    * The artwork position on media.
    */
-  static position: PrintPosition
+  position: PrintPosition
 
   /**
    * The page tiling mode.
    */
-  static tiling: PrintTiling
+  tiling: PrintTiling
 
   /**
    * The vertical scaling factor expressed as a percentage (100 = 100%)
    */
-  static verticalScale: number
+  verticalScale: number
 }
 
 /**
@@ -7360,42 +7906,42 @@ declare class PrintPageMarksOptions {
   /**
    * The bleed offset rect.
    */
-  static bleedOffsetRect: Rect
+  bleedOffsetRect: [number, number, number, number]
 
   /**
    * Whether to enable color bars printing.
    */
-  static colorBars: boolean
+  colorBars: boolean
 
   /**
    * The page marks offset rect.
    */
-  static marksOffsetRect: Rect
+  marksOffsetRect: [number, number, number, number]
 
   /**
    * Whether to enable page info marks printing.
    */
-  static pageInfoMarks: boolean
+  pageInfoMarks: boolean
 
   /**
    * The page marks style.
    */
-  static pageMarksType: PageMarksTypes
+  pageMarksType: PageMarksTypes
 
   /**
    * Whether to enable registration marks printing.
    */
-  static registrationMarks: boolean
+  registrationMarks: boolean
 
   /**
    * Whether to enable trim marks printing.
    */
-  static trimMarks: boolean
+  trimMarks: boolean
 
   /**
    * Stroke weight of trim marks.
    */
-  static trimMarksWeight: number
+  trimMarksWeight: number
 }
 
 /**
@@ -7405,12 +7951,12 @@ declare class PrintFontOptions {
   /**
    * The font download mode.
    */
-  static downloadFonts: PrintFontDownloadMode
+  downloadFonts: PrintFontDownloadMode
 
   /**
    * The font substitution policy.
    */
-  static fontSubstitution: FontSubstitutionPolicy
+  fontSubstitution: FontSubstitutionPolicy
 }
 
 /**
@@ -7420,37 +7966,37 @@ declare class PrintPostScriptOptions {
   /**
    * Whether to print in binary mode.
    */
-  static binaryPrinting: boolean
+  binaryPrinting: boolean
 
   /**
    * Use PostScript level 1 compatible gradient and gradient mesh printing.
    */
-  static compatibleShading: boolean
+  compatibleShading: boolean
 
   /**
    * Whether to force continuous tone.
    */
-  static forceContinuousTone: boolean
+  forceContinuousTone: boolean
 
   /**
    * The image compression type.
    */
-  static imageCompression: PostScriptImageCompressionType
+  imageCompression: PostScriptImageCompressionType
 
   /**
    * Whether to print in negative mode.
    */
-  static negativePrinting: boolean
+  negativePrinting: boolean
 
   /**
    * The PostScript language level.
    */
-  static postScriptLevel: PrinterPostScriptLevelEnum
+  postScriptLevel: PrinterPostScriptLevelEnum
 
   /**
    * The shading resolution.
    */
-  static shadingResolution: number
+  shadingResolution: number
 }
 
 /**
@@ -7460,17 +8006,17 @@ declare class PrintColorManagementOptions {
   /**
    * The color management profile mode.
    */
-  static colorProfileMode: PrintColorProfile
+  colorProfileMode: PrintColorProfile
 
   /**
    * The color management intent type.
    */
-  static intent: PrintColorIntent
+  intent: PrintColorIntent
 
   /**
    * The color management profile name.
    */
-  static name: string
+  name: string
 }
 
 /**
@@ -7480,37 +8026,37 @@ declare class PrintFlattenerOptions {
   /**
    * Whether to clip complex regions.
    */
-  static clipComplexRegions: boolean
+  clipComplexRegions: boolean
 
   /**
    * Whether to convert all strokes to outlines.
    */
-  static convertStrokesToOutlines: boolean
+  convertStrokesToOutlines: boolean
 
   /**
    * Whether to convert all text to outlines.
    */
-  static convertTextToOutlines: boolean
+  convertTextToOutlines: boolean
 
   /**
    * The flattening balance.
    */
-  static flatteningBalance: number
+  flatteningBalance: number
 
   /**
    * The gradient resolution.
    */
-  static gradientResolution: number
+  gradientResolution: number
 
   /**
    * Overprint.
    */
-  static overprint: PDFOverprint
+  overprint: PDFOverprint
 
   /**
    * The rasterization resolution.
    */
-  static rasterizationResolution: number
+  rasterizationResolution: number
 }
 
 /**
@@ -7520,27 +8066,27 @@ declare class ImageCaptureOptions {
   /**
    * Should the resulting image be antialiased.
    */
-  static antiAliasing: boolean
+  antiAliasing: boolean
 
   /**
    * Should the artboard be matted with a color.
    */
-  static matte: boolean
+  matte: boolean
 
   /**
    * The color to use when matting the artboard (default: white)
    */
-  static matteColor: RGBColor
+  matteColor: RGBColor
 
   /**
    * The resolution of the captured image file.
    */
-  static resolution: number
+  resolution: number
 
   /**
    * Should the resulting image use transparency.
    */
-  static transparency: boolean
+  transparency: boolean
 }
 
 /**
@@ -7550,37 +8096,37 @@ declare class RasterEffectOptions {
   /**
    * Should the resulting image be antialiased.
    */
-  static antiAliasing: boolean
+  antiAliasing: boolean
 
   /**
    * Should a clipping mask be created for the resulting image.
    */
-  static clippingMask: boolean
+  clippingMask: boolean
 
   /**
    * The color model for the rasterization.
    */
-  static colorModel: RasterizationColorModel
+  colorModel: RasterizationColorModel
 
   /**
    * Whether to convert all spot colors to process colors in the resulting image.
    */
-  static convertSpotColors: boolean
+  convertSpotColors: boolean
 
   /**
    * The amount of white space (in points) to be added around the object during rasterization.
    */
-  static padding: number
+  padding: number
 
   /**
    * The rasterization resolution in dots-per-inch (dpi)
    */
-  static resolution: number
+  resolution: number
 
   /**
    * Should the resulting image use transparency.
    */
-  static transparency: boolean
+  transparency: boolean
 }
 
 /**
@@ -7590,52 +8136,52 @@ declare class RasterizeOptions {
   /**
    * The type of antialiasing method.
    */
-  static antiAliasingMethod: AntiAliasingMethod
+  antiAliasingMethod: AntiAliasingMethod
 
   /**
    * Should rasterize against a black background instead of white.
    */
-  static backgroundBlack: boolean
+  backgroundBlack: boolean
 
   /**
    * Should a clipping mask be created for the resulting image.
    */
-  static clippingMask: boolean
+  clippingMask: boolean
 
   /**
    * The color model for the rasterization.
    */
-  static colorModel: RasterizationColorModel
+  colorModel: RasterizationColorModel
 
   /**
    * Whether to convert all spot colors to process colors in the resulting image.
    */
-  static convertSpotColors: boolean
+  convertSpotColors: boolean
 
   /**
    * Should all text be converted to outlines before rasterization.
    */
-  static convertTextToOutlines: boolean
+  convertTextToOutlines: boolean
 
   /**
    * Should the resulting image incorporates the layer attributes (such as opacity and blend mode)
    */
-  static includeLayers: boolean
+  includeLayers: boolean
 
   /**
    * The amount of white space (in points) to be added around the object during rasterization.
    */
-  static padding: number
+  padding: number
 
   /**
    * The rasterization resolution in dots-per-inch (dpi)
    */
-  static resolution: number
+  resolution: number
 
   /**
    * Should the resulting image use transparency.
    */
-  static transparency: boolean
+  transparency: boolean
 }
 
 /**
@@ -7645,12 +8191,12 @@ declare class Application {
   /**
    * The list of PDF preset names currently available for use.
    */
-  readonly PDFPresetsList: string[]
+  PDFPresetsList: string[]
 
   /**
    * The list of PPD files currently available for use. For performance reasons, the PPDFile entry only contains the model name and file spec of each PPD file.
    */
-  readonly PPDFileList: PPDFile[]
+  PPDFileList: PPDFile[]
 
   /**
    * The active document.
@@ -7660,17 +8206,17 @@ declare class Application {
   /**
    * Is a web browser available?
    */
-  readonly browserAvailable: boolean
+  browserAvailable: boolean
 
   /**
    * The build number of the Adobe Illustrator application.
    */
-  readonly buildNumber: string
+  buildNumber: string
 
   /**
    * The list of color settings files currently available for use.
    */
-  readonly colorSettingsList: File[]
+  colorSettingsList: File[]
 
   /**
    * Coordinate System used by script.
@@ -7680,37 +8226,42 @@ declare class Application {
   /**
    * The default color settings file for the current application locale.
    */
-  readonly defaultColorSettings: File
+  defaultColorSettings: File
 
   /**
    * The open documents.
    */
-  readonly documents: Documents
+  documents: Documents
 
   /**
    * The list of flattener style names currently available for use.
    */
-  readonly flattenerPresetsList: string[]
+  flattenerPresetsList: string[]
 
   /**
    * The amount of unused memory within the Adobe Illustrator partition.
    */
-  readonly freeMemory: number
+  freeMemory: number
+
+  /**
+   * True if Home Screen is visible
+   */
+  homeScreenVisible: boolean
 
   /**
    * The Locale of the Adobe Illustrator application.
    */
-  readonly locale: string
+  locale: string
 
   /**
    * The application's name.
    */
-  readonly name: string
+  name: string
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Does paste operation remember layers structure?
@@ -7720,62 +8271,62 @@ declare class Application {
   /**
    * Path specification for the application.
    */
-  readonly path: File
+  path: File
 
   /**
    * Preferences for Illustrator.
    */
-  readonly preferences: Preferences
+  preferences: Preferences
 
   /**
    * The list of print preset names currently available for use.
    */
-  readonly printPresetsList: string[]
+  printPresetsList: string[]
 
   /**
    * The list of installed printers.
    */
-  readonly printerList: Printer[]
+  printerList: Printer[]
 
   /**
    * The version of the Scripting plugin.
    */
-  readonly scriptingVersion: string
+  scriptingVersion: string
 
   /**
    * The selection visible to the user.
    */
-  selection: any
+  selection: any[] | null
 
   /**
    * The list of presets available for creating a new document.
    */
-  readonly startupPresetsList: string[]
+  startupPresetsList: string[]
 
   /**
    * Installed fonts.
    */
-  readonly textFonts: TextFonts
+  textFonts: TextFonts
 
   /**
    * The list of tracing preset names currently available for use.
    */
-  readonly tracingPresetsList: string[]
+  tracingPresetsList: string[]
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * The current users adobe id.
    */
-  readonly userAdobeID: string
+  userAdobeID: string
 
   /**
    * The current user's GUID.
    */
-  readonly userGUID: string
+  userGUID: string
 
   /**
    * What level of interaction with the user should be allowed when handling script commands.
@@ -7785,12 +8336,12 @@ declare class Application {
   /**
    * The version of the Adobe Illustrator application.
    */
-  readonly version: string
+  version: string
 
   /**
    * Is the application visible.
    */
-  readonly visible: boolean
+  visible: boolean
 
   /**
    * Add the specified to the sequencer.
@@ -8091,6 +8642,12 @@ declare class Application {
   getIdentityMatrix(): Matrix
 
   /**
+   * Returns if the specified filePath is open.
+   * @param filePath The filePath to be checked.
+   */
+  getIsFileOpen(filePath: string): boolean
+
+  /**
    * Get detailed info from the specified PPD file.
    * @param name The model name of the PPD file.
    */
@@ -8207,9 +8764,15 @@ declare class Application {
    * For Internal Use.
    * @param assetURL For Internal use.
    * @param thumbnailURL For Internal use.
+   * @param assetType For internal use.
    * @param options For internal use.
    */
-  openCloudLibraryAssetForEditing(assetURL: File, thumbnailURL: File, options?: any): Document
+  openCloudLibraryAssetForEditing(
+    assetURL: File,
+    thumbnailURL: File,
+    assetType: string,
+    options?: any,
+  ): Document
 
   /**
    * Paste clipboard into the current document.
@@ -8269,10 +8832,23 @@ declare class Application {
   setThumbnailOptionsForCloudLibrary(options: any): void
 
   /**
+   * Sets given tool as active.
+   * @param toolName Name of tool.
+   */
+  selectTool(toolName: string): boolean
+
+  /**
    * Invokes application's color picker.
    * @param color The color to load in the color picker initially.
    */
   showColorPicker(color: Color): Color
+
+  /**
+   * 	Display learn panel with specific content.
+   * @param color 	Path of the manifest.
+   * @param hTMLPage Url of the html file to be displayed on learn panel.
+   */
+  showLearnPanelWithContent(manifest: string, hTMLPage: string): boolean
 
   /**
    * Get presets from the file.
@@ -8334,37 +8910,42 @@ declare class Document {
   /**
    * The document's current view.
    */
-  readonly activeView: View
+  activeView: View
 
   /**
    * All artboards in the document.
    */
-  readonly artboards: Artboards
+  artboards: Artboards
+
+  /**
+   * All assets in the document.
+   */
+  assets: Assets
 
   /**
    * The brushes defined in this document.
    */
-  readonly brushes: Brushes
+  brushes: Brushes
 
   /**
    * The list of character styles in this document.
    */
-  readonly characterStyles: CharacterStyles
+  characterStyles: CharacterStyles
 
   /**
    * The name of the color profile of the document.
    */
-  readonly colorProfileName: string
+  colorProfileName: string
 
   /**
    * The compound path artwork in this collection.
    */
-  readonly compoundPathItems: CompoundPathItems
+  compoundPathItems: CompoundPathItems
 
   /**
    *
    */
-  cropBox: Rect
+  cropBox: [number, number, number, number]
 
   /**
    *
@@ -8374,7 +8955,7 @@ declare class Document {
   /**
    * The data sets defined in this document.
    */
-  readonly dataSets: DataSets
+  dataSets: DataSets
 
   /**
    * Default fill color.
@@ -8439,142 +9020,142 @@ declare class Document {
   /**
    * The color space used for the document.
    */
-  readonly documentColorSpace: DocumentColorSpace
+  documentColorSpace: DocumentColorSpace
 
   /**
    * The embedded art items in this layer.
    */
-  readonly embeddedItems: EmbeddedItems
+  embeddedItems: EmbeddedItems
 
   /**
    * The file associated with the document.
    */
-  readonly fullName: File
+  fullName: File
 
   /**
    * The bounds of the illustration excluding stroke width.
    */
-  readonly geometricBounds: Rect
+  geometricBounds: [number, number, number, number]
 
   /**
    * The gradients available in this document.
    */
-  readonly gradients: Gradients
+  gradients: Gradients
 
   /**
    * The graph art items in this document.
    */
-  readonly graphItems: GraphItems
+  graphItems: GraphItems
 
   /**
    * The graphic styles defined in this document.
    */
-  readonly graphicStyles: ArtStyles
+  graphicStyles: GraphicStyles
 
   /**
    * The group items in this document.
    */
-  readonly groupItems: GroupItems
+  groupItems: GroupItems
 
   /**
    *
    */
-  readonly height: number
+  height: number
 
   /**
    * The list of inks in this document.
    */
-  readonly inkList: Ink[]
+  inkList: Ink[]
 
   /**
    * The Kinsoku set.
    */
-  readonly kinsokuSet: string[]
+  kinsokuSet: string[]
 
   /**
    * The layers in this document.
    */
-  readonly layers: Layers
+  layers: Layers
 
   /**
    * The text frame items in this story.
    */
-  readonly legacyTextItems: LegacyTextItems
+  legacyTextItems: LegacyTextItems
 
   /**
    * The mesh art items in this document.
    */
-  readonly meshItems: MeshItems
+  meshItems: MeshItems
 
   /**
    * The Mojikumi set.
    */
-  readonly mojikumiSet: string[]
+  mojikumiSet: string[]
 
   /**
    * The document's name.
    */
-  readonly name: string
+  name: string
 
   /**
    * The non-native art items in this document.
    */
-  readonly nonNativeItems: NonNativeItems
+  nonNativeItems: NonNativeItems
 
   /**
    *
    */
-  readonly outputResolution: number
+  outputResolution: number
 
   /**
    * All the artwork in this document.
    */
-  readonly pageItems: PageItems
+  pageItems: PageItems
 
   /**
    *
    */
-  pageOrigin: Point | number[]
+  pageOrigin: Point
 
   /**
    * The list of paragraph styles in this document.
    */
-  readonly paragraphStyles: ParagraphStyles
+  paragraphStyles: ParagraphStyles
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Path specification for the document.
    */
-  readonly path: File
+  path: File
 
   /**
    * The path artwork in this document.
    */
-  readonly pathItems: PathItems
+  pathItems: PathItems
 
   /**
    * The patterns available in this document.
    */
-  readonly patterns: Patterns
+  patterns: Patterns
 
   /**
    * The placed art items in this document.
    */
-  readonly placedItems: PlacedItems
+  placedItems: PlacedItems
 
   /**
    * The plugin art items in this document.
    */
-  readonly pluginItems: PluginItems
+  pluginItems: PluginItems
 
   /**
    *
    */
-  readonly printTiles: boolean
+  printTiles: boolean
 
   /**
    * The document raster effects settings.
@@ -8584,17 +9165,17 @@ declare class Document {
   /**
    * The raster art items in this document.
    */
-  readonly rasterItems: RasterItems
+  rasterItems: RasterItems
 
   /**
    *
    */
-  rulerOrigin: Point | number[]
+  rulerOrigin: Point
 
   /**
    *
    */
-  readonly rulerUnits: RulerUnits
+  rulerUnits: RulerUnits
 
   /**
    * Has the document been saved?
@@ -8604,82 +9185,82 @@ declare class Document {
   /**
    * The selection within the document.
    */
-  selection: any
+  selection: any[] | null
 
   /**
    *
    */
-  readonly showPlacedImages: boolean
+  showPlacedImages: boolean
 
   /**
    *
    */
-  readonly splitLongPaths: boolean
+  splitLongPaths: boolean
 
   /**
    * The custom spot colors available in this document.
    */
-  readonly spots: Spots
+  spots: Spots
 
   /**
    * Is the file a stationery file?
    */
-  readonly stationery: boolean
+  stationery: boolean
 
   /**
    * The story items in this document.
    */
-  readonly stories: Stories
+  stories: Stories
 
   /**
    * The Swatch Groups in this document.
    */
-  readonly swatchGroups: SwatchGroups
+  swatchGroups: SwatchGroups
 
   /**
    * The swatches in this document.
    */
-  readonly swatches: Swatches
+  swatches: Swatches
 
   /**
    * The symbol items in this document.
    */
-  readonly symbolItems: SymbolItems
+  symbolItems: SymbolItems
 
   /**
    * The symbols defined in this document.
    */
-  readonly symbols: Symbols
+  symbols: Symbols
 
   /**
    * The tags in this document.
    */
-  readonly tags: Tags
+  tags: Tags
 
   /**
    * The text frame items in this document.
    */
-  readonly textFrames: TextFrameItems
+  textFrames: TextFrameItems
 
   /**
    *
    */
-  readonly tileFullPages: boolean
+  tileFullPages: boolean
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    *
    */
-  readonly useDefaultScreen: boolean
+  useDefaultScreen: boolean
 
   /**
    * The variables defined in this document.
    */
-  readonly variables: Variables
+  variables: Variables
 
   /**
    * The locked variables.
@@ -8689,17 +9270,17 @@ declare class Document {
   /**
    * The views in this document.
    */
-  readonly views: Views
+  views: Views
 
   /**
    * The visible bounds of the illustration including stroke width.
    */
-  readonly visibleBounds: Rect
+  visibleBounds: [number, number, number, number]
 
   /**
    *
    */
-  readonly width: number
+  width: number
 
   /**
    * Activate the first window associated with the document.
@@ -8719,10 +9300,10 @@ declare class Document {
    * @param destination The destination coordinate system.
    */
   convertCoordinate(
-    coordinate: Point | number[],
+    coordinate: Point,
     source: CoordinateSystem,
     destination: CoordinateSystem,
-  ): Point | number[]
+  ): Point
 
   /**
    * Export the specified document(s)
@@ -8731,6 +9312,22 @@ declare class Document {
    * @param options Options for the file type specified.
    */
   exportFile(exportFile: File, exportFormat: ExportType, options?: any): void
+
+  /**
+   * Export the specified document/asset(s)/artboard(s)
+   * @param exportFolder The folder where the exported documents/assets/artboards are saved.
+   * @param exportFormat The file type in which the document is exported.
+   * @param options Options for the file type specified.
+   * @param itemToExport What to export.
+   * @param fileNamePrefix String prepended to each file name.
+   */
+  exportForScreens(
+    exportFolder: File,
+    exportFormat: ExportForScreensType,
+    options?: any,
+    itemToExport?: ExportForScreensItemToExport,
+    fileNamePrefix?: string,
+  ): void
 
   /**
    * Save all PDF presets to a file.
@@ -8776,6 +9373,12 @@ declare class Document {
   fitArtboardToSelectedArt(index?: number): boolean
 
   /**
+   * Retrieves the pageitem using Uuid.
+   * @param uuid Uuid of pageitem.
+   */
+  getPageItemFromUuid(uuid: string): PageItem
+
+  /**
    * Gets the active plane of the active perspective grid of the document.
    */
   getPerspectiveActivePlane(): PerspectiveGridPlaneType
@@ -8791,7 +9394,11 @@ declare class Document {
    * @param clipBounds The rectangular region of the artwork for image capture. If the parameter is omitted, the entire artwork bound is captured.
    * @param options Describes the image capture options.
    */
-  imageCapture(imageFile: File, clipBounds?: Rect, options?: ImageCaptureOptions): void
+  imageCapture(
+    imageFile: File,
+    clipBounds?: [number, number, number, number],
+    options?: ImageCaptureOptions,
+  ): void
 
   /**
    * Load the character styles from the Illustrator file.
@@ -8810,6 +9417,7 @@ declare class Document {
    * @param creationTime For Internal Use.
    * @param adobeStockId For Internal Use.
    * @param adobeStockLicense For Internal Use.
+   * @param shouldLoadToPlaceGun Whether or not to load the imported file to placegun.
    */
   importFile(
     importFile: File,
@@ -8821,6 +9429,7 @@ declare class Document {
     creationTime?: number,
     adobeStockId?: string,
     adobeStockLicense?: string,
+    shouldLoadToPlaceGun?: boolean,
   ): void
 
   /**
@@ -8874,7 +9483,11 @@ declare class Document {
    * @param clipBounds The rectangular region of the artwork for the rasterization. If the parameter is omitted, the bounds of the source art(s) is used instead.
    * @param options Describes the rasterization options.
    */
-  rasterize(sourceArt: any, clipBounds?: Rect, options?: RasterizeOptions): RasterItem
+  rasterize(
+    sourceArt: any,
+    clipBounds?: [number, number, number, number],
+    options?: RasterizeOptions,
+  ): PageItem
 
   /**
    * Rearrange Artboards in the document.
@@ -8929,7 +9542,14 @@ declare class Document {
    * @param imageFile The TIFF file to which the captured image should be written.
    * @param windowSize The size to make the window before capture.
    */
-  windowCapture(imageFile: File, windowSize: Point | number[]): void
+  windowCapture(imageFile: File, windowSize: Point): void
+
+  /**
+   * Capture the current document window to the target TIFF image file.
+   * @param file The file to write the library in.
+   * @param libraryType Type of library to write as.
+   */
+  writeAsLibrary(file: File, libraryType: LibraryType): void
 }
 
 /**
@@ -8939,7 +9559,7 @@ declare class Layer {
   /**
    * The absolute drawing order of the layer.
    */
-  readonly absoluteZOrderPosition: number
+  absoluteZOrderPosition: number
 
   /**
    * Is the artwork used to create a knockout.
@@ -8959,7 +9579,7 @@ declare class Layer {
   /**
    * The compound path artwork in this layer.
    */
-  readonly compoundPathItems: CompoundPathItems
+  compoundPathItems: CompoundPathItems
 
   /**
    * Is rendered as dimmed in this layer?
@@ -8969,12 +9589,12 @@ declare class Layer {
   /**
    * The graph art items in this layer.
    */
-  readonly graphItems: GraphItems
+  graphItems: GraphItems
 
   /**
    * The group items in this layer.
    */
-  readonly groupItems: GroupItems
+  groupItems: GroupItems
 
   /**
    * Is any artwork in this layer selected? Setting this property to false deselects all artwork in the layer.
@@ -8989,12 +9609,12 @@ declare class Layer {
   /**
    * Nested layers.
    */
-  readonly layers: Layers
+  layers: Layers
 
   /**
    * The text frame items in this story.
    */
-  readonly legacyTextItems: LegacyTextItems
+  legacyTextItems: LegacyTextItems
 
   /**
    * Is the layer editable?
@@ -9004,7 +9624,7 @@ declare class Layer {
   /**
    * The mesh art items in this layer.
    */
-  readonly meshItems: MeshItems
+  meshItems: MeshItems
 
   /**
    * The layer's name.
@@ -9014,7 +9634,7 @@ declare class Layer {
   /**
    * The non-native art items in this layer.
    */
-  readonly nonNativeItems: NonNativeItems
+  nonNativeItems: NonNativeItems
 
   /**
    * The layer's opacity (between 0.0 and 100.0)
@@ -9024,27 +9644,27 @@ declare class Layer {
   /**
    * All the artwork in this layer.
    */
-  readonly pageItems: PageItems
+  pageItems: PageItems
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The path artwork in this layer.
    */
-  readonly pathItems: PathItems
+  pathItems: PathItems
 
   /**
    * The placed art items in this layer.
    */
-  readonly placedItems: PlacedItems
+  placedItems: PlacedItems
 
   /**
    * The plugin art items in this layer.
    */
-  readonly pluginItems: PluginItems
+  pluginItems: PluginItems
 
   /**
    * Is the layer rendered in preview mode?
@@ -9059,7 +9679,7 @@ declare class Layer {
   /**
    * The raster art items in this layer.
    */
-  readonly rasterItems: RasterItems
+  rasterItems: RasterItems
 
   /**
    * Is the layer sliced (default: false)
@@ -9069,17 +9689,17 @@ declare class Layer {
   /**
    * The symbol items in this layer.
    */
-  readonly symbolItems: SymbolItems
+  symbolItems: SymbolItems
 
   /**
    * The text frame items in this layer.
    */
-  readonly textFrames: TextFrameItems
+  textFrames: TextFrameItems
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Is the layer visible?
@@ -9089,24 +9709,17 @@ declare class Layer {
   /**
    * The drawing order of the layer.
    */
-  readonly zOrderPosition: number
+  zOrderPosition: number
 
   /**
    * Move the object.
-   * @param relativeObject
-   * @param insertionLocation
    */
-  move(relativeObject: object, insertionLocation: any): Layer
+  move(relativeObject: object, insertionLocation: ElementPlacement): Layer
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 
   /**
    * Arranges the layer relative to other layers.
@@ -9122,17 +9735,17 @@ declare class View {
   /**
    * The bounding rectangle of this view.
    */
-  readonly bounds: Rect
+  bounds: [number, number, number, number]
 
   /**
    * The center point of this view.
    */
-  centerPoint: Point | number[]
+  centerPoint: Point
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The mode of display.
@@ -9142,7 +9755,12 @@ declare class View {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
+
+  /**
+   * The zoom factor of this view that is visible to user.
+   */
+  visibleZoom: number
 
   /**
    * The zoom factor of this view.
@@ -9157,7 +9775,7 @@ declare class Gradient {
   /**
    * The stops in this gradient.
    */
-  readonly gradientStops: GradientStops
+  gradientStops: GradientStops
 
   /**
    * The gradient's name.
@@ -9167,7 +9785,7 @@ declare class Gradient {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The gradient type.
@@ -9177,17 +9795,12 @@ declare class Gradient {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -9212,7 +9825,7 @@ declare class GradientStop {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Location of color in the blend (in percent)
@@ -9222,17 +9835,12 @@ declare class GradientStop {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -9242,27 +9850,27 @@ declare class Preferences {
   /**
    * Options to use when opening or placing a AutoCAD file.
    */
-  readonly AutoCADFileOptions: OpenOptionsAutoCAD
+  AutoCADFileOptions: OpenOptionsAutoCAD
 
   /**
    * Options to use when opening or placing a PDF file.
    */
-  readonly PDFFileOptions: OpenOptionsPDF
+  PDFFileOptions: OpenOptionsPDF
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Options to use when opening or placing a Photoshop file.
    */
-  readonly photoshopFileOptions: OpenOptionsPhotoshop
+  photoshopFileOptions: OpenOptionsPhotoshop
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Retrieve the value of the application preference key as boolean.
@@ -9287,6 +9895,12 @@ declare class Preferences {
    * @param key The preference key.
    */
   getStringPreference(key: string): string
+
+  /**
+   * Checks whether the application preference key exists.
+   * @param key The preference key.
+   */
+  preferenceExists(key: string): boolean
 
   /**
    * Delete the application preference key.
@@ -9345,17 +9959,17 @@ declare class Spot {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Kind of the spot color (i.e. RGB, CMYK or LAB), it is the name of color kind contained in spot.
    */
-  readonly spotKind: SpotColorKind
+  spotKind: SpotColorKind
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Gets the internal color of a spot.
@@ -9366,11 +9980,6 @@ declare class Spot {
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -9390,27 +9999,22 @@ declare class Variable {
   /**
    * All the artwork in this document.
    */
-  readonly pageItems: PageItems
+  pageItems: PageItems
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -9425,12 +10029,12 @@ declare class DataSet {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Displays the dynamic data that has been captured in the dataset.
@@ -9441,11 +10045,6 @@ declare class DataSet {
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 
   /**
    * Re-apply the dynamic data of the active dataset to the artboard.
@@ -9470,22 +10069,17 @@ declare class Swatch {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -9500,12 +10094,12 @@ declare class SwatchGroup {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Add a spot swatch to the group.
@@ -9528,11 +10122,6 @@ declare class SwatchGroup {
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -9547,22 +10136,17 @@ declare class Pattern {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -9577,29 +10161,22 @@ declare class Symbol {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Duplicate this object.
-   * @param relativeObject
-   * @param insertionLocation
    */
-  duplicate(relativeObject: object, insertionLocation: any): Symbol
+  duplicate(relativeObject: object, insertionLocation: ElementPlacement): Symbol
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -9614,12 +10191,12 @@ declare class Brush {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Apply a brush or art style to object(s)
@@ -9629,45 +10206,40 @@ declare class Brush {
 }
 
 /**
- * An art style.
+ * A graphic style. Each graphic style defines a set of appearance attributes that you can apply
+ * non-destructively to page items. Graphic styles are contained in documents. Scripts cannot create new
+ * graphic styles.
  */
-declare class ArtStyle {
+declare class GraphicStyle {
   /**
-   * The art style's name.
+   * The graphic style name.
    */
   name: string
 
   /**
-   * The object's container.
+   * The document that contains this graphic style.
    */
-  readonly parent: object
+  readonly parent: Document
 
   /**
-   * The class name of the object.
+   * The class name of the referenced object.
    */
   readonly typename: string
 
   /**
-   * Apply a brush or art style to object(s)
-   * @param artItem The page item(s) to apply to.
+   * Applies this art style to a specified art item.
    */
-  applyTo(artItem: any): void
+  applyTo(artItem: PageItem): void
 
   /**
-   * Merge an art style to object(s) current style(s)
-   * @param artItem The page item(s) to merge to.
+   * Merges this art style into the current styles of a specified art item.
    */
-  mergeTo(artItem: any): void
+  mergeTo(artItem: PageItem): void
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -9675,29 +10247,34 @@ declare class ArtStyle {
  */
 declare class TextFont {
   /**
+   * The font's Axis Vector.
+   */
+  axisVector: number[]
+
+  /**
    * The font's family name.
    */
-  readonly family: string
+  family: string
 
   /**
    * The font's full name.
    */
-  readonly name: string
+  name: string
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The font's style name.
    */
-  readonly style: string
+  style: string
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 }
 
 /**
@@ -9707,12 +10284,12 @@ declare class PageItem {
   /**
    * The value of the Adobe URL tag assigned to this artwork item.
    */
-  URL: string
+  uRL: string
 
   /**
    * The absolute drawing order of the layer.
    */
-  readonly absoluteZOrderPosition: number
+  absoluteZOrderPosition: number
 
   /**
    * Is the artwork used to create a knockout.
@@ -9727,17 +10304,17 @@ declare class PageItem {
   /**
    * The bounds of the artwork including stroke width and controls.
    */
-  readonly controlBounds: Rect
+  controlBounds: [number, number, number, number]
 
   /**
    * Can the art item be modified.
    */
-  readonly editable: boolean
+  editable: boolean
 
   /**
    * The bounds of the artwork excluding stroke width.
    */
-  readonly geometricBounds: Rect
+  geometricBounds: [number, number, number, number]
 
   /**
    * The height of the art item.
@@ -9757,7 +10334,7 @@ declare class PageItem {
   /**
    * The layer to which this artwork belongs.
    */
-  readonly layer: Layer
+  layer: Layer
 
   /**
    * The left position of the art item.
@@ -9787,7 +10364,7 @@ declare class PageItem {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Is this artwork item aligned to Pixel Grid?
@@ -9812,7 +10389,7 @@ declare class PageItem {
   /**
    * The collection of tags associated with this page item.
    */
-  readonly tags: Tags
+  tags: Tags
 
   /**
    * The top position of the art item.
@@ -9822,7 +10399,12 @@ declare class PageItem {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
+
+  /**
+   * 	The PageItem's unique identifier.
+   */
+  readonly uuid: string
 
   /**
    * The visibility variable bound to this page item.
@@ -9832,7 +10414,7 @@ declare class PageItem {
   /**
    * The visible bounds of the artwork including stroke width.
    */
-  readonly visibleBounds: Rect
+  visibleBounds: [number, number, number, number]
 
   /**
    * The width of the art item.
@@ -9857,11 +10439,10 @@ declare class PageItem {
   /**
    * The drawing order of the art within it's group or layer.
    */
-  readonly zOrderPosition: number
+  zOrderPosition: number
 
   /**
    * Apply effect to selected artItem.
-   * @param liveEffectXML
    */
   applyEffect(liveEffectXML: string): void
 
@@ -9879,27 +10460,18 @@ declare class PageItem {
 
   /**
    * Duplicate this object.
-   * @param relativeObject
-   * @param insertionLocation
    */
-  duplicate(relativeObject: object, insertionLocation: any): PageItem
+  duplicate(relativeObject: object, insertionLocation: ElementPlacement): PageItem
 
   /**
    * Move the object.
-   * @param relativeObject
-   * @param insertionLocation
    */
-  move(relativeObject: object, insertionLocation: any): PageItem
+  move(relativeObject: object, insertionLocation: ElementPlacement): PageItem
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 
   /**
    * Scale art object(s)
@@ -10001,7 +10573,7 @@ declare class CompoundPathItem extends PageItem {
   /**
    * The path artwork in this compound path.
    */
-  readonly pathItems: PathItems
+  pathItems: PathItems
 }
 
 /**
@@ -10016,12 +10588,12 @@ declare class Tag {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * The data stored in this tag.
@@ -10032,11 +10604,6 @@ declare class Tag {
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -10046,7 +10613,7 @@ declare class PathItem extends PageItem {
   /**
    * The area of this path in square points.
    */
-  readonly area: number
+  area: number
 
   /**
    * Should this be used as a clipping path?
@@ -10086,12 +10653,12 @@ declare class PathItem extends PageItem {
   /**
    * The length of this path in points.
    */
-  readonly length: number
+  length: number
 
   /**
    *
    */
-  readonly pathPoints: PathPoints
+  pathPoints: PathPoints
 
   /**
    * The polarity the path.
@@ -10106,7 +10673,7 @@ declare class PathItem extends PageItem {
   /**
    * All the selected points in the path.
    */
-  readonly selectedPathPoints: PathPoints
+  selectedPathPoints: any[]
 
   /**
    * Type of line capping.
@@ -10157,7 +10724,7 @@ declare class PathItem extends PageItem {
    * Set the path using the provided array of path point (x, y) coordinate pairs.
    * @param pathPoints Array of (x, y) coordinate pairs for the path points.
    */
-  setEntirePath(pathPoints: number[][]): void
+  setEntirePath(pathPoints: any[]): void
 }
 
 /**
@@ -10167,17 +10734,17 @@ declare class PathPoint {
   /**
    * The position (coordinates) of the anchor point.
    */
-  anchor: Point | number[]
+  anchor: Point
 
   /**
    * Location of the left direction point (in position)
    */
-  leftDirection: Point | number[]
+  leftDirection: Point
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The type of point: smooth/corner.
@@ -10187,7 +10754,7 @@ declare class PathPoint {
   /**
    * Location of the right direction point (out position)
    */
-  rightDirection: Point | number[]
+  rightDirection: Point
 
   /**
    * The path point selected state.
@@ -10197,17 +10764,12 @@ declare class PathPoint {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -10217,27 +10779,27 @@ declare class RasterItem extends PageItem {
   /**
    * The number of bits per channel.
    */
-  readonly bitsPerChannel: number
+  bitsPerChannel: number
 
   /**
    * Dimensions of raster art object regardless of transformations.
    */
-  boundingBox: Rect
+  boundingBox: [number, number, number, number]
 
   /**
    * The number of image channels.
    */
-  readonly channels: number
+  channels: number
 
   /**
    * List of colorant names.
    */
-  readonly colorants: string[]
+  colorants: string[]
 
   /**
    * Is the raster art a colorized grayscale image?
    */
-  readonly colorizedGrayscale: boolean
+  colorizedGrayscale: boolean
 
   /**
    * The content variable bound to this raster art object.
@@ -10252,12 +10814,12 @@ declare class RasterItem extends PageItem {
   /**
    * The file containing the raster artwork.
    */
-  readonly file: File
+  file: File
 
   /**
    * The color space of the raster image.
    */
-  readonly imageColorSpace: ImageColorSpace
+  imageColorSpace: ImageColorSpace
 
   /**
    * The transformation matrix of the raster art object.
@@ -10272,12 +10834,12 @@ declare class RasterItem extends PageItem {
   /**
    * Status of the linked image.
    */
-  readonly status: RasterLinkState
+  status: RasterLinkState
 
   /**
    * Is the raster art transparent?
    */
-  readonly transparent: boolean
+  transparent: boolean
 
   /**
    * Colorize the RasterItem with a CMYK or RGB Color.
@@ -10298,7 +10860,7 @@ declare class PlacedItem extends PageItem {
   /**
    * Dimensions of placed art object, regardless of transformations.
    */
-  readonly boundingBox: Rect
+  boundingBox: [number, number, number, number]
 
   /**
    * The content variable bound to this placed art object.
@@ -10369,12 +10931,12 @@ declare class PluginItem extends PageItem {
   /**
    * Is the plugin group a tracing?
    */
-  readonly isTracing: boolean
+  isTracing: boolean
 
   /**
    * The tracing object associated with this plugin item.
    */
-  readonly tracing: TracingObject
+  tracing: TracingObject
 }
 
 /**
@@ -10389,67 +10951,67 @@ declare class GroupItem extends PageItem {
   /**
    * The compound path artwork in this group.
    */
-  readonly compoundPathItems: CompoundPathItems
+  compoundPathItems: CompoundPathItems
 
   /**
    * The graph art items in this group.
    */
-  readonly graphItems: GraphItems
+  graphItems: GraphItems
 
   /**
    * The group items in this group.
    */
-  readonly groupItems: GroupItems
+  groupItems: GroupItems
 
   /**
    * The text frame items in this story.
    */
-  readonly legacyTextItems: LegacyTextItems
+  legacyTextItems: LegacyTextItems
 
   /**
    * The mesh art items in this group.
    */
-  readonly meshItems: MeshItems
+  meshItems: MeshItems
 
   /**
    * The non-native art items in this group.
    */
-  readonly nonNativeItems: NonNativeItems
+  nonNativeItems: NonNativeItems
 
   /**
    * All the artwork in this group.
    */
-  readonly pageItems: PageItems
+  pageItems: PageItems
 
   /**
    * The path artwork in this group.
    */
-  readonly pathItems: PathItems
+  pathItems: PathItems
 
   /**
    * The placed art items in this group.
    */
-  readonly placedItems: PlacedItems
+  placedItems: PlacedItems
 
   /**
    * The plugin art items in this group.
    */
-  readonly pluginItems: PluginItems
+  pluginItems: PluginItems
 
   /**
    * The raster art items in this group.
    */
-  readonly rasterItems: RasterItems
+  rasterItems: RasterItems
 
   /**
    * The symbol items in this group.
    */
-  readonly symbolItems: SymbolItems
+  symbolItems: SymbolItems
 
   /**
    * The text frame items in this group.
    */
-  readonly textFrames: TextFrameItems
+  textFrames: TextFrameItems
 }
 
 /**
@@ -10474,7 +11036,7 @@ declare class TextPath {
   /**
    * The area of this path in square points.
    */
-  readonly area: number
+  area: number
 
   /**
    * The mode used when compositing an object.
@@ -10494,7 +11056,7 @@ declare class TextPath {
   /**
    * Can the text path be modified.
    */
-  readonly editable: boolean
+  editable: boolean
 
   /**
    * Should the even-odd rule be used to determine insideness?
@@ -10544,12 +11106,12 @@ declare class TextPath {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    *
    */
-  readonly pathPoints: PathPoints
+  pathPoints: PathPoints
 
   /**
    * The polarity the path.
@@ -10569,7 +11131,7 @@ declare class TextPath {
   /**
    * All the selected points in the path.
    */
-  readonly selectedPathPoints: PathPoints
+  selectedPathPoints: any[]
 
   /**
    * Type of line capping.
@@ -10624,7 +11186,7 @@ declare class TextPath {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * The width of the text path.
@@ -10645,72 +11207,72 @@ declare class Story {
   /**
    * All the characters in this text range.
    */
-  readonly characters: Characters
+  characters: Characters
 
   /**
    * All the insertion points in this text range.
    */
-  readonly insertionPoints: InsertionPoints
+  insertionPoints: InsertionPoints
 
   /**
    * The number of characters in the story.
    */
-  readonly length: number
+  length: number
 
   /**
    * All the lines in this text range.
    */
-  readonly lines: Lines
+  lines: Lines
 
   /**
    * All the paragraphs in this text range.
    */
-  readonly paragraphs: Paragraphs
+  paragraphs: Paragraphs
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The text frame items in this story.
    */
-  readonly textFrames: TextFrameItems
+  textFrames: TextFrameItems
 
   /**
    * The text range of the story.
    */
-  readonly textRange: TextRange
+  textRange: TextRange
 
   /**
    * All the text in this text range.
    */
-  readonly textRanges: TextRanges
+  textRanges: TextRanges
 
   /**
    * The selected text (ranges) in the story.
    */
-  readonly textSelection: TextRange[]
+  textSelection: TextRange[]
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * All the words in this text range.
    */
-  readonly words: Words
+  words: Words
 }
 
 /**
  * Text frame item.
  */
-declare class TextFrame extends PageItem {
+declare class TextFrameItem extends PageItem {
   /**
    * The position of the anchor point (start of base line for point text)
    */
-  anchor: Point | number[]
+  anchor: Point
 
   /**
    * The type of a text anti-aliasing on text frame item.
@@ -10720,7 +11282,7 @@ declare class TextFrame extends PageItem {
   /**
    * All the characters in this text range.
    */
-  readonly characters: Characters
+  characters: Characters
 
   /**
    * The column count in the text frame (area text only)
@@ -10765,27 +11327,27 @@ declare class TextFrame extends PageItem {
   /**
    * All the insertion points in this text range.
    */
-  readonly insertionPoints: InsertionPoints
+  insertionPoints: InsertionPoints
 
   /**
    * The type of a text frame item.
    */
-  readonly kind: TextType
+  kind: TextType
 
   /**
    * All the lines in this text range.
    */
-  readonly lines: Lines
+  lines: Lines
 
   /**
    * The transformation matrix of the text frame object.
    */
-  readonly matrix: Matrix
+  matrix: Matrix
 
   /**
    * The linked text frame following this one.
    */
-  nextFrame: TextFrame
+  nextFrame: TextFrameItem
 
   /**
    * Is the optical alignment active?
@@ -10800,12 +11362,12 @@ declare class TextFrame extends PageItem {
   /**
    * All the paragraphs in this text range.
    */
-  readonly paragraphs: Paragraphs
+  paragraphs: Paragraphs
 
   /**
    * The linked text frame preceding this one.
    */
-  previousFrame: TextFrame
+  previousFrame: TextFrameItem
 
   /**
    * The row count in the text frame (area text only)
@@ -10830,42 +11392,42 @@ declare class TextFrame extends PageItem {
   /**
    * The story of the text frame.
    */
-  readonly story: Story
+  story: Story
 
   /**
    * The path for the text frame (area and path text)
    */
-  readonly textPath: TextPath
+  textPath: TextPath
 
   /**
    * The text range of the text frame.
    */
-  readonly textRange: TextRange
+  textRange: TextRange
 
   /**
    * All the text in this text range.
    */
-  readonly textRanges: TextRanges
+  textRanges: TextRanges
 
   /**
    * The selected text (ranges) in the story.
    */
-  readonly textSelection: TextRange[]
+  textSelection: TextRange[]
 
   /**
    * All the words in this text range.
    */
-  readonly words: Words
+  words: Words
 
   /**
    * Convert Area Type Text Object To Point Type Object.
    */
-  convertAreaObjectToPointObject(): TextFrame
+  convertAreaObjectToPointObject(): TextFrameItem
 
   /**
    * Convert Point Type Text Object To Area Type Object.
    */
-  convertPointObjectToAreaObject(): TextFrame
+  convertPointObjectToAreaObject(): TextFrameItem
 
   /**
    * Convert text item to path items.
@@ -10894,7 +11456,7 @@ declare class LegacyTextItem extends PageItem {
   /**
    * Has the legacy text item been updated to a native text frame item?
    */
-  readonly converted: boolean
+  converted: boolean
 
   /**
    * Create a native text frame from a legacy text item. The original legacy text item is deleted.
@@ -10909,7 +11471,7 @@ declare class TextRange {
   /**
    * The character properties for the text range.
    */
-  readonly characterAttributes: CharacterAttributes
+  characterAttributes: CharacterAttributes
 
   /**
    * Offset of the first character of the range from the beginning of the story, in characters.
@@ -10919,12 +11481,12 @@ declare class TextRange {
   /**
    * List of referenced character styles in the text range.
    */
-  readonly characterStyles: CharacterStyles
+  characterStyles: CharacterStyles
 
   /**
    * All the characters in this text range.
    */
-  readonly characters: Characters
+  characters: Characters
 
   /**
    * The text string.
@@ -10932,9 +11494,14 @@ declare class TextRange {
   contents: string
 
   /**
+   * End index of the text range.
+   */
+  end: number
+
+  /**
    * All the insertion points in this text range.
    */
-  readonly insertionPoints: InsertionPoints
+  insertionPoints: InsertionPoints
 
   /**
    * Controls the spacing between two characters (in milli-ems)
@@ -10949,52 +11516,57 @@ declare class TextRange {
   /**
    * All the lines in this text range.
    */
-  readonly lines: Lines
+  lines: Lines
 
   /**
    * The paragraph properties for the text range.
    */
-  readonly paragraphAttributes: ParagraphAttributes
+  paragraphAttributes: ParagraphAttributes
 
   /**
    * List of referenced paragraph styles in the text range.
    */
-  readonly paragraphStyles: ParagraphStyles
+  paragraphStyles: ParagraphStyles
 
   /**
    * All the paragraphs in this text range.
    */
-  readonly paragraphs: Paragraphs
+  paragraphs: Paragraphs
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
+
+  /**
+   * Start index of the text range.
+   */
+  start: number
 
   /**
    * The story of the text range.
    */
-  readonly story: Story
+  story: Story
 
   /**
    * All the text in this text range.
    */
-  readonly textRanges: TextRanges
+  textRanges: TextRanges
 
   /**
    * The selected text (ranges) in the text range.
    */
-  readonly textSelection: TextRange[]
+  textSelection: TextRange[]
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * All the words in this text range.
    */
-  readonly words: Words
+  words: Words
 
   /**
    * Change the capitalization of text.
@@ -11009,27 +11581,28 @@ declare class TextRange {
 
   /**
    * Duplicate this object.
-   * @param relativeObject
-   * @param insertionLocation
    */
-  duplicate(relativeObject: object, insertionLocation: any): TextRange
+  duplicate(relativeObject: object, insertionLocation: ElementPlacement): TextRange
+
+  /**
+   * Get the length of the first paragraph.
+   */
+  getParagraphLength(): number
+
+  /**
+   * Get the length of the first text run.
+   */
+  getTextRunLength(): number
 
   /**
    * Move the object.
-   * @param relativeObject
-   * @param insertionLocation
    */
-  move(relativeObject: object, insertionLocation: any): TextRange
+  move(relativeObject: object, insertionLocation: ElementPlacement): TextRange
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 
   /**
    * Select the text range.
@@ -11045,42 +11618,42 @@ declare class InsertionPoint {
   /**
    * All the characters in this text range.
    */
-  readonly characters: Characters
+  characters: Characters
 
   /**
    * All the lines in this text range.
    */
-  readonly lines: Lines
+  lines: Lines
 
   /**
    * All the paragraphs in this text range.
    */
-  readonly paragraphs: Paragraphs
+  paragraphs: Paragraphs
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The story of the text range.
    */
-  readonly story: Story
+  story: Story
 
   /**
    * All the text in this text range.
    */
-  readonly textRanges: TextRanges
+  textRanges: TextRanges
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * All the words in this text range.
    */
-  readonly words: Words
+  words: Words
 }
 
 /**
@@ -11090,7 +11663,7 @@ declare class CharacterStyle {
   /**
    * The character properties for the text range.
    */
-  readonly characterAttributes: CharacterAttributes
+  characterAttributes: CharacterAttributes
 
   /**
    * The character style's name.
@@ -11100,12 +11673,12 @@ declare class CharacterStyle {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Adds an element.
@@ -11128,11 +11701,6 @@ declare class CharacterStyle {
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -11142,7 +11710,7 @@ declare class ParagraphStyle {
   /**
    * The character properties for the text range.
    */
-  readonly characterAttributes: CharacterAttributes
+  characterAttributes: CharacterAttributes
 
   /**
    * The paragraph style's name.
@@ -11152,17 +11720,17 @@ declare class ParagraphStyle {
   /**
    * The paragraph properties for the text range.
    */
-  readonly paragraphAttributes: ParagraphAttributes
+  paragraphAttributes: ParagraphAttributes
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Adds an element.
@@ -11185,11 +11753,6 @@ declare class ParagraphStyle {
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
@@ -11257,6 +11820,31 @@ declare class CharacterAttributes {
   contextualLigature: boolean
 
   /**
+   * Diacritics positioning attribute.
+   */
+  diacVPos: DiacVPosType
+
+  /**
+   * Diacritics x offset attribute.
+   */
+  diacXOffset: number
+
+  /**
+   * Diacritics y offset attribute.
+   */
+  diacYOffset: number
+
+  /**
+   * Digit set attribute.
+   */
+  digitSet: DigitSetType
+
+  /**
+   * Direction override attribute.
+   */
+  dirOverride: DirOverrideType
+
+  /**
    * Whether the discretionary ligature should be used.
    */
   discretionaryLigature: boolean
@@ -11285,6 +11873,21 @@ declare class CharacterAttributes {
    * Does the Japanese OpenType support italics?
    */
   italics: boolean
+
+  /**
+   * Justification alternates attribute.
+   */
+  justificationAlternates: boolean
+
+  /**
+   * Does the Japanese OpenType support kana?
+   */
+  kana: boolean
+
+  /**
+   * Kashidas attribute.
+   */
+  kashidas: KashidasType
 
   /**
    * The automatic kerning method to use.
@@ -11339,7 +11942,7 @@ declare class CharacterAttributes {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Does the Japanese OpenType support proportional font?
@@ -11377,6 +11980,11 @@ declare class CharacterAttributes {
   stylisticAlternates: boolean
 
   /**
+   * Stylistic sets attribute.
+   */
+  stylisticSets: number
+
+  /**
    * Whether the OpenType swash should be used.
    */
   swash: boolean
@@ -11409,7 +12017,7 @@ declare class CharacterAttributes {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Whether to underline the text.
@@ -11477,6 +12085,11 @@ declare class ParagraphAttributes {
   burasagariType: BurasagariTypeEnum
 
   /**
+   * Composer engine attribute.
+   */
+  composerEngine: ComposerEngineType
+
+  /**
    * Desired glyph scaling expressed as a percentage.
    */
   desiredGlyphScaling: number
@@ -11525,6 +12138,11 @@ declare class ParagraphAttributes {
    * Paragraph justification.
    */
   justification: Justification
+
+  /**
+   * The Kashida Width attribute.
+   */
+  kashidaWidth: KashidaWidthType
 
   /**
    * The Kinsoku Shori name.
@@ -11607,9 +12225,14 @@ declare class ParagraphAttributes {
   mojikumi: string
 
   /**
+   * Main writing direction attribute.
+   */
+  paragraphDirection: ParagraphDirectionType
+
+  /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Right indent of margin expressed in points.
@@ -11644,7 +12267,7 @@ declare class ParagraphAttributes {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 }
 
 /**
@@ -11659,7 +12282,7 @@ declare class OpenOptionsPhotoshop {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Should hidden layers be preserved when the document is converted (default: false)
@@ -11684,7 +12307,7 @@ declare class OpenOptionsPhotoshop {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 }
 
 /**
@@ -11697,6 +12320,11 @@ declare class OpenOptionsPDF {
   pDFCropToBox: PDFBoxType
 
   /**
+   * Range of pages when opening a multipage document [possible values: 'all', range(for example: '1,2,3-5,8')]
+   */
+  pageRangeToOpen: string
+
+  /**
    * What page should be used when opening a multipage document (default: 1)
    */
   pageToOpen: number
@@ -11704,12 +12332,17 @@ declare class OpenOptionsPDF {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
+
+  /**
+   * Import PDF pages as links for optimal performance (default: true for PageRangeToOpen=all; false otherwise)
+   */
+  placeAsLinks: boolean
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 }
 
 /**
@@ -11739,7 +12372,7 @@ declare class OpenOptionsAutoCAD {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * To scale lineweights by the same amount as rest of the drawing (default: false)
@@ -11754,7 +12387,7 @@ declare class OpenOptionsAutoCAD {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Units to which to map (default: Millimeters)
@@ -11819,7 +12452,7 @@ declare class TracingOptions {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Path fidelity for tracing.
@@ -11829,7 +12462,7 @@ declare class TracingOptions {
   /**
    * The name of the preset in use. Read-only.
    */
-  readonly preset: string
+  preset: string
 
   /**
    * Controls whether to snap curve to lines.
@@ -11869,7 +12502,7 @@ declare class TracingOptions {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * The visualization mode.
@@ -11896,37 +12529,37 @@ declare class TracingObject {
   /**
    * The number of anchors in the tracing result.
    */
-  readonly anchorCount: number
+  anchorCount: number
 
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * The number of paths in the tracing result.
    */
-  readonly pathCount: number
+  pathCount: number
 
   /**
    * The source art used when creating a new tracing object.
    */
-  readonly sourceArt: PageItem
+  sourceArt: PageItem
 
   /**
    * The options used when tracing the artwork.
    */
-  readonly tracingOptions: TracingOptions
+  tracingOptions: TracingOptions
 
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * The number of colors used in the tracing result.
    */
-  readonly usedColorCount: number
+  usedColorCount: number
 
   /**
    * Expand the tracing to paths. Deletes this tracing object.
@@ -11941,13 +12574,53 @@ declare class TracingObject {
 }
 
 /**
+ * An (exportable) asset.
+ */
+declare class Asset {
+  /**
+   * The UID for the asset which is unique within a document.
+   */
+  assetID: number
+
+  /**
+   * Name of the asset.
+   */
+  assetName: string
+
+  /**
+   * The object's container.
+   */
+  parent: object
+
+  /**
+   * The class name of the object.
+   */
+  typename: string
+
+  /**
+   * Gets the normalized name without special characters, such that it can be used as a file name.
+   */
+  getNormalizedName(): string
+
+  /**
+   * Deletes this object.
+   */
+  remove(): void
+
+  /**
+   * Deletes all elements.
+   */
+  removeAll(): void
+}
+
+/**
  * An artboard object.
  */
 declare class Artboard {
   /**
    * Size and position of artboard.
    */
-  artboardRect: Rect
+  artboardRect: [number, number, number, number]
 
   /**
    * The name of the artboard.
@@ -11957,12 +12630,12 @@ declare class Artboard {
   /**
    * The object's container.
    */
-  readonly parent: object
+  parent: object
 
   /**
    * Ruler origin of artboard.It is relative to left-bottom corner of the Artboard.
    */
-  rulerOrigin: Point | number[]
+  rulerOrigin: Point
 
   /**
    * Pixel aspect ratio, used in ruler visualization if the units are pixels.
@@ -11987,26 +12660,637 @@ declare class Artboard {
   /**
    * The class name of the object.
    */
-  readonly typename: string
+  typename: string
 
   /**
    * Deletes this object.
    */
   remove(): void
-
-  /**
-   * Deletes all elements.
-   */
-  removeAll(): void
 }
 
 /**
- * Describes a rectangle. This class is also a four-element collection.
- *
- * Format: left, top, right, bottom.
- * Width and height can be computed using `[r[2] - r[0], r[1] - r[3]]`.
- *
- * **Note:** y axis is flipped. Upper means negative number, lower means positive.
- *
+ * Describes a point. This class is also a two-element collection.
  */
-type Rect = [number, number, number, number]
+declare class Point {
+  new(value1: number, value2: number): [number, number]
+}
+
+declare const Rect: {
+  new (value1: number, value2: number, value3: number, value4: number): [
+    number,
+    number,
+    number,
+    number
+  ]
+}
+
+declare enum ElementPlacement {
+  INSIDE = 0,
+  PLACEATBEGINNING = 1,
+  PLACEATEND = 2,
+  PLACEBEFORE = 3,
+  PLACEAFTER = 4,
+}
+
+declare enum PerspectiveGridType {
+  OnePointPerspectiveGridType = 0,
+  TwoPointPerspectiveGridType = 1,
+  ThreePointPerspectiveGridType = 2,
+  InvalidPerspectiveGridType = 3,
+}
+
+declare enum ViewRasterType {
+  TRACINGVIEWRASTERADJUSTEDIMAGE = 0,
+  TRACINGVIEWRASTERNOIMAGE = 1,
+  TRACINGVIEWRASTERORIGINALIMAGE = 2,
+  TRACINGVIEWRASTERTRANSPARENTIMAGE = 3,
+}
+
+declare enum ViewVectorType {
+  TRACINGVIEWVECTORNOTRACINGRESULT = 0,
+  TRACINGVIEWVECTOROUTLINES = 1,
+  TRACINGVIEWVECTOROUTLINESWITHTRACING = 2,
+  TRACINGVIEWVECTORTRACINGRESULT = 3,
+}
+
+declare module aiMenu {
+  let file: {
+    new: "New"
+    newFromTemplate: "newFromTemplate"
+    open: "open"
+    browseInBridge: "Adobe Bridge Browse"
+    close: "close"
+    save: "save"
+    saveAs: "saveas"
+    saveACopy: "saveacopy"
+    saveAsTemplate: "saveastemplate"
+    saveSelectedSlices: "Adobe AI Save Selected Slices"
+    revert: "revert"
+    searchAdobeStock: "Search Adobe Stock"
+    place: "AI Place"
+    export: {
+      export: "export"
+      exportForScreens: "exportForScreens"
+      saveForWebAndDevices: "Adobe AI Save For Web"
+    }
+    exportSelection: "exportSelection"
+    packageMenuItem: "Package Menu Item"
+    scripts: {
+      otherScript: "ai_browse_for_script"
+    }
+    documentSetup: "document"
+    documentColorMode: {
+      cmykColor: "doc-color-cmyk"
+      rgbColor: "doc-color-rgb"
+    }
+    fileInfo: "File Info"
+    print: "Print"
+    exit: "quit"
+  }
+  let edit: {
+    undo: "undo"
+    redo: "redo"
+    cut: "cut"
+    copy: "copy"
+    paste: "paste"
+    pasteInFront: "pasteFront"
+    pasteInBack: "pasteBack"
+    pasteInPlace: "pasteInPlace"
+    pasteOnAllArtboards: "pasteInAllArtboard"
+    clear: "clear"
+    findAndReplace: "Find and Replace"
+    findNext: "Find Next"
+    checkSpelling: "Check Spelling"
+    definePattern: "Define Pattern Menu Item"
+    editColors: {
+      recolorArtwork: "Recolor Art Dialog"
+      adjustColorBalance: "Adjust3"
+      blendFrontToBack: "Colors3"
+      blendHorizontally: "Colors4"
+      blendVertically: "Colors5"
+      convertToCMYK: "Colors8"
+      convertToGrayscale: "Colors7"
+      convertToRGB: "Colors9"
+      invertColors: "Colors6"
+      overprintBlack: "Overprint2"
+      saturate: "Saturate3"
+    }
+    editOriginal: "EditOriginal Menu Item"
+    transparencyFlattenerPresets: "Transparency Presets"
+    tracingPresets: "TracingPresets"
+    printPresets: "Print Presets"
+    adobePDFPresets: "PDF Presets"
+    sWFPresets: "SWFPresets"
+    perspectiveGridPresets: "PerspectiveGridPresets"
+    colorSettings: "color"
+    assignProfile: "assignprofile"
+    keyboardShortcuts: "KBSC Menu Item"
+    preferences: {
+      general: "preference"
+      selectionAndAnchorDisplay: "selectPref"
+      type: "keyboardPref"
+      units: "unitundoPref"
+      guidesAndGrid: "guidegridPref"
+      smartGuides: "snapPref"
+      slices: "slicePref"
+      hyphenation: "hyphenPref"
+      pluginsAndScratchDisks: "pluginPref"
+      userInterface: "UIPref"
+      fileHandlingAndClipboard: "FileClipboardPref"
+      appearanceOfBlack: "BlackPref"
+    }
+  }
+  let preferences: {
+    general: "preference"
+    selectionAndAnchorDisplay: "selectPref"
+    type: "keyboardPref"
+    units: "unitundoPref"
+    guidesAndGrid: "guidegridPref"
+    smartGuides: "snapPref"
+    slices: "slicePref"
+    hyphenation: "hyphenPref"
+    pluginsAndScratchDisks: "pluginPref"
+    userInterface: "UIPref"
+    fileHandlingAndClipboard: "FileClipboardPref"
+    appearanceOfBlack: "BlackPref"
+  }
+  let object: {
+    transform: {
+      transformAgain: "transformagain"
+      move: "transformmove"
+      rotate: "transformrotate"
+      reflect: "transformreflect"
+      scale: "transformscale"
+      shear: "transformshear"
+      transformEach: "Transform v23"
+      resetBoundingBox: "AI Reset Bounding Box"
+    }
+    arrange: {
+      bringToFront: "sendToFront"
+      bringForward: "sendForward"
+      sendBackward: "sendBackward"
+      sendToBack: "sendToBack"
+      sendToCurrentLayer: "Selection Hat 2"
+    }
+    group: "group"
+    ungroup: "ungroup"
+    lock: {
+      selection: "lock"
+      allArtworkAbove: "Selection Hat 5"
+      otherLayers: "Selection Hat 7"
+    }
+    unlockAll: "unlockAll"
+    hide: {
+      selection: "hide"
+      allArtworkAbove: "Selection Hat 4"
+      otherLayers: "Selection Hat 6"
+    }
+    showAll: "showAll"
+    expand: "Expand3"
+    expandAppearance: "expandStyle"
+    flattenTransparency: "FlattenTransparency1"
+    rasterize: "Rasterize 8 menu item"
+    createGradientMesh: "make mesh"
+    createObjectMosaic: "AI Object Mosaic Plug-in4"
+    createTrimMarks: "TrimMark v25"
+    slice: {
+      make: "AISlice Make Slice"
+      release: "AISlice Release Slice"
+      createFromGuides: "AISlice Create from Guides"
+      createFromSelection: "AISlice Create from Selection"
+      duplicateSlice: "AISlice Duplicate"
+      combineSlices: "AISlice Combine"
+      divideSlices: "AISlice Divide"
+      deleteAll: "AISlice Delete All Slices"
+      sliceOptions: "AISlice Slice Options"
+      clipToArtboard: "AISlice Clip to Artboard"
+    }
+    path: {
+      join: "join"
+      average: "average"
+      outlineStroke: "OffsetPath v22"
+      offsetPath: "OffsetPath v23"
+      simplify: "simplify menu item"
+      addAnchorPoints: "Add Anchor Points2"
+      removeAnchorPoints: "Remove Anchor Points menu"
+      divideObjectsBelow: "Knife Tool2"
+      splitIntoGrid: "Rows and Columns…."
+      cleanUp: "cleanup menu item"
+    }
+    blend: {
+      make: "Path Blend Make"
+      release: "Path Blend Release"
+      expand: "Path Blend Expand"
+      blendOptions: "Path Blend Options"
+      replaceSpine: "Path Blend Replace Spine"
+      reverseSpine: "Path Blend Reverse Spine"
+      reverseFrontToBack: "Path Blend Reverse Stack"
+    }
+    envelopeDistort: {
+      makeWithWarp: "Make Warp"
+      makeWithMesh: "Create Envelope Grid"
+      makeWithTopObject: "Make Envelope"
+      release: "Release Envelope"
+      envelopeOptions: "Envelope Options"
+      expand: "Expand Envelope"
+      editContents: "Edit Envelope Contents"
+    }
+    perspective: {
+      attachToActivePlane: "Attach to Active Plane"
+      releaseWithPerspective: "Release with Perspective"
+      movePlaneToMatchObject: "Show Object Grid Plane"
+      editText: "Edit Original Object"
+    }
+    livePaint: {
+      make: "Make Planet X"
+      merge: "Marge Planet X"
+      release: "Release Planet X"
+      gapOptions: "Planet X Options"
+      expand: "Expand Planet X"
+    }
+    textWrap: {
+      make: "Make Text Wrap"
+      release: "Release Text Wrap"
+      textWrapOptions: "Text Wrap Options…"
+    }
+    clippingMask: {
+      make: "makeMask"
+      release: "releaseMask"
+      editContents: "editMask"
+    }
+    compoundPath: {
+      make: "compoundPath"
+      release: "noCompoundPath"
+    }
+    artboards: {
+      convertToArtboards: "setCropMarks"
+      rearrange: "ReArrange Artboards"
+      fitToArtworkBounds: "Fit Artboard to artwork bounds"
+      fitToSelectedArt: "Fit Artboard to selected Art"
+    }
+    graph: {
+      type: "setGraphStyle"
+      data: "editGraphData"
+      design: "graphDesigns"
+      column: "setBarDesign"
+      marker: "setIconDesign"
+    }
+    cropImage: "Crop Image"
+    makeMesh: "make mesh"
+  }
+  let type: {
+    glyphs: "alternate glyph palette plugin"
+    areaTypeOptions: "area-type-options"
+    typeOnAPath: {
+      rainbow: "Rainbow"
+      threeDRibbon: "3D ribbon"
+      skew: "Skew"
+      stairStep: "Stair Step"
+      gravity: "Gravity"
+      typeOnAPathOptions: "typeOnPathOptions"
+      updateLegacyTypeOnAPath: "updateLegacyTOP"
+    }
+    threadedText: {
+      create: "threadTextCreate"
+      releaseSelection: "releaseThreadedTextSelection"
+      removeThreading: "removeThreading"
+    }
+    compositeFonts: "Adobe internal composite font plugin"
+    kinsokuShoriSettings: "Adobe Kinsoku Settings"
+    mojikumiSettings: "Adobe MojiKumi Settings"
+    fitHeadline: "fitHeadline"
+    createOutlines: "outline"
+    findFont: "Adobe Illustrator Find Font Menu Item"
+    changeCase: {
+      upperCase: "UpperCase Change Case Item"
+      lowerCase: "LowerCase Change Case Item"
+      titleCase: "Title Case Change Case Item"
+      sentenceCase: "Sentence case Change Case Item"
+    }
+    smartPunctuation: "Adobe Illustrator Smart Punctuation Menu Item"
+    opticalMarginAlignment: "Adobe Optical Alignment Item"
+    showHiddenCharacters: "showHiddenChar"
+    typeOrientation: {
+      horizontal: "type-horizontal"
+      vertical: "type-vertical"
+    }
+  }
+  let select: {
+    all: "selectall"
+    allOnActiveArtboard: "selectallinartboard"
+    deselect: "deselectall"
+    globalEdit: "SmartEdit Menu Item"
+    reselect: "Find Reselect menu item"
+    inverse: "Inverse menu item"
+    nextObjectAbove: "Selection Hat 8"
+    nextObjectBelow: "Selection Hat 9"
+    same: {
+      appearance: "Find Appearance menu item"
+      appearanceAttribute: "Find Appearance Attributes menu item"
+      blendingMode: "Find Blending Mode menu item"
+      fillAndStroke: "Find Fill & Stroke menu item"
+      fillColor: "Find Fill Color menu item"
+      opacity: "Find Opacity menu item"
+      strokeColor: "Find Stroke Color menu item"
+      strokeWeight: "Find Stroke Weight menu item"
+      graphicStyle: "Find Style menu item"
+      symbolInstance: "Find Symbol Instance menu item"
+      linkBlockSeries: "Find Link Block Series menu item"
+    }
+    object: {
+      allOnSameLayers: "Selection Hat 3"
+      directionHandles: "Selection Hat 1"
+      notAlignedToPixelGrid: "Selection Hat 12"
+      bristleBrushStrokes: "Bristle Brush Strokes menu item"
+      brushStrokes: "Brush Strokes menu item"
+      clippingMasks: "Clipping Masks menu item"
+      strayPoints: "Stray Points menu item"
+      textObjects: "Text Objects menu item"
+      flashDynamicText: "Dynamic Text"
+      flashInputText: "Input Text"
+    }
+    saveSelection: "Selection Hat 10"
+    editSelection: "Selection Hat 11"
+  }
+  let effect: {
+    applyLastEffect: "Adobe Apply Last Effect"
+    lastEffect: "Adobe Last Effect"
+    documentRasterEffectsSettings: "Live Rasterize Effect Setting"
+    live3D: {
+      extrudeAndBevel: "Live 3DExtrude"
+      revolve: "Live 3DRevolve"
+      rotate: "Live 3DRotate"
+    }
+    convertTo: {
+      rectangle: "Live Rectangle"
+      roundedRectangle: "Live Rounded Rectangle"
+      ellipse: "Live Ellipse"
+    }
+    cropMarks: "Live Trim Marks"
+    distortAndTransform: {
+      freeDistort: "Live Free Distort"
+      puckerAndBloat: "Live Pucker & Bloat"
+      roughen: "Live Roughen"
+      transform: "Live Transform"
+      tweak: "Live Scribble and Tweak"
+      twist: "Live Twist"
+      zigZag: "Live Zig Zag"
+    }
+    path: {
+      offsetPath: "Live Offset Path"
+      outlineObject: "Live Outline Object"
+      outlineStroke: "Live Outline Stroke"
+    }
+    pathfinder: {
+      add: "Live Pathfinder Add"
+      intersect: "Live Pathfinder Intersect"
+      exclude: "Live Pathfinder Exclude"
+      subtract: "Live Pathfinder Subtract"
+      minusBack: "Live Pathfinder Minus Back"
+      divide: "Live Pathfinder Divide"
+      trim: "Live Pathfinder Trim"
+      merge: "Live Pathfinder Merge"
+      crop: "Live Pathfinder Crop"
+      outline: "Live Pathfinder Outline"
+      hardMix: "Live Pathfinder Hard Mix"
+      softMix: "Live Pathfinder Soft Mix"
+      trap: "Live Pathfinder Trap"
+    }
+    rasterize: "Live Rasterize"
+    stylize: {
+      dropShadow: "Live Adobe Drop Shadow"
+      feather: "Live Feather"
+      innerGlow: "Live Inner Glow"
+      outerGlow: "Live Outer Glow"
+      roundCorners: "Live Adobe Round Corners"
+      scribble: "Live Scribble Fill"
+      glowingEdges: "Live PSAdapter_plugin_GlwE"
+    }
+    svgFilters: {
+      applySVGFilter: "Live SVG Filters"
+      importSVGFilter: "SVG Filter Import"
+    }
+    warp: {
+      arc: "Live Deform Arc"
+      arcLower: "Live Deform Arc Lower"
+      arcUpper: "Live Deform Arc Upper"
+      arch: "Live Deform Arch"
+      bulge: "Live Deform Bulge"
+      shellLower: "Live Deform Shell Lower"
+      shellUpper: "Live Deform Shell Upper"
+      flag: "Live Deform Flag"
+      wave: "Live Deform Wave"
+      fish: "Live Deform Fish"
+      rise: "Live Deform Rise"
+      fisheye: "Live Deform Fisheye"
+      inflate: "Live Deform Inflate"
+      squeeze: "Live Deform Squeeze"
+      twist: "Live Deform Twist"
+    }
+    effectGallery: "Live PSAdapter_plugin_GEfc"
+    artistic: {
+      coloredPencil: "Live PSAdapter_plugin_ClrP"
+      cutout: "Live PSAdapter_plugin_Ct"
+      dryBrush: "Live PSAdapter_plugin_DryB"
+      filmGrain: "Live PSAdapter_plugin_FlmG"
+      fresco: "Live PSAdapter_plugin_Frsc"
+      neonGlow: "Live PSAdapter_plugin_NGlw"
+      paintDaubs: "Live PSAdapter_plugin_PntD"
+      paletteKnife: "Live PSAdapter_plugin_PltK"
+      plasticWrap: "Live PSAdapter_plugin_PlsW"
+      posterEdges: "Live PSAdapter_plugin_PstE"
+      roughPastels: "Live PSAdapter_plugin_RghP"
+      smudgeStick: "Live PSAdapter_plugin_SmdS"
+      sponge: "Live PSAdapter_plugin_Spng"
+      underpainting: "Live PSAdapter_plugin_Undr"
+      watercolor: "Live PSAdapter_plugin_Wtrc"
+    }
+    blur: {
+      gaussianBlur: "Live PSAdapter_plugin_GblR"
+      radialBlur: "Live PSAdapter_plugin_RdlB"
+      smartBlur: "Live PSAdapter_plugin_SmrB"
+    }
+    brushStrokes: {
+      accentedEdges: "Live PSAdapter_plugin_AccE"
+      angledStrokes: "Live PSAdapter_plugin_AngS"
+      crosshatch: "Live PSAdapter_plugin_Crsh"
+      darkStrokes: "Live PSAdapter_plugin_DrkS"
+      inkOutlines: "Live PSAdapter_plugin_InkO"
+      spatter: "Live PSAdapter_plugin_Spt"
+      sprayedStrokes: "Live PSAdapter_plugin_SprS"
+      sumiE: "Live PSAdapter_plugin_Smie"
+    }
+    distort: {
+      diffuseGlow: "Live PSAdapter_plugin_DfsG"
+      glass: "Live PSAdapter_plugin_Gls"
+      oceanRipple: "Live PSAdapter_plugin_OcnR"
+    }
+    pixelate: {
+      colorHalftone: "Live PSAdapter_plugin_ClrH"
+      crystallize: "Live PSAdapter_plugin_Crst"
+      mezzotint: "Live PSAdapter_plugin_Mztn"
+      pointillize: "Live PSAdapter_plugin_Pntl"
+    }
+    sharpen: {
+      unsharpMask: "Live PSAdapter_plugin_USMk"
+    }
+    sketch: {
+      basRelief: "Live PSAdapter_plugin_BsRl"
+      chalkAndCharcoal: "Live PSAdapter_plugin_ChlC"
+      charcoal: "Live PSAdapter_plugin_Chrc"
+      chrome: "Live PSAdapter_plugin_Chrm"
+      contCrayon: "Live PSAdapter_plugin_CntC"
+      graphicPen: "Live PSAdapter_plugin_GraP"
+      halftonePattern: "Live PSAdapter_plugin_HlfS"
+      notePaper: "Live PSAdapter_plugin_NtPr"
+      photocopy: "Live PSAdapter_plugin_Phtc"
+      plaster: "Live PSAdapter_plugin_Plst"
+      reticulation: "Live PSAdapter_plugin_Rtcl"
+      stamp: "Live PSAdapter_plugin_Stmp"
+      tornEdges: "Live PSAdapter_plugin_TrnE"
+      waterPaper: "Live PSAdapter_plugin_WtrP"
+    }
+    texture: {
+      craquelure: "Live PSAdapter_plugin_Crql"
+      grain: "Live PSAdapter_plugin_Grn"
+      mosaicTiles: "Live PSAdapter_plugin_MscT"
+      patchwork: "Live PSAdapter_plugin_Ptch"
+      stainedGlass: "Live PSAdapter_plugin_StnG"
+      texturizer: "Live PSAdapter_plugin_Txtz"
+    }
+    video: {
+      deInterlace: "Live PSAdapter_plugin_Dntr"
+      nTSCColors: "Live PSAdapter_plugin_NTSC"
+    }
+  }
+  let view: {
+    preview: "preview"
+    overprintPreview: "ink"
+    pixelPreview: "raster"
+    proofSetup: {
+      cmyk: "proof-document"
+      macRgb: "proof-mac-rgb"
+      sRgb: "proof-win-rgb"
+      monitorRgb: "proof-monitor-rgb"
+      colorBlindnessPType: "proof-colorblindp"
+      colorBlindnessDType: "proof-colorblindd"
+      customize: "proof-custom"
+    }
+    proofColors: "proofColors"
+    zoomIn: "zoomin"
+    zoomOut: "zoomout"
+    fitArtboardInWindow: "fitin"
+    fitAllInWindow: "fitall"
+    actualSize: "actualsize"
+    hideEdges: "edge"
+    hideArtboards: "artboard"
+    hidePrintTiling: "pagetiling"
+    showSlices: "AISlice Feedback Menu"
+    lockSlices: "AISlice Lock Menu"
+    showTemplate: "showtemplate"
+    showGradientGuide: "Gradient Feedback"
+    rulers: {
+      showRulers: "ruler"
+      showVideoRulers: "videoruler"
+      changeToGlobalRulers: "rulerCoordinateSystem"
+    }
+    hideBoundingBox: "AI Bounding Box Toggle"
+    showTransparencyGrid: "TransparencyGrid Menu Item"
+    showTextThreads: "textthreads"
+    hideGradientAnnotator: "Gradient Feedback"
+    showLivePaintGaps: "Show Gaps Planet X"
+    guides: {
+      hideGuides: "showguide"
+      lockGuides: "lockguide"
+      makeGuides: "makeguide"
+      releaseGuides: "releaseguide"
+      clearGuides: "clearguide"
+    }
+    smartGuides: "Snapomatic on-off menu item"
+    perspectiveGrid: {
+      showGrid: "Show Perspective Grid"
+      showRulers: "Show Ruler"
+      snapToGrid: "Snap to Grid"
+      lockGrid: "Lock Perspective Grid"
+      lockStationPoint: "Lock Station Point"
+      defineGrid: "Define Perspective Grid"
+      saveGridAsPreset: "Save Perspective Grid as Preset"
+    }
+    showGrid: "showgrid"
+    snapToGrid: "snapgrid"
+    snapToPoint: "snappoint"
+    newView: "newview"
+    editViews: "editview"
+  }
+  let window: {
+    newWindow: "newwindow"
+    arrange: {
+      cascade: "cascade"
+      tile: "tile"
+      floatInWindow: "floatInWindow"
+      floatAllInWindows: "floatAllInWindows"
+      consolidateAllWindows: "consolidateAllWindows"
+    }
+    workspace: {
+      saveWorkspace: "Adobe Save Workspace"
+      newWorkspace: "Adobe New Workspace"
+      manageWorkspaces: "Adobe Manage Workspace"
+    }
+    cssMenu: "CSS Menu Item"
+    tools: "AdobeBuiltInToolbox1"
+    actions: "Adobe Action Palette"
+    align: "AdobeAlignObjects2"
+    appearance: "Style Palette"
+    artboards: "Adobe Artboard Palette"
+    attributes: "internal palettes posing as plug-in menus-attributes"
+    brushes: "Adobe BrushManager Menu Item"
+    color: "Adobe Color Palette"
+    colorGuide: "Adobe Harmony Palette"
+    kulerPanel: "Adobe Illustrator Kuler Panel"
+    documentInfo: "DocInfo1"
+    flattenerPreview: "Adobe Flattening Preview"
+    gradient: "Adobe Gradient Palette"
+    graphicStyles: "Adobe Style Palette"
+    info: "internal palettes posing as plug-in menus-info"
+    layers: "AdobeLayerPalette1"
+    links: "Adobe LinkPalette Menu Item"
+    magicWand: "AI Magic Wand"
+    navigator: "AdobeNavigator"
+    pathfinder: "Adobe PathfinderUI"
+    separationsPreview: "Adobe Separation Preview Panel"
+    stroke: "Adobe Stroke Palette"
+    svgInteractivity: "Adobe SVG Interactivity Palette"
+    swatches: "Adobe Swatches Menu Item"
+    symbols: "Adobe Symbol Palette"
+    transform: "AdobeTransformObjects1"
+    transparency: "Adobe Transparency Palette Menu Item"
+    variables: "Adobe Variables Palette Menu Item"
+    character: "internal palettes posing as plug-in menus-character"
+    characterStyles: "Character Styles"
+    glyphs: "alternate glyph palette plugin 2"
+    openType: "internal palettes posing as plug-in menus-opentype"
+    paragraph: "internal palettes posing as plug-in menus-paragraph"
+    paragraphStyles: "Adobe Paragraph Styles Palette"
+    tabs: "internal palettes posing as plug-in menus-tab"
+    otherArtStyleLibrary: "Adobe Art Style Plugin Other libraries menu item"
+    otherSymbolLibrary: "Adobe Symbol Palette Plugin Other libraries menu item"
+  }
+  let help: {
+    illustratorHelp: "helpcontent"
+    aboutIllustrator: "about"
+    systemInfo: "System Info"
+  }
+  let panels: {
+    newSymbol: "Adobe New Symbol Shortcut"
+    showColorPanel_Secondary: "Adobe Color Palette Secondary"
+    actionsBatch: "Adobe Actions Batch"
+    addNewFill: "Adobe New Fill Shortcut"
+    addNewStroke: "Adobe New Stroke Shortcut"
+    newGraphicStyle: "Adobe New Style Shortcut"
+    newLayer: "AdobeLayerPalette2"
+    newLayerWithDialog: "AdobeLayerPalette3"
+    updateLink: "Adobe Update Link Shortcut"
+    navigatorOptions: "AdobeNavigator2"
+    newSwatch: "Adobe New Swatch Shortcut Menu"
+  }
+}

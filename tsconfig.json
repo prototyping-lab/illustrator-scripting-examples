@@ -6,9 +6,9 @@
         "allowJs": true,
         "checkJs": true,
         "typeRoots": [ "typings" ],
-        "types":  [ "Illustrator/2015.3" ]
+        "types":  [ "Illustrator/2020" ]
     },
-    "include": [ "my-scripts"],
-    "exclude": [ "my-scripts/TypeScript/build/**/*" ]
+    "exclude": [ "my-scripts/TypeScript/build/**/*" ],
+    "include": [ "my-scripts"]
     
 }

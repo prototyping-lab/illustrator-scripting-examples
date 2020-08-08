@@ -3,7 +3,7 @@
         "module": "none", 
         "target": "ES3",
         "noLib": true,
-        "types":  [ "Illustrator/2015.3" ],
+        "types":  [ "Illustrator/2020" ],
         "typeRoots": [ "../../typings"],
         "outDir": "build",
         "rootDir": "src"
